@@ -1,0 +1,3 @@
+class CloudFirestore {
+  CloudFirestore._();
+}

@@ -1,0 +1,3 @@
+class FirebaseStorage {
+  FirebaseStorage._();
+}

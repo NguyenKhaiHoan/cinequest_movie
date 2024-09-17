@@ -1,0 +1,141 @@
+name: cinequest
+description: "A new Flutter project."
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+# In Windows, build-name is used as the major, minor, and patch parts
+# of the product and file versions while build-number is used as the build suffix.
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.3
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  ## Localization & Date Format
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+  intl_utils: ^2.8.7
+
+  # Api
+  retrofit: ^4.1.0
+  dio: ^5.6.0
+  pretty_dio_logger: ^1.4.0
+  logger: any # for logging purposes
+
+  # Services
+  firebase_core: ^3.4.0
+  firebase_auth: ^5.2.0
+  google_sign_in: ^6.2.1
+  firebase_storage: ^12.2.0
+  firebase_messaging: ^15.1.0
+  firebase_database: ^11.1.0
+  connectivity_plus: ^6.0.5
+  shared_preferences: ^2.3.2
+
+  # Push Nitification
+  # awesome_notifications: ^0.9.3
+
+  # Annotation
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
+
+  # Image
+  cached_network_image: ^3.4.0
+  flutter_svg: ^2.0.10+1
+
+  # Navigation
+  go_router: ^14.2.7
+
+  # Other
+  flutter_screenutil: ^5.9.3
+  equatable: ^2.0.5
+  animated_text_kit: ^4.2.2
+  page_transition: ^2.1.0
+  rxdart: ^0.28.0
+  envied: ^0.5.4+1
+  dartz: ^0.10.1
+  get_it: ^7.7.0
+
+  # Statement
+  flutter_bloc: ^8.1.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner: ^2.4.12
+  retrofit_generator: ^9.1.2
+  flutter_gen_runner: ^5.7.0
+  json_serializable: ^6.8.0
+  flutter_lints: ^4.0.0
+  freezed: ^2.5.7
+  envied_generator: ^0.5.4+1
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/fonts/
+    - assets/colors/
+
+  fonts:
+    - family: SI
+      fonts:
+        - asset: assets/fonts/si/SuisseIntl-Light.ttf
+          weight: 400
+        - asset: assets/fonts/si/SuisseIntl-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/si/SuisseIntl-Regular.ttf
+          weight: 700
+
+flutter_intl:
+  enabled: true
+  arb_dir: assets/languages/
+  output_dir: lib/src/core/localization
+  main_locale: en
+
+flutter_gen:
+  output: lib/gen/
+
+  integrations:
+    flutter_svg: true
+
+  assets:
+    enabled: true
+
+    outputs:
+      class_name: AppAssets
+      package_parameter_enabled: false
+
+  fonts:
+    enabled: true
+    outputs:
+      class_name: AppFonts
+
+  colors:
+    enabled: true
+    outputs:
+      class_name: AppColors
+    inputs:
+      - assets/colors/color.xml
