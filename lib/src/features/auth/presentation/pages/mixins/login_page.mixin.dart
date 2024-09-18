@@ -19,7 +19,7 @@ mixin LoginPageMixin on State<LoginPage> {
     _setPasswordTextEditingController.dispose();
   }
 
-  void _login(BuildContext context) async {
+  void _login() async {
     try {
       if (!_loginFormKey.currentState!.validate()) {
         return;

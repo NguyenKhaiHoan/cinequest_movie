@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> with LoginPageMixin {
             loginFormKey: _loginFormKey,
             emailTextEditingController: _emailTextEditingController,
             setPasswordTextEditingController: _setPasswordTextEditingController,
-            onLogin: () => _login(context),
+            onLogin: () => _login(),
           ),
         ),
       ),

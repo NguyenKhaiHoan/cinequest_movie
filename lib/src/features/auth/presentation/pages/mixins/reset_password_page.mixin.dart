@@ -22,7 +22,7 @@ mixin ResetPasswordPageMixin on State<ResetPasswordPage> {
     _emailTextEditingController.dispose();
   }
 
-  void _send(BuildContext context) async {
+  void _send() async {
     try {
       // if (!_signUpFormKey.currentState!.validate()) {
       //   return;
@@ -35,9 +35,6 @@ mixin ResetPasswordPageMixin on State<ResetPasswordPage> {
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
-      await Future.delayed(const Duration(seconds: 5));
-      if (!context.mounted) return;
-      context.pop();
     } catch (e) {
       rethrow;
     }
@@ -50,7 +47,7 @@ mixin ResetPasswordPageMixin on State<ResetPasswordPage> {
     );
   }
 
-  void _resend(BuildContext context) async {
+  void _resend() async {
     try {
       // if (!_verificationCodeFormKey.currentState!.validate()) {
       //   return;
@@ -62,11 +59,5 @@ mixin ResetPasswordPageMixin on State<ResetPasswordPage> {
     } catch (e) {
       rethrow;
     }
-  }
-
-  void _onChangedEmail(String? value) {
-    setState(() {
-      email = value ?? '';
-    });
   }
 }

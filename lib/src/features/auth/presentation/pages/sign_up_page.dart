@@ -45,7 +45,7 @@ class _SignUpPageState extends State<SignUpPage> with SignUpPageMixin {
             verificationCodeTextEditingController:
                 _verificationCodeTextEditingController,
             onBack: _back,
-            onSignUp: () => _signUp(context),
+            onSignUp: () => _signUp(),
           ),
         ),
       ],

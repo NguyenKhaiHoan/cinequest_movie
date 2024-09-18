@@ -1,12 +1,13 @@
 part of '../account_setup_page.dart';
 
 mixin AccountSetupPageMixin on State<AccountSetupPage> {
-  late TextEditingController _emailTextEditingController;
-  late TextEditingController _setPasswordTextEditingController;
-  late TextEditingController _confirmPasswordTextEditingController;
-  late TextEditingController _verificationCodeTextEditingController;
-  final GlobalKey<FormState> _signUpFormKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> _verificationCodeFormKey = GlobalKey<FormState>();
+  late TextEditingController _usernameTextEditingController;
+  late TextEditingController _nameTextEditingController;
+  late TextEditingController _surnameTextEditingController;
+  late TextEditingController _bioTextEditingController;
+  // final GlobalKey<FormState> _useNameFormKey = GlobalKey<FormState>();
+  // final GlobalKey<FormState> _fullNameCodeFormKey = GlobalKey<FormState>();
+  // final GlobalKey<FormState> _bioFormKey = GlobalKey<FormState>();
 
   final _pageController = PageController(
     initialPage: 0,
@@ -15,19 +16,19 @@ mixin AccountSetupPageMixin on State<AccountSetupPage> {
   @override
   void initState() {
     super.initState();
-    _emailTextEditingController = TextEditingController();
-    _setPasswordTextEditingController = TextEditingController();
-    _confirmPasswordTextEditingController = TextEditingController();
-    _verificationCodeTextEditingController = TextEditingController();
+    _usernameTextEditingController = TextEditingController();
+    _nameTextEditingController = TextEditingController();
+    _surnameTextEditingController = TextEditingController();
+    _bioTextEditingController = TextEditingController();
   }
 
   @override
   void dispose() {
     super.dispose();
-    _emailTextEditingController.dispose();
-    _setPasswordTextEditingController.dispose();
-    _confirmPasswordTextEditingController.dispose();
-    _verificationCodeTextEditingController.dispose();
+    _usernameTextEditingController.dispose();
+    _nameTextEditingController.dispose();
+    _surnameTextEditingController.dispose();
+    _bioTextEditingController.dispose();
   }
 
   void _next() {
@@ -50,4 +51,6 @@ mixin AccountSetupPageMixin on State<AccountSetupPage> {
       curve: Curves.easeInOut,
     );
   }
+
+  void _onPageChanged(int index) {}
 }

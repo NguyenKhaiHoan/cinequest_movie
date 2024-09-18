@@ -1,7 +1,6 @@
 import 'package:cinequest/src/features/auth/presentation/widgets/reset_password/reset_password_first_process.dart';
 import 'package:cinequest/src/features/auth/presentation/widgets/reset_password/reset_password_second_process.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 part 'mixins/reset_password_page.mixin.dart';
 
@@ -24,7 +23,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage>
         ResetPasswordFirstProcess(
           resetPasswordFormKey: _resetPasswordFormKey,
           emailTextEditingController: _emailTextEditingController,
-          onSend: () => _send(context),
+          onSend: () => _send(),
         ),
         ResetPasswordSecondProcess(onBack: _back),
       ],

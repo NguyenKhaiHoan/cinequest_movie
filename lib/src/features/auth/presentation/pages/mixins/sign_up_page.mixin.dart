@@ -52,7 +52,7 @@ mixin SignUpPageMixin on State<SignUpPage> {
     );
   }
 
-  void _signUp(BuildContext context) async {
+  void _signUp() async {
     try {
       if (!_verificationCodeFormKey.currentState!.validate()) {
         return;
