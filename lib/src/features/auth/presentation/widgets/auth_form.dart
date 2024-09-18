@@ -1,25 +1,30 @@
 import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:cinequest/src/common/widgets/custom_text_field.dart';
 import 'package:cinequest/src/core/extensions/context_extention.dart';
+import 'package:cinequest/src/core/utils/validation_util.dart';
 import 'package:flutter/material.dart';
 
 class AuthForm extends StatelessWidget {
   final String title;
   final GlobalKey<FormState> formKey;
-  final Function(String)? onChanged;
 
   final TextEditingController emailTextEditingController;
+  final Function(String)? onEmailChanged;
   final TextEditingController setPasswordTextEditingController;
+  final Function(String)? onSetPasswordChanged;
   final TextEditingController? confirmPasswordTextEditingController;
+  final Function(String)? onConfirmPasswordChanged;
 
   const AuthForm({
     super.key,
     required this.title,
     required this.formKey,
-    this.onChanged,
     required this.emailTextEditingController,
+    this.onEmailChanged,
     required this.setPasswordTextEditingController,
+    this.onSetPasswordChanged,
     this.confirmPasswordTextEditingController,
+    this.onConfirmPasswordChanged,
   });
 
   @override
@@ -43,13 +48,16 @@ class AuthForm extends StatelessWidget {
           CustomTextField(
             label: 'Email',
             controller: emailTextEditingController,
-            onChanged: onChanged,
+            onChanged: onEmailChanged,
+            validator: (value) => ValidationUtil.validateEmail(value),
           ),
           gapH16,
           CustomTextField(
             isPassword: true,
             label: 'Set Password',
             controller: setPasswordTextEditingController,
+            onChanged: onSetPasswordChanged,
+            validator: (value) => ValidationUtil.validatePassword(value),
           ),
           if (isSignUp) gapH16,
           if (isSignUp)
@@ -57,6 +65,9 @@ class AuthForm extends StatelessWidget {
               isPassword: true,
               label: 'Confirm Password',
               controller: confirmPasswordTextEditingController!,
+              onChanged: onConfirmPasswordChanged,
+              validator: (value) => ValidationUtil.validateCorrectPassword(
+                  value, setPasswordTextEditingController.text),
             ),
         ],
       ),

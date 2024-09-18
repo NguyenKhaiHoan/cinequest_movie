@@ -14,7 +14,7 @@ class CustomButton extends StatelessWidget {
   final bool isLoading;
   final String? iconPath;
   final double? iconSize;
-  final Color? backgroundColor;
+  final Color backgroundColor;
   final Color? borderColor;
   final VoidCallback? onPressed;
   final ColorFilter? colorFilter;
@@ -52,7 +52,7 @@ class CustomButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppSizes.buttonRadius),
             ),
             side: BorderSide(
-                width: 1.5, color: borderColor ?? AppColors.blackOlive),
+                width: 1.5, color: borderColor ?? AppColors.raisinBlack),
           );
 
     final constrainedWidth = width ?? AppSizes.buttonWidth;

@@ -15,7 +15,9 @@ class BottomWelcome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(
-          vertical: AppSizes.defaultSpace, horizontal: AppSizes.defaultSpace),
+        vertical: AppSizes.defaultSpace,
+        horizontal: AppSizes.defaultSpace,
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [

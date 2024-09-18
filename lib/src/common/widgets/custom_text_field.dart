@@ -10,15 +10,19 @@ import '../bloc/text_field/text_field_bloc.dart';
 class CustomTextField extends StatelessWidget {
   final String label;
   final bool isPassword;
+  final bool isVerificationCode;
   final TextEditingController controller;
   final Function(String)? onChanged;
+  final String? Function(String?)? validator;
 
   const CustomTextField({
     super.key,
     required this.label,
     this.isPassword = false,
+    this.isVerificationCode = false,
     required this.controller,
     this.onChanged,
+    this.validator,
   });
 
   @override
@@ -27,11 +31,12 @@ class CustomTextField extends StatelessWidget {
       create: (_) => TextFieldBloc(),
       child: BlocBuilder<TextFieldBloc, TextFieldState>(
         builder: (context, state) {
-          return TextField(
+          return TextFormField(
             controller: controller,
             obscureText: isPassword ? state.obscureText : false,
             style: context.textTheme.bodyMedium,
             onChanged: onChanged,
+            validator: validator,
             decoration: InputDecoration(
               labelText: label.toUpperCase(),
               floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -51,7 +56,8 @@ class CustomTextField extends StatelessWidget {
                     )
                   : null,
             ),
-            keyboardType: TextInputType.text,
+            keyboardType:
+                isVerificationCode ? TextInputType.number : TextInputType.text,
           );
         },
       ),

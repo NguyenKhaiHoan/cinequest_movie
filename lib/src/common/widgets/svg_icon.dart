@@ -20,7 +20,8 @@ class SvgIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
+      borderRadius: BorderRadius.circular(100),
       onTap: onPressed,
       child: SvgPicture.asset(
         iconPath,

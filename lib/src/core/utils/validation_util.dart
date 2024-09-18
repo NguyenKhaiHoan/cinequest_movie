@@ -42,7 +42,7 @@ class ValidationUtil {
 
   static String? validateCorrectPassword(String? value, String password) {
     validatePassword(value);
-    if (value != password) {
+    if (value!.trim() != password.trim()) {
       return 'Passwords do not match.';
     }
     return null;

@@ -1,5 +1,6 @@
 import 'package:cinequest/src/common/bloc/app/app_auth_bloc.dart';
 import 'package:cinequest/src/core/routes/go_router_refresh_stream.dart';
+import 'package:cinequest/src/core/utils/page_transition_util.dart';
 import 'package:cinequest/src/features/auth/presentation/pages/account_setup_page.dart';
 import 'package:cinequest/src/features/auth/presentation/pages/login_page.dart';
 import 'package:cinequest/src/features/auth/presentation/pages/reset_password_page.dart';
@@ -23,26 +24,46 @@ final class RouterPages {
           GoRoute(
             path: AppRoutes.welcome.path,
             builder: (context, state) => const WelcomePage(),
+            pageBuilder: PageTransitionUtil.customPageBuilder(
+              child: const WelcomePage(),
+              fadeTransition: true,
+            ),
           ),
           GoRoute(
             path: AppRoutes.navigation.path,
             builder: (context, state) => const NavigationPage(),
+            pageBuilder: PageTransitionUtil.customPageBuilder(
+              child: const NavigationPage(),
+              fadeTransition: true,
+            ),
           ),
           GoRoute(
             path: AppRoutes.login.path,
             builder: (context, state) => const LoginPage(),
+            pageBuilder: PageTransitionUtil.customPageBuilder(
+              child: const LoginPage(),
+            ),
           ),
           GoRoute(
             path: AppRoutes.signUp.path,
             builder: (context, state) => const SignUpPage(),
+            pageBuilder: PageTransitionUtil.customPageBuilder(
+              child: const SignUpPage(),
+            ),
           ),
           GoRoute(
             path: AppRoutes.accountSetup.path,
             builder: (context, state) => const AccountSetupPage(),
+            pageBuilder: PageTransitionUtil.customPageBuilder(
+              child: const AccountSetupPage(),
+            ),
           ),
           GoRoute(
             path: AppRoutes.resetPassword.path,
             builder: (context, state) => const ResetPasswordPage(),
+            pageBuilder: PageTransitionUtil.customPageBuilder(
+              child: const ResetPasswordPage(),
+            ),
           ),
         ],
       );

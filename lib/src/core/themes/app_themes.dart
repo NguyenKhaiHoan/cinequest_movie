@@ -16,7 +16,7 @@ class AppThemes {
       inputDecorationTheme: InputDecorationTheme(
         contentPadding: const EdgeInsets.symmetric(vertical: 12.0),
         labelStyle: AppStyles.p2().copyWith(
-          color: AppColors.raisinBlack,
+          color: AppColors.dimGray,
         ),
         enabledBorder: const UnderlineInputBorder(
             borderSide: BorderSide(color: AppColors.raisinBlack)),

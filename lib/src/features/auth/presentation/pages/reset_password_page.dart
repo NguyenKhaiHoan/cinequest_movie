@@ -1,13 +1,7 @@
-import 'package:cinequest/src/core/extensions/string_extension.dart';
+import 'package:cinequest/src/features/auth/presentation/widgets/reset_password/reset_password_first_process.dart';
+import 'package:cinequest/src/features/auth/presentation/widgets/reset_password/reset_password_second_process.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../../../../gen/assets.gen.dart';
-import '../../../../common/constants/app_sizes.dart';
-import '../../../../common/widgets/custom_app_bar.dart';
-import '../../../../common/widgets/custom_button.dart';
-import '../../../../core/enums/button_type.dart';
-import '../widgets/reset_password_form.dart';
 
 part 'mixins/reset_password_page.mixin.dart';
 
@@ -27,63 +21,13 @@ class _ResetPasswordPageState extends State<ResetPasswordPage>
       scrollDirection: Axis.horizontal,
       physics: const NeverScrollableScrollPhysics(),
       children: [
-        resetPasswordPage(),
-        checkEmailPage(),
-      ],
-    );
-  }
-
-  Widget resetPasswordPage() {
-    return Scaffold(
-      appBar: CustomAppBar(title: 'Reset Password'.hardcoded),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(
-            AppSizes.defaultSpace,
-            AppSizes.defaultSpace * 3,
-            AppSizes.defaultSpace,
-            AppSizes.defaultSpace / 2),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            ResetPasswordForm(
-              title: 'Reset password'.hardcoded,
-              subtitle:
-                  'Enter your email to receive a confirmation link and reset your password'
-                      .hardcoded,
-              formKey: _resetPasswordFormKey,
-              emailTextEditingController: _emailTextEditingController,
-            ),
-            const Spacer(),
-            CustomButton(
-              width: 170,
-              iconPath: AppAssets.images.arrowRight.path,
-              buttonType: ButtonType.outline,
-              onPressed: () => _send(context),
-            )
-          ],
+        ResetPasswordFirstProcess(
+          resetPasswordFormKey: _resetPasswordFormKey,
+          emailTextEditingController: _emailTextEditingController,
+          onSend: () => _send(context),
         ),
-      ),
-    );
-  }
-
-  Widget checkEmailPage() {
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: 'Reset Password'.hardcoded,
-        onBackTap: _back,
-      ),
-      body: const Padding(
-        padding: EdgeInsets.fromLTRB(
-            AppSizes.defaultSpace,
-            AppSizes.defaultSpace * 3,
-            AppSizes.defaultSpace,
-            AppSizes.defaultSpace / 2),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-          Text(
-            'Check your inbox',
-          )
-        ]),
-      ),
+        ResetPasswordSecondProcess(onBack: _back),
+      ],
     );
   }
 }

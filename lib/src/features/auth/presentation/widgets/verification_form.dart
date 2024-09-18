@@ -2,6 +2,7 @@ import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:cinequest/src/common/widgets/custom_text_field.dart';
 import 'package:cinequest/src/core/extensions/context_extention.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
+import 'package:cinequest/src/core/utils/validation_util.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../gen/colors.gen.dart';
@@ -10,10 +11,9 @@ class VerificationForm extends StatelessWidget {
   final String title;
   final String subtitle;
   final String email;
-
   final GlobalKey<FormState> formKey;
-
   final TextEditingController verificationCodeTextEditingController;
+  final Function(String)? onVerificationCodeChanged;
 
   const VerificationForm({
     super.key,
@@ -22,6 +22,7 @@ class VerificationForm extends StatelessWidget {
     required this.email,
     required this.formKey,
     required this.verificationCodeTextEditingController,
+    this.onVerificationCodeChanged,
   });
 
   @override
@@ -38,7 +39,7 @@ class VerificationForm extends StatelessWidget {
           TextSpan(
             text: subtitle,
             style: context.textTheme.bodyMedium!
-                .copyWith(color: AppColors.raisinBlack),
+                .copyWith(color: AppColors.dimGray),
             children: [
               TextSpan(
                 text: email,
@@ -59,6 +60,9 @@ class VerificationForm extends StatelessWidget {
       child: CustomTextField(
         label: 'Verification Code'.hardcoded,
         controller: verificationCodeTextEditingController,
+        onChanged: onVerificationCodeChanged,
+        validator: (value) =>
+            ValidationUtil.validateEmptyField('Verification Code', value),
       ),
     );
   }

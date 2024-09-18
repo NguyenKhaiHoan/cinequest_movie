@@ -1,6 +1,6 @@
-part of '../sign_up_page.dart';
+part of '../account_setup_page.dart';
 
-mixin SignUpPageMixin on State<SignUpPage> {
+mixin AccountSetupPageMixin on State<AccountSetupPage> {
   late TextEditingController _emailTextEditingController;
   late TextEditingController _setPasswordTextEditingController;
   late TextEditingController _confirmPasswordTextEditingController;
@@ -31,14 +31,13 @@ mixin SignUpPageMixin on State<SignUpPage> {
   }
 
   void _next() {
-    if (!_signUpFormKey.currentState!.validate()) {
-      return;
-    }
+    // if (!_signUpFormKey.currentState!.validate()) {
+    //   return;
+    // }
     // var isConnected = ConnectivityUtil.checkConnectivity();
     // if (!isConnected) {
     //   return;
     // }
-    _verificationCodeTextEditingController.text = '123456';
     _pageController.nextPage(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
@@ -50,20 +49,5 @@ mixin SignUpPageMixin on State<SignUpPage> {
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
-  }
-
-  void _signUp(BuildContext context) async {
-    try {
-      if (!_verificationCodeFormKey.currentState!.validate()) {
-        return;
-      }
-      // var isConnected = ConnectivityUtil.checkConnectivity();
-      // if (isConnected) {
-      //   return;
-      // }
-      context.go(AppRoutes.accountSetup.path);
-    } catch (e) {
-      rethrow;
-    }
   }
 }

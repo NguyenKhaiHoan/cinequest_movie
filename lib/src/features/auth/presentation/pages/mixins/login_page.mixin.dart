@@ -21,9 +21,9 @@ mixin LoginPageMixin on State<LoginPage> {
 
   void _login(BuildContext context) async {
     try {
-      // if (!_verificationCodeFormKey.currentState!.validate()) {
-      //   return;
-      // }
+      if (!_loginFormKey.currentState!.validate()) {
+        return;
+      }
       // var isConnected = ConnectivityUtil.checkConnectivity();
       // if (isConnected) {
       //   return;
