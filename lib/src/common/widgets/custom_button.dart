@@ -13,7 +13,7 @@ class CustomButton extends StatelessWidget {
   final Color? textColor;
   final bool isLoading;
   final String? iconPath;
-  final double? iconSize;
+  final double iconSize;
   final Color backgroundColor;
   final Color? borderColor;
   final VoidCallback? onPressed;
@@ -28,7 +28,7 @@ class CustomButton extends StatelessWidget {
     this.textColor,
     this.isLoading = false,
     this.iconPath,
-    this.iconSize,
+    this.iconSize = 24,
     this.backgroundColor = AppColors.white,
     this.borderColor,
     this.onPressed,

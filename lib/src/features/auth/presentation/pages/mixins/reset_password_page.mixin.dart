@@ -24,13 +24,14 @@ mixin ResetPasswordPageMixin on State<ResetPasswordPage> {
 
   void _send() async {
     try {
-      // if (!_signUpFormKey.currentState!.validate()) {
-      //   return;
-      // }
+      if (!_resetPasswordFormKey.currentState!.validate()) {
+        return;
+      }
       // var isConnected = ConnectivityUtil.checkConnectivity();
       // if (!isConnected) {
       //   return;
       // }
+      FocusScope.of(context).unfocus();
       _pageController.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
@@ -49,9 +50,6 @@ mixin ResetPasswordPageMixin on State<ResetPasswordPage> {
 
   void _resend() async {
     try {
-      // if (!_verificationCodeFormKey.currentState!.validate()) {
-      //   return;
-      // }
       // var isConnected = ConnectivityUtil.checkConnectivity();
       // if (isConnected) {
       //   return;

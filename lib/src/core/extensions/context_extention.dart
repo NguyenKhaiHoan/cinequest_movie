@@ -1,3 +1,4 @@
+import 'package:cinequest/gen/colors.gen.dart';
 import 'package:flutter/material.dart';
 
 extension ThemeExtension on BuildContext {
@@ -17,6 +18,7 @@ extension SnackbarExtension on BuildContext {
       SnackBar(
         content: Text(message),
         duration: const Duration(seconds: 10),
+        backgroundColor: AppColors.blackOlive,
       ),
     );
   }

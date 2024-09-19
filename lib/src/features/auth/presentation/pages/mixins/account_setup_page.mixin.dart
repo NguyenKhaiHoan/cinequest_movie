@@ -5,9 +5,9 @@ mixin AccountSetupPageMixin on State<AccountSetupPage> {
   late TextEditingController _nameTextEditingController;
   late TextEditingController _surnameTextEditingController;
   late TextEditingController _bioTextEditingController;
-  // final GlobalKey<FormState> _useNameFormKey = GlobalKey<FormState>();
-  // final GlobalKey<FormState> _fullNameCodeFormKey = GlobalKey<FormState>();
-  // final GlobalKey<FormState> _bioFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _usernameFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _fullNameCodeFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _bioFormKey = GlobalKey<FormState>();
 
   final _pageController = PageController(
     initialPage: 0,
@@ -31,10 +31,21 @@ mixin AccountSetupPageMixin on State<AccountSetupPage> {
     _bioTextEditingController.dispose();
   }
 
-  void _next() {
-    // if (!_signUpFormKey.currentState!.validate()) {
-    //   return;
-    // }
+  void _next(int currentPage) {
+    if (currentPage == 0) {
+      if (!_usernameFormKey.currentState!.validate()) {
+        return;
+      }
+    } else if (currentPage == 1) {
+      if (!_fullNameCodeFormKey.currentState!.validate()) {
+        return;
+      }
+    } else if (currentPage == 2) {
+      FocusScope.of(context).unfocus();
+      if (!_bioFormKey.currentState!.validate()) {
+        return;
+      }
+    }
     // var isConnected = ConnectivityUtil.checkConnectivity();
     // if (!isConnected) {
     //   return;
@@ -52,5 +63,12 @@ mixin AccountSetupPageMixin on State<AccountSetupPage> {
     );
   }
 
-  void _onPageChanged(int index) {}
+  void _changePhoto(BuildContext context) {
+    BottomSheetUtil.showTakeImageBottomSheet(context).then((value) {
+      if (!context.mounted) return;
+      context
+          .read<AccountSetupBloc>()
+          .add(AccountSetupEvent.profilePhotoChanged(value));
+    });
+  }
 }

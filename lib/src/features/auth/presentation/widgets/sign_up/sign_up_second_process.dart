@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../gen/colors.gen.dart';
 import '../../../../../common/constants/app_sizes.dart';
 import '../../../../../common/widgets/custom_app_bar.dart';
-import '../../blocs/verification_code_form/verification_code_form_bloc.dart';
+import '../../blocs/sign_up/sign_up_bloc.dart';
 
 class SignUpSecondProcess extends StatelessWidget {
   final GlobalKey<FormState> verificationCodeFormKey;
@@ -39,7 +39,7 @@ class SignUpSecondProcess extends StatelessWidget {
             AppSizes.defaultSpace * 2,
             AppSizes.defaultSpace,
             AppSizes.defaultSpace / 2),
-        child: BlocBuilder<VerificationCodeFormBloc, VerificationCodeFormState>(
+        child: BlocBuilder<SignUpBloc, SignUpState>(
           builder: (context, state) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -52,9 +52,8 @@ class SignUpSecondProcess extends StatelessWidget {
                   verificationCodeTextEditingController:
                       verificationCodeTextEditingController,
                   onVerificationCodeChanged: (value) => context
-                      .read<VerificationCodeFormBloc>()
-                      .add(VerificationCodeFormEvent.verificationCodeChanged(
-                          value)),
+                      .read<SignUpBloc>()
+                      .add(SignUpEvent.verificationCodeChanged(value)),
                 ),
                 const Spacer(),
                 Row(
@@ -67,7 +66,7 @@ class SignUpSecondProcess extends StatelessWidget {
                     ),
                     gapW8,
                     Expanded(
-                      child: state.isFormValid
+                      child: state.isVerificationCodeFormValid
                           ? CustomButton(
                               text: 'Continue'.hardcoded,
                               textColor: AppColors.black,

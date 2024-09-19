@@ -26,8 +26,15 @@ class AccountSetupBaseContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AccountSetupBloc, AccountSetupState>(
+      buildWhen: (previous, current) =>
+          previous.currentPage != current.currentPage ||
+          previous.isFirstFormValid != current.isFirstFormValid ||
+          previous.isSecondFormValid != current.isSecondFormValid ||
+          previous.isThirdFormValid != current.isThirdFormValid ||
+          previous.isProfilePhotoValid != current.isProfilePhotoValid,
       builder: (context, state) {
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: CustomAppBar(
             title: 'Account Setup'.hardcoded,
             hasLeading: false,
@@ -88,12 +95,21 @@ class AccountSetupBaseContent extends StatelessWidget {
                     child: Row(
                       children: [
                         const Spacer(),
-                        CustomButton(
-                          width: 100,
-                          iconPath: AppAssets.images.arrowRight.path,
-                          buttonType: ButtonType.outline,
-                          onPressed: onNext,
-                        )
+                        getValid(state)
+                            ? CustomButton(
+                                width: 100,
+                                iconPath: AppAssets.images.arrowRight.path,
+                                colorFilter: const ColorFilter.mode(
+                                    AppColors.black, BlendMode.srcIn),
+                                buttonType: ButtonType.elevated,
+                                onPressed: onNext,
+                              )
+                            : CustomButton(
+                                width: 100,
+                                iconPath: AppAssets.images.arrowRight.path,
+                                buttonType: ButtonType.outline,
+                                onPressed: onNext,
+                              )
                       ],
                     ),
                   )
@@ -104,5 +120,20 @@ class AccountSetupBaseContent extends StatelessWidget {
         );
       },
     );
+  }
+
+  bool getValid(AccountSetupState state) {
+    switch (state.currentPage) {
+      case 0:
+        return state.isFirstFormValid;
+      case 1:
+        return state.isSecondFormValid;
+      case 2:
+        return state.isThirdFormValid;
+      case 3:
+        return state.isProfilePhotoValid;
+      default:
+        return false;
+    }
   }
 }

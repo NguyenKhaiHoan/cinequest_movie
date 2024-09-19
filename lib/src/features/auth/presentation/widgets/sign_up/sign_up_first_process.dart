@@ -8,7 +8,7 @@ import '../../../../../../gen/colors.gen.dart';
 import '../../../../../common/constants/app_sizes.dart';
 import '../../../../../common/widgets/custom_app_bar.dart';
 import '../../../../../core/enums/button_type.dart';
-import '../../blocs/sign_up_form/sign_up_form_bloc.dart';
+import '../../blocs/sign_up/sign_up_bloc.dart';
 import '../auth_form.dart';
 
 class SignUpFirstProcess extends StatelessWidget {
@@ -37,7 +37,9 @@ class SignUpFirstProcess extends StatelessWidget {
             AppSizes.defaultSpace * 2,
             AppSizes.defaultSpace,
             AppSizes.defaultSpace / 2),
-        child: BlocBuilder<SignUpFormBloc, SignUpFormState>(
+        child: BlocBuilder<SignUpBloc, SignUpState>(
+          buildWhen: (previous, current) =>
+              previous.isSignUpFormValid != current.isSignUpFormValid,
           builder: (context, state) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -47,21 +49,21 @@ class SignUpFirstProcess extends StatelessWidget {
                   formKey: signUpFormKey,
                   emailTextEditingController: emailTextEditingController,
                   onEmailChanged: (value) => context
-                      .read<SignUpFormBloc>()
-                      .add(SignUpFormEvent.emailChanged(value)),
+                      .read<SignUpBloc>()
+                      .add(SignUpEvent.emailChanged(value)),
                   setPasswordTextEditingController:
                       setPasswordTextEditingController,
                   onSetPasswordChanged: (value) => context
-                      .read<SignUpFormBloc>()
-                      .add(SignUpFormEvent.setPasswordChanged(value)),
+                      .read<SignUpBloc>()
+                      .add(SignUpEvent.setPasswordChanged(value)),
                   confirmPasswordTextEditingController:
                       confirmPasswordTextEditingController,
                   onConfirmPasswordChanged: (value) => context
-                      .read<SignUpFormBloc>()
-                      .add(SignUpFormEvent.confirmPasswordChanged(value)),
+                      .read<SignUpBloc>()
+                      .add(SignUpEvent.confirmPasswordChanged(value)),
                 ),
                 const Spacer(),
-                state.isFormValid
+                state.isSignUpFormValid
                     ? CustomButton(
                         width: 170,
                         iconPath: AppAssets.images.arrowRight.path,

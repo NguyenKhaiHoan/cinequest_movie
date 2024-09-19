@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SvgIcon extends StatelessWidget {
-  final double? iconSize;
+  final double iconSize;
   final String iconPath;
   final bool notNeedColorFilter;
   final ColorFilter? colorFilter;
@@ -14,7 +14,7 @@ class SvgIcon extends StatelessWidget {
     required this.iconPath,
     this.notNeedColorFilter = false,
     this.colorFilter,
-    this.iconSize,
+    this.iconSize = 24,
     this.onPressed,
   });
 
@@ -25,8 +25,8 @@ class SvgIcon extends StatelessWidget {
       onTap: onPressed,
       child: SvgPicture.asset(
         iconPath,
-        width: iconSize ?? 24,
-        height: iconSize ?? 24,
+        width: iconSize,
+        height: iconSize,
         colorFilter: notNeedColorFilter
             ? null
             : colorFilter ??

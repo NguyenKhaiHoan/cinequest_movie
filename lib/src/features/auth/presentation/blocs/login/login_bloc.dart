@@ -1,13 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'login_form_event.dart';
-part 'login_form_state.dart';
-part 'login_form_bloc.freezed.dart';
+part 'login_event.dart';
+part 'login_state.dart';
+part 'login_bloc.freezed.dart';
 
-class LoginFormBloc extends Bloc<LoginFormEvent, LoginFormState> {
-  LoginFormBloc() : super(LoginFormState.initial()) {
-    on<LoginFormEvent>((events, emit) async {
+class LoginBloc extends Bloc<LoginEvent, LoginState> {
+  LoginBloc() : super(LoginState.initial()) {
+    on<LoginEvent>((events, emit) async {
       events.map(
         emailChanged: (event) => _onEmailChanged(event, emit),
         setPasswordChanged: (event) => _onSetPasswordChanged(event, emit),
@@ -15,8 +15,7 @@ class LoginFormBloc extends Bloc<LoginFormEvent, LoginFormState> {
     });
   }
 
-  void _onEmailChanged(
-      EventLoginFormEmailChanged event, Emitter<LoginFormState> emit) {
+  void _onEmailChanged(EventLoginEmailChanged event, Emitter<LoginState> emit) {
     emit(state.copyWith(
       email: event.email,
       isFormValid: _isFormValid(event.email, state.password),
@@ -24,7 +23,7 @@ class LoginFormBloc extends Bloc<LoginFormEvent, LoginFormState> {
   }
 
   void _onSetPasswordChanged(
-      EventLoginFormSetPasswordChanged event, Emitter<LoginFormState> emit) {
+      EventLoginSetPasswordChanged event, Emitter<LoginState> emit) {
     emit(state.copyWith(
       password: event.password,
       isFormValid: _isFormValid(state.email, event.password),

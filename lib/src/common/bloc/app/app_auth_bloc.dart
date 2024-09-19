@@ -19,6 +19,7 @@ class AppAuthBloc extends Bloc<AppAuthEvent, AppAuthState> {
   Future<void> onStarted(
       EventAppAuthStarted event, Emitter<AppAuthState> emit) async {
     var isLoggedIn = Random().nextBool();
+    print('====================================== $isLoggedIn');
     await Future.delayed(const Duration(seconds: 3));
     if (isLoggedIn) {
       emit(const AppAuthState.authenticated());

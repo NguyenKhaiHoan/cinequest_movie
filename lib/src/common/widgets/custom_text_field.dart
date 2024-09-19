@@ -14,6 +14,8 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final Function(String)? onChanged;
   final String? Function(String?)? validator;
+  final bool checkCharacterCounter;
+  final int couter;
 
   const CustomTextField({
     super.key,
@@ -23,6 +25,8 @@ class CustomTextField extends StatelessWidget {
     required this.controller,
     this.onChanged,
     this.validator,
+    this.checkCharacterCounter = false,
+    this.couter = 0,
   });
 
   @override
@@ -40,6 +44,21 @@ class CustomTextField extends StatelessWidget {
             decoration: InputDecoration(
               labelText: label.toUpperCase(),
               floatingLabelBehavior: FloatingLabelBehavior.always,
+              counter: checkCharacterCounter
+                  ? Text.rich(
+                      TextSpan(
+                        text: couter.toString(),
+                        style: context.textTheme.bodyMedium,
+                        children: [
+                          TextSpan(
+                            text: '/120',
+                            style: context.textTheme.bodyMedium!
+                                .copyWith(color: AppColors.dimGray),
+                          ),
+                        ],
+                      ),
+                    )
+                  : null,
               suffixIcon: isPassword
                   ? Padding(
                       padding: const EdgeInsets.all(16.0),

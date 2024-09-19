@@ -61,8 +61,8 @@ class VerificationForm extends StatelessWidget {
         label: 'Verification Code'.hardcoded,
         controller: verificationCodeTextEditingController,
         onChanged: onVerificationCodeChanged,
-        validator: (value) =>
-            ValidationUtil.validateEmptyField('Verification Code', value),
+        validator: (value) => ValidationUtil.validateEmptyField(
+            'Verification Code'.hardcoded, value),
       ),
     );
   }

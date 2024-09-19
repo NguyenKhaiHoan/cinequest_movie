@@ -1,6 +1,5 @@
 import 'package:cinequest/src/common/widgets/custom_app_bar.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
-import 'package:cinequest/src/features/auth/presentation/blocs/login_form/login_form_bloc.dart';
 import 'package:cinequest/src/features/auth/presentation/widgets/login_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +7,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../common/constants/app_sizes.dart';
 import '../../../../core/enums/app_routes.dart';
+import '../blocs/login/login_bloc.dart';
 
 part 'mixins/login_page.mixin.dart';
 
@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> with LoginPageMixin {
           AppSizes.defaultSpace / 2,
         ),
         child: BlocProvider(
-          create: (context) => LoginFormBloc(),
+          create: (context) => LoginBloc(),
           child: LoginBody(
             loginFormKey: _loginFormKey,
             emailTextEditingController: _emailTextEditingController,

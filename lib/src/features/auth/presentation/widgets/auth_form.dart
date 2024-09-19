@@ -1,6 +1,7 @@
 import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:cinequest/src/common/widgets/custom_text_field.dart';
 import 'package:cinequest/src/core/extensions/context_extention.dart';
+import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:cinequest/src/core/utils/validation_util.dart';
 import 'package:flutter/material.dart';
 
@@ -46,28 +47,32 @@ class AuthForm extends StatelessWidget {
       child: Column(
         children: [
           CustomTextField(
-            label: 'Email',
+            label: 'Email'.hardcoded,
             controller: emailTextEditingController,
             onChanged: onEmailChanged,
-            validator: (value) => ValidationUtil.validateEmail(value),
+            validator: (value) =>
+                ValidationUtil.validateEmail('Email'.hardcoded, value),
           ),
           gapH16,
           CustomTextField(
             isPassword: true,
-            label: 'Set Password',
+            label: 'Set Password'.hardcoded,
             controller: setPasswordTextEditingController,
             onChanged: onSetPasswordChanged,
-            validator: (value) => ValidationUtil.validatePassword(value),
+            validator: (value) => ValidationUtil.validatePassword(
+                'Set Password'.hardcoded, value),
           ),
           if (isSignUp) gapH16,
           if (isSignUp)
             CustomTextField(
               isPassword: true,
-              label: 'Confirm Password',
+              label: 'Confirm Password'.hardcoded,
               controller: confirmPasswordTextEditingController!,
               onChanged: onConfirmPasswordChanged,
               validator: (value) => ValidationUtil.validateCorrectPassword(
-                  value, setPasswordTextEditingController.text),
+                  'Confirm Password'.hardcoded,
+                  value,
+                  setPasswordTextEditingController.text),
             ),
         ],
       ),

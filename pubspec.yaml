@@ -63,6 +63,8 @@ dependencies:
   # Image
   cached_network_image: ^3.4.0
   flutter_svg: ^2.0.10+1
+  image_picker: ^1.1.2
+  image_cropper: ^8.0.2
 
   # Navigation
   go_router: ^14.2.7
@@ -76,9 +78,12 @@ dependencies:
   envied: ^0.5.4+1
   dartz: ^0.10.1
   get_it: ^7.7.0
+  device_info_plus: ^10.1.2
 
   # Statement
   flutter_bloc: ^8.1.6
+  permission_handler: ^11.3.1
+  photo_view: ^0.15.0
 
 dev_dependencies:
   flutter_test:

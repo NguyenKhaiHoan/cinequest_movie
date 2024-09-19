@@ -1,6 +1,6 @@
 import 'package:cinequest/src/core/extensions/context_extention.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
-import 'package:cinequest/src/features/auth/presentation/blocs/login_form/login_form_bloc.dart';
+import 'package:cinequest/src/features/auth/presentation/blocs/login/login_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -30,7 +30,9 @@ class LoginBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginFormBloc, LoginFormState>(
+    return BlocBuilder<LoginBloc, LoginState>(
+      buildWhen: (previous, current) =>
+          previous.isFormValid != current.isFormValid,
       builder: (context, state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,14 +41,13 @@ class LoginBody extends StatelessWidget {
               title: 'Welcome back'.hardcoded,
               formKey: loginFormKey,
               emailTextEditingController: emailTextEditingController,
-              onEmailChanged: (value) => context
-                  .read<LoginFormBloc>()
-                  .add(LoginFormEvent.emailChanged(value)),
+              onEmailChanged: (value) =>
+                  context.read<LoginBloc>().add(LoginEvent.emailChanged(value)),
               setPasswordTextEditingController:
                   setPasswordTextEditingController,
               onSetPasswordChanged: (value) => context
-                  .read<LoginFormBloc>()
-                  .add(LoginFormEvent.setPasswordChanged(value)),
+                  .read<LoginBloc>()
+                  .add(LoginEvent.setPasswordChanged(value)),
             ),
             gapH16,
             TextButton(
