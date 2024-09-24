@@ -1,4 +1,3 @@
-import 'package:cinequest/src/core/enums/app_routes.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -6,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../../gen/colors.gen.dart';
 import '../../../../common/constants/app_sizes.dart';
 import '../../../../common/widgets/custom_button.dart';
-import '../../../../core/enums/button_type.dart';
+import '../../../../core/routes/route_enums.dart';
 
 class BottomWelcome extends StatelessWidget {
   const BottomWelcome({super.key});

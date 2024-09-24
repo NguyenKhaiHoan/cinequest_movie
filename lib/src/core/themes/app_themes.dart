@@ -19,9 +19,9 @@ class AppThemes {
           color: AppColors.dimGray,
         ),
         enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: AppColors.raisinBlack)),
+            borderSide: BorderSide(color: AppColors.eerieBlack)),
         border: const UnderlineInputBorder(
-            borderSide: BorderSide(color: AppColors.raisinBlack)),
+            borderSide: BorderSide(color: AppColors.eerieBlack)),
         focusedBorder: const UnderlineInputBorder(
             borderSide: BorderSide(color: AppColors.white)),
         errorBorder: const UnderlineInputBorder(

@@ -4,14 +4,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
+import '../../../external/services/connectivity/connectivity_service.dart';
+
 part 'connectivity_event.dart';
 part 'connectivity_state.dart';
 part 'connectivity_bloc.freezed.dart';
 
 class ConnectivityBloc extends Bloc<ConnectivityEvent, ConnectivityState> {
+  final ConnectivityService _connectivityService;
+
   late StreamSubscription<List<ConnectivityResult>> _connectivitySubscription;
 
-  ConnectivityBloc() : super(const ConnectivityState.initial()) {
+  ConnectivityBloc(this._connectivityService)
+      : super(const ConnectivityState.initial()) {
     _initializeConnectivitySubscription();
 
     on<ConnectivityEvent>((events, emit) async {
@@ -21,7 +26,7 @@ class ConnectivityBloc extends Bloc<ConnectivityEvent, ConnectivityState> {
   }
 
   void _initializeConnectivitySubscription() {
-    _connectivitySubscription = Connectivity().onConnectivityChanged.listen(
+    _connectivitySubscription = _connectivityService.connectivityStream.listen(
       (List<ConnectivityResult> result) {
         bool isConnected = (result.first == result.last
                 ? result.first

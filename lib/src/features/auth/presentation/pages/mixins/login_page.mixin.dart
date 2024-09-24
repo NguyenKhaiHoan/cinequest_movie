@@ -3,7 +3,7 @@ part of '../login_page.dart';
 mixin LoginPageMixin on State<LoginPage> {
   late TextEditingController _emailTextEditingController;
   late TextEditingController _setPasswordTextEditingController;
-  final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _LoginKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -19,18 +19,33 @@ mixin LoginPageMixin on State<LoginPage> {
     _setPasswordTextEditingController.dispose();
   }
 
-  void _login() async {
+  void _login(BuildContext context) async {
     try {
-      if (!_loginFormKey.currentState!.validate()) {
+      if (!_LoginKey.currentState!.validate()) {
         return;
       }
-      // var isConnected = ConnectivityUtil.checkConnectivity();
-      // if (isConnected) {
-      //   return;
-      // }
-      context.go(AppRoutes.navigation.path);
+      context.read<ButtonBloc>().add(
+            ButtonEvent.execute(
+              useCase: sl<LoginUseCase>(),
+              params: AuthParams(
+                email: _emailTextEditingController.text.trim(),
+                password: _setPasswordTextEditingController.text.trim(),
+              ),
+            ),
+          );
     } catch (e) {
       rethrow;
     }
+  }
+
+  void _listener(BuildContext context, ButtonState state) {
+    state.whenOrNull(
+      failure: (failure) => context.showSnackbar(failure.message),
+      success: () {
+        // Nếu đăng nhập thành công thì chạy event này để cập nhật lại
+        // trạng thái xác thực của app và sử dụng điều hướng của go router
+        context.read<AppAuthBloc>().add(const AppAuthEvent.started());
+      },
+    );
   }
 }

@@ -1,37 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../enums/page_transition_direction.dart';
+import '../routes/route_enums.dart';
 
 class PageTransitionUtil {
   PageTransitionUtil._();
 
-  static Page<dynamic> Function(BuildContext, GoRouterState)
-      customPageBuilder<T>(
-              {required Widget child,
-              PageTransitionDirection direction = PageTransitionDirection.left,
-              bool fadeTransition = false}) =>
-          (BuildContext context, GoRouterState state) {
-            return fadeTransition
-                ? buildPageWithFadeTransition(
-                    context: context,
-                    state: state,
-                    child: child,
-                  )
-                : buildPageWithDirectionTransition<T>(
-                    context: context,
-                    state: state,
-                    child: child,
-                    direction: direction,
-                  );
-          };
+  static Page<dynamic> Function(BuildContext, GoRouterState) customPageBuilder(
+          {required Widget child,
+          PageTransitionDirection direction = PageTransitionDirection.left,
+          bool fadeTransition = false}) =>
+      (BuildContext context, GoRouterState state) {
+        return fadeTransition
+            ? buildPageWithFadeTransition(
+                context: context,
+                state: state,
+                child: child,
+              )
+            : buildPageWithDirectionTransition(
+                context: context,
+                state: state,
+                child: child,
+                direction: direction,
+              );
+      };
 
-  static CustomTransitionPage buildPageWithFadeTransition<T>({
+  static CustomTransitionPage buildPageWithFadeTransition({
     required BuildContext context,
     required GoRouterState state,
     required Widget child,
   }) {
-    return CustomTransitionPage<T>(
+    return CustomTransitionPage(
       key: state.pageKey,
       child: child,
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
@@ -39,17 +38,17 @@ class PageTransitionUtil {
     );
   }
 
-  static CustomTransitionPage buildPageWithDirectionTransition<T>({
+  static CustomTransitionPage buildPageWithDirectionTransition({
     required BuildContext context,
     required GoRouterState state,
     required Widget child,
     required PageTransitionDirection direction,
   }) {
-    return CustomTransitionPage<T>(
+    return CustomTransitionPage(
       key: state.pageKey,
       child: child,
       transitionDuration: const Duration(milliseconds: 300),
-      reverseTransitionDuration: const Duration(milliseconds: 100),
+      reverseTransitionDuration: const Duration(milliseconds: 300),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
           SlideTransition(
         position:

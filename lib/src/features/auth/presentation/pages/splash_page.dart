@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../gen/colors.gen.dart';
+
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
 
@@ -7,7 +9,9 @@ class SplashPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(
+          color: AppColors.white,
+        ),
       ),
     );
   }

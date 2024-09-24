@@ -1,5 +1,5 @@
 import 'package:cinequest/src/common/widgets/svg_icon.dart';
-import 'package:cinequest/src/core/extensions/context_extention.dart';
+import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -53,7 +53,7 @@ class CustomTextField extends StatelessWidget {
                           TextSpan(
                             text: '/120',
                             style: context.textTheme.bodyMedium!
-                                .copyWith(color: AppColors.dimGray),
+                                .copyWith(color: AppColors.eerieBlack),
                           ),
                         ],
                       ),
@@ -67,7 +67,7 @@ class CustomTextField extends StatelessWidget {
                             ? AppAssets.images.eyeSlash.path
                             : AppAssets.images.eye.path,
                         colorFilter: const ColorFilter.mode(
-                            AppColors.raisinBlack, BlendMode.srcIn),
+                            AppColors.dimGray, BlendMode.srcIn),
                         onPressed: () => context
                             .read<TextFieldBloc>()
                             .add(const TextFieldEvent.toggleVisibility()),

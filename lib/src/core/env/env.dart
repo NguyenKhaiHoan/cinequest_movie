@@ -4,6 +4,6 @@ part 'env.g.dart';
 
 @Envied(path: '.env')
 final class Env {
-  @EnviedField(varName: 'MOVIEDB_API_KEY', obfuscate: true)
-  static final String movieDbApiKey = _Env.movieDbApiKey;
+  @EnviedField(varName: 'THEMOVIEDB_API_KEY', obfuscate: true)
+  static final String theMovieDbApiKey = _Env.theMovieDbApiKey;
 }

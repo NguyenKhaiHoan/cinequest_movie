@@ -7,7 +7,7 @@ part 'reset_password_bloc.freezed.dart';
 
 class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
   ResetPasswordBloc() : super(ResetPasswordState.initial()) {
-    on<ResetPasswordEvent>((events, emit) {
+    on<ResetPasswordEvent>((events, emit) async {
       events.map(
         emailChanged: (event) => _onEmailChanged(event, emit),
       );

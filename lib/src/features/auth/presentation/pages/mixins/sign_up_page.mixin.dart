@@ -30,18 +30,31 @@ mixin SignUpPageMixin on State<SignUpPage> {
     _verificationCodeTextEditingController.dispose();
   }
 
-  void _next() {
+  void _signUp(BuildContext context) {
     if (!_signUpFormKey.currentState!.validate()) {
       return;
     }
-    // var isConnected = ConnectivityUtil.checkConnectivity();
-    // if (!isConnected) {
-    //   return;
-    // }
-    _verificationCodeTextEditingController.text = '123456';
-    _pageController.nextPage(
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
+    context.read<ButtonBloc>().add(
+          ButtonEvent.execute(
+            useCase: SignUpUseCase(sl()),
+            params: AuthParams(
+              email: _emailTextEditingController.text.trim(),
+              password: _setPasswordTextEditingController.text.trim(),
+            ),
+          ),
+        );
+  }
+
+  void _listenerSignUp(BuildContext context, ButtonState state) {
+    state.whenOrNull(
+      success: () {
+        _verificationCodeTextEditingController.text = '123456';
+        _pageController.nextPage(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        );
+      },
+      failure: (failure) => context.showSnackbar(failure.message),
     );
   }
 
@@ -52,18 +65,25 @@ mixin SignUpPageMixin on State<SignUpPage> {
     );
   }
 
-  void _signUp() async {
-    try {
-      if (!_verificationCodeFormKey.currentState!.validate()) {
-        return;
-      }
-      // var isConnected = ConnectivityUtil.checkConnectivity();
-      // if (isConnected) {
-      //   return;
-      // }
-      context.go(AppRoutes.accountSetup.path);
-    } catch (e) {
-      rethrow;
+  void _verificateCode(BuildContext context) async {
+    if (!_verificationCodeFormKey.currentState!.validate()) {
+      return;
     }
+    context.read<ButtonBloc>().add(
+          ButtonEvent.execute(
+            useCase: VerificateCodeUseCase(sl()),
+            params: VerificationCodeParams(
+              verificationCode:
+                  _verificationCodeTextEditingController.text.trim(),
+            ),
+          ),
+        );
+  }
+
+  void _listenerVerificateCode(BuildContext context, ButtonState state) {
+    state.whenOrNull(
+      success: () => context.go(AppRoutes.accountSetup.path),
+      failure: (failure) => context.showSnackbar(failure.message),
+    );
   }
 }

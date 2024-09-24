@@ -1,4 +1,0 @@
-enum AppLanguages {
-  en,
-  vi,
-}

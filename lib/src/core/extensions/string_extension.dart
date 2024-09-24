@@ -1,3 +1,3 @@
-extension StringExtenstion on String {
+extension HardcodedExtenstion on String {
   String get hardcoded => this;
 }

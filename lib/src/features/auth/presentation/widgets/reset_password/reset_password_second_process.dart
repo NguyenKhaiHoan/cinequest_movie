@@ -1,6 +1,6 @@
 import 'package:cinequest/gen/assets.gen.dart';
-import 'package:cinequest/src/common/widgets/custom_app_bar.dart';
-import 'package:cinequest/src/core/extensions/context_extention.dart';
+import 'package:cinequest/src/common/widgets/auth_app_bar.dart';
+import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:cinequest/src/core/utils/ui_util.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +9,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../../../gen/colors.gen.dart';
 import '../../../../../common/constants/app_sizes.dart';
 import '../../../../../common/widgets/custom_button.dart';
-import '../../../../../core/enums/button_type.dart';
 
 class ResetPasswordSecondProcess extends StatelessWidget {
   final String title;
@@ -34,7 +33,7 @@ class ResetPasswordSecondProcess extends StatelessWidget {
     String part2 = parts[1];
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: CustomAppBar(
+      appBar: AuthAppBar(
         title: 'Reset Password'.hardcoded,
         onBackTap: onBack,
       ),

@@ -1,10 +1,14 @@
-import 'package:cinequest/src/core/extensions/context_extention.dart';
+import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 
 import '../../../gen/colors.gen.dart';
-import '../../core/enums/button_type.dart';
 import '../constants/app_sizes.dart';
 import 'svg_icon.dart';
+
+enum ButtonType {
+  outline,
+  elevated,
+}
 
 class CustomButton extends StatelessWidget {
   final bool isUpperCase;
@@ -52,10 +56,10 @@ class CustomButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppSizes.buttonRadius),
             ),
             side: BorderSide(
-                width: 1.5, color: borderColor ?? AppColors.raisinBlack),
+                width: 1.5, color: borderColor ?? AppColors.eerieBlack),
           );
 
-    final constrainedWidth = width ?? AppSizes.buttonWidth;
+    final constrainedWidth = width;
 
     return SizedBox(
       height: AppSizes.buttonHeight,
@@ -76,8 +80,10 @@ class CustomButton extends StatelessWidget {
 
   Widget _buildContent(BuildContext context) {
     if (isLoading) {
-      return const CircularProgressIndicator(
-        color: AppColors.white,
+      return CircularProgressIndicator(
+        color: backgroundColor == AppColors.white
+            ? AppColors.black
+            : AppColors.white,
       );
     }
 

@@ -6,8 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../gen/assets.gen.dart';
 import '../../../../../../gen/colors.gen.dart';
 import '../../../../../common/constants/app_sizes.dart';
-import '../../../../../common/widgets/custom_app_bar.dart';
-import '../../../../../core/enums/button_type.dart';
+import '../../../../../common/widgets/auth_app_bar.dart';
 import '../../blocs/sign_up/sign_up_bloc.dart';
 import '../auth_form.dart';
 
@@ -17,6 +16,7 @@ class SignUpFirstProcess extends StatelessWidget {
   final TextEditingController setPasswordTextEditingController;
   final TextEditingController? confirmPasswordTextEditingController;
   final VoidCallback onNext;
+  final bool isLoading;
 
   const SignUpFirstProcess({
     super.key,
@@ -25,12 +25,13 @@ class SignUpFirstProcess extends StatelessWidget {
     required this.setPasswordTextEditingController,
     required this.confirmPasswordTextEditingController,
     required this.onNext,
+    required this.isLoading,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Sign Up'.hardcoded),
+      appBar: AuthAppBar(title: 'Sign Up'.hardcoded),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(
             AppSizes.defaultSpace,
@@ -71,6 +72,7 @@ class SignUpFirstProcess extends StatelessWidget {
                             AppColors.black, BlendMode.srcIn),
                         buttonType: ButtonType.elevated,
                         onPressed: onNext,
+                        isLoading: isLoading,
                       )
                     : CustomButton(
                         width: 170,

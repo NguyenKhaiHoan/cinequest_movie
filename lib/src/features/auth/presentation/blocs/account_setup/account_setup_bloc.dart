@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'account_setup_bloc.freezed.dart';
 part 'account_setup_event.dart';
 part 'account_setup_state.dart';
-part 'account_setup_bloc.freezed.dart';
 
 class AccountSetupBloc extends Bloc<AccountSetupEvent, AccountSetupState> {
   AccountSetupBloc() : super(AccountSetupState.initial()) {

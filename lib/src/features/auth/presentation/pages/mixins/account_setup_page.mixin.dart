@@ -31,7 +31,7 @@ mixin AccountSetupPageMixin on State<AccountSetupPage> {
     _bioTextEditingController.dispose();
   }
 
-  void _next(int currentPage) {
+  void _next(BuildContext context, int currentPage, String? profilePhoto) {
     if (currentPage == 0) {
       if (!_usernameFormKey.currentState!.validate()) {
         return;
@@ -46,13 +46,40 @@ mixin AccountSetupPageMixin on State<AccountSetupPage> {
         return;
       }
     }
-    // var isConnected = ConnectivityUtil.checkConnectivity();
-    // if (!isConnected) {
-    //   return;
-    // }
+
+    if (currentPage == 3) {
+      print(profilePhoto);
+      if (profilePhoto == null) {
+        return;
+      }
+      context.read<ButtonBloc>().add(
+            ButtonEvent.execute(
+              useCase: SaveProfileUserUseCase(sl()),
+              params: SaveProfileUserParams(
+                user: AppUser(
+                  id: sl<FirebaseAuth>().currentUser?.uid ?? const Uuid().v4(),
+                  profilePhoto: profilePhoto,
+                  email: sl<FirebaseAuth>().currentUser!.email ?? '',
+                  username: _usernameTextEditingController.text.trim(),
+                  name: _nameTextEditingController.text.trim(),
+                  surname: _surnameTextEditingController.text.trim(),
+                  createdAt: DateTime.now(),
+                  authBy: 'Email',
+                ),
+              ),
+            ),
+          );
+    }
     _pageController.nextPage(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
+    );
+  }
+
+  void _listener(BuildContext context, ButtonState state) {
+    state.whenOrNull(
+      success: () => context.go(AppRoutes.home.path),
+      failure: (failure) => context.showSnackbar(failure.message),
     );
   }
 

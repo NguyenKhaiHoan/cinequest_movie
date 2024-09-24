@@ -23,6 +23,6 @@ class CustomDivider extends StatelessWidget {
 
   Widget _buildDivider() => const Divider(
         height: 0,
-        color: AppColors.raisinBlack,
+        color: AppColors.eerieBlack,
       );
 }

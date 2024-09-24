@@ -34,7 +34,7 @@ class CustomCircleButton extends StatelessWidget {
         width: buttonSize,
         decoration: BoxDecoration(
             shape: BoxShape.circle,
-            border: Border.all(color: AppColors.raisinBlack)),
+            border: Border.all(color: AppColors.eerieBlack)),
         child: Padding(
           padding: EdgeInsets.all(buttonSize * 12.0 / AppSizes.buttonHeight),
           child: SvgIcon(

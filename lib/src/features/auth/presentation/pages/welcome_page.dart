@@ -1,6 +1,6 @@
 import 'package:cinequest/gen/assets.gen.dart';
 import 'package:cinequest/src/common/constants/app_sizes.dart';
-import 'package:cinequest/src/core/extensions/context_extention.dart';
+import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:cinequest/src/core/utils/ui_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';

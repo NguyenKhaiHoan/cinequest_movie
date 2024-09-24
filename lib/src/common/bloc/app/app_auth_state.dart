@@ -4,5 +4,6 @@ part of 'app_auth_bloc.dart';
 class AppAuthState with _$AppAuthState {
   const factory AppAuthState.initial() = AppInitialState;
   const factory AppAuthState.authenticated() = AppAuthenticatedState;
-  const factory AppAuthState.unAuthenticated() = AppUnAuthenticatedState;
+  const factory AppAuthState.unAuthenticated({Failure? failure}) =
+      AppUnAuthenticatedState;
 }

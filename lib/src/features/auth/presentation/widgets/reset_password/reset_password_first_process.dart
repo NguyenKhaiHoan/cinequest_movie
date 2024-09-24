@@ -1,13 +1,12 @@
 import 'package:cinequest/gen/assets.gen.dart';
 import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:cinequest/src/common/widgets/custom_button.dart';
-import 'package:cinequest/src/core/enums/button_type.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../gen/colors.gen.dart';
-import '../../../../../common/widgets/custom_app_bar.dart';
+import '../../../../../common/widgets/auth_app_bar.dart';
 import '../../blocs/reset_password/reset_password_bloc.dart';
 import '../reset_password_form.dart';
 
@@ -28,7 +27,7 @@ class ResetPasswordFirstProcess extends StatelessWidget {
     return BlocBuilder<ResetPasswordBloc, ResetPasswordState>(
       builder: (context, state) {
         return Scaffold(
-          appBar: CustomAppBar(title: 'Reset Password'.hardcoded),
+          appBar: AuthAppBar(title: 'Reset Password'.hardcoded),
           body: Padding(
             padding: const EdgeInsets.fromLTRB(
                 AppSizes.defaultSpace,

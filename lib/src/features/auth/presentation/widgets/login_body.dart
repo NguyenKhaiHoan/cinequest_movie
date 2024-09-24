@@ -1,4 +1,4 @@
-import 'package:cinequest/src/core/extensions/context_extention.dart';
+import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:cinequest/src/features/auth/presentation/blocs/login/login_bloc.dart';
 import 'package:flutter/material.dart';
@@ -10,22 +10,23 @@ import '../../../../../gen/colors.gen.dart';
 import '../../../../common/constants/app_sizes.dart';
 import '../../../../common/widgets/custom_button.dart';
 import '../../../../common/widgets/custom_divider.dart';
-import '../../../../core/enums/app_routes.dart';
-import '../../../../core/enums/button_type.dart';
+import '../../../../core/routes/route_enums.dart';
 import 'auth_form.dart';
 
 class LoginBody extends StatelessWidget {
-  final GlobalKey<FormState> loginFormKey;
+  final GlobalKey<FormState> LoginKey;
   final TextEditingController emailTextEditingController;
   final TextEditingController setPasswordTextEditingController;
   final VoidCallback onLogin;
+  final bool isLoading;
 
   const LoginBody({
     super.key,
-    required this.loginFormKey,
+    required this.LoginKey,
     required this.emailTextEditingController,
     required this.setPasswordTextEditingController,
     required this.onLogin,
+    required this.isLoading,
   });
 
   @override
@@ -39,7 +40,7 @@ class LoginBody extends StatelessWidget {
           children: [
             AuthForm(
               title: 'Welcome back'.hardcoded,
-              formKey: loginFormKey,
+              formKey: LoginKey,
               emailTextEditingController: emailTextEditingController,
               onEmailChanged: (value) =>
                   context.read<LoginBloc>().add(LoginEvent.emailChanged(value)),
@@ -66,6 +67,7 @@ class LoginBody extends StatelessWidget {
                     textColor: AppColors.black,
                     buttonType: ButtonType.elevated,
                     onPressed: onLogin,
+                    isLoading: isLoading,
                   )
                 : CustomButton(
                     width: double.infinity,

@@ -1,5 +1,5 @@
 import 'package:cinequest/src/common/widgets/custom_circle_button.dart';
-import 'package:cinequest/src/core/extensions/context_extention.dart';
+import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,21 +7,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../gen/assets.gen.dart';
 import '../../../../../../gen/colors.gen.dart';
 import '../../../../../common/constants/app_sizes.dart';
-import '../../../../../common/widgets/custom_app_bar.dart';
+import '../../../../../common/widgets/auth_app_bar.dart';
 import '../../../../../common/widgets/custom_button.dart';
-import '../../../../../core/enums/button_type.dart';
 import '../../blocs/account_setup/account_setup_bloc.dart';
 
 class AccountSetupBaseContent extends StatelessWidget {
   final Widget child;
   final VoidCallback onNext;
   final VoidCallback onBack;
+  final bool isLoading;
 
-  const AccountSetupBaseContent(
-      {super.key,
-      required this.child,
-      required this.onNext,
-      required this.onBack});
+  const AccountSetupBaseContent({
+    super.key,
+    required this.child,
+    required this.onNext,
+    required this.onBack,
+    required this.isLoading,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class AccountSetupBaseContent extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: CustomAppBar(
+          appBar: AuthAppBar(
             title: 'Account Setup'.hardcoded,
             hasLeading: false,
           ),
@@ -50,7 +52,7 @@ class AccountSetupBaseContent extends StatelessWidget {
           bottomNavigationBar: Container(
             decoration: const BoxDecoration(
               border: Border(
-                top: BorderSide(color: AppColors.raisinBlack),
+                top: BorderSide(color: AppColors.eerieBlack),
               ),
             ),
             child: Container(
@@ -103,6 +105,7 @@ class AccountSetupBaseContent extends StatelessWidget {
                                     AppColors.black, BlendMode.srcIn),
                                 buttonType: ButtonType.elevated,
                                 onPressed: onNext,
+                                isLoading: isLoading,
                               )
                             : CustomButton(
                                 width: 100,

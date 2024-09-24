@@ -1,5 +1,4 @@
 import 'package:cinequest/src/common/widgets/custom_button.dart';
-import 'package:cinequest/src/core/enums/button_type.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:cinequest/src/features/auth/presentation/widgets/verification_form.dart';
 import 'package:flutter/material.dart';
@@ -7,29 +6,29 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../gen/colors.gen.dart';
 import '../../../../../common/constants/app_sizes.dart';
-import '../../../../../common/widgets/custom_app_bar.dart';
+import '../../../../../common/widgets/auth_app_bar.dart';
 import '../../blocs/sign_up/sign_up_bloc.dart';
 
 class SignUpSecondProcess extends StatelessWidget {
   final GlobalKey<FormState> verificationCodeFormKey;
-  final String email;
   final TextEditingController verificationCodeTextEditingController;
   final VoidCallback onBack;
   final VoidCallback onSignUp;
+  final bool isLoading;
 
   const SignUpSecondProcess({
     super.key,
     required this.verificationCodeFormKey,
-    required this.email,
     required this.verificationCodeTextEditingController,
     required this.onBack,
     required this.onSignUp,
+    required this.isLoading,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: AuthAppBar(
         title: 'Verification'.hardcoded,
         onBackTap: onBack,
       ),
@@ -47,7 +46,7 @@ class SignUpSecondProcess extends StatelessWidget {
                 VerificationForm(
                   title: 'Verify your email address'.hardcoded,
                   subtitle: 'We have sent the verification code to '.hardcoded,
-                  email: email,
+                  email: state.email,
                   formKey: verificationCodeFormKey,
                   verificationCodeTextEditingController:
                       verificationCodeTextEditingController,
@@ -72,6 +71,7 @@ class SignUpSecondProcess extends StatelessWidget {
                               textColor: AppColors.black,
                               buttonType: ButtonType.elevated,
                               onPressed: onSignUp,
+                              isLoading: isLoading,
                             )
                           : CustomButton(
                               text: 'Continue'.hardcoded,
