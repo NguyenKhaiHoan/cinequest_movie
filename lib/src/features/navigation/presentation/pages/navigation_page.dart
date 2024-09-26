@@ -1,20 +1,39 @@
+import 'package:cinequest/src/core/routes/route_enums.dart';
+import 'package:cinequest/src/core/routes/route_pages.dart';
+import 'package:cinequest/src/core/utils/bottom_sheet_util.dart';
+import 'package:cinequest/src/features/navigation/presentation/bloc/bottom_nav_bloc.dart';
 import 'package:cinequest/src/features/navigation/presentation/widgets/bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../bloc/bottom_nav_bloc.dart';
-
+/// Trang điều hướng
 class NavigationPage extends StatefulWidget {
-  final StatefulNavigationShell child;
+  /// Constructor
+  const NavigationPage({required this.child, super.key});
 
-  const NavigationPage({super.key, required this.child});
+  ///
+  final StatefulNavigationShell child;
 
   @override
   State<NavigationPage> createState() => _NavigationPageState();
 }
 
 class _NavigationPageState extends State<NavigationPage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _showBottomSheet();
+    });
+  }
+
+  void _showBottomSheet() {
+    if (RouterPages.path.contains(AppRoutes.accountSetup.path)) {
+      BottomSheetUtil.showSucessSignUp(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -24,7 +43,7 @@ class _NavigationPageState extends State<NavigationPage> {
         body: widget.child,
         bottomNavigationBar: BlocBuilder<BottomNavBloc, BottomNavState>(
           builder: (context, state) {
-            var currentIndex = state.currentIndex;
+            final currentIndex = state.currentIndex;
             return BottomNavBar(
               currentIndex: currentIndex,
               onTap: (index) {

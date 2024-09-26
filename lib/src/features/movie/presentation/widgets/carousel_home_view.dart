@@ -1,22 +1,31 @@
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cinequest/gen/colors.gen.dart';
+import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../gen/colors.gen.dart';
-import '../../../../common/constants/app_sizes.dart';
-
+/// Carousel chung cho trang Home
 class CarouselHomeView extends StatelessWidget {
-  final String title;
-  final TextStyle? titleStyle;
-  final String? subtitle;
-  final Widget child;
-
+  /// Constructor
   const CarouselHomeView({
-    super.key,
     required this.title,
+    required this.child,
+    super.key,
     this.titleStyle,
     this.subtitle,
-    required this.child,
   });
+
+  ///
+  final String title;
+
+  ///
+  final TextStyle? titleStyle;
+
+  ///
+  final String? subtitle;
+
+  ///
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -52,28 +61,43 @@ class CarouselHomeView extends StatelessWidget {
   }
 }
 
+/// Carousel box
 class CarouselBox extends StatelessWidget {
+  /// Constructor
   const CarouselBox({
-    super.key,
     required this.maxHeight,
     required this.children,
+    super.key,
   });
 
+  ///
   final double maxHeight;
+
+  ///
   final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
       constraints: BoxConstraints(maxHeight: maxHeight, minHeight: maxHeight),
-      child: CarouselView(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppSizes.borderRadiusLg)),
-        itemExtent: 320,
-        shrinkExtent: 200,
-        reverse: true,
-        children: children,
+      child: CarouselSlider(
+        options: CarouselOptions(
+          height: maxHeight,
+          enlargeCenterPage: true,
+          autoPlay: true,
+          disableCenter: true,
+        ),
+        items: children,
       ),
+      // child: CarouselView(
+      //   shape: RoundedRectangleBorder(
+      //     borderRadius: BorderRadius.circular(AppSizes.borderRadiusLg),
+      //   ),
+      //   itemExtent: 320,
+      //   shrinkExtent: 200,
+      //   onTap: print,
+      //   children: children,
+      // ),
     );
   }
 }

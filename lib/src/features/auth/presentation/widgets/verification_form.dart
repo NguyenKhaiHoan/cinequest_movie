@@ -1,3 +1,4 @@
+import 'package:cinequest/gen/colors.gen.dart';
 import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:cinequest/src/common/widgets/custom_text_field.dart';
 import 'package:cinequest/src/core/extensions/context_extension.dart';
@@ -5,25 +6,36 @@ import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:cinequest/src/core/utils/validation_util.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../gen/colors.gen.dart';
-
+/// Form của second precess trong SignUpPage
 class VerificationForm extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final String email;
-  final GlobalKey<FormState> formKey;
-  final TextEditingController verificationCodeTextEditingController;
-  final Function(String)? onVerificationCodeChanged;
-
+  /// Constructor
   const VerificationForm({
-    super.key,
     required this.title,
     required this.subtitle,
     required this.email,
     required this.formKey,
     required this.verificationCodeTextEditingController,
+    super.key,
     this.onVerificationCodeChanged,
   });
+
+  ///
+  final String title;
+
+  ///
+  final String subtitle;
+
+  ///
+  final String email;
+
+  ///
+  final GlobalKey<FormState> formKey;
+
+  ///
+  final TextEditingController verificationCodeTextEditingController;
+
+  ///
+  final void Function(String)? onVerificationCodeChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +74,9 @@ class VerificationForm extends StatelessWidget {
         controller: verificationCodeTextEditingController,
         onChanged: onVerificationCodeChanged,
         validator: (value) => ValidationUtil.validateEmptyField(
-            'Verification Code'.hardcoded, value),
+          'Verification Code'.hardcoded,
+          value,
+        ),
       ),
     );
   }

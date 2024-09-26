@@ -3,7 +3,9 @@ import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:cinequest/src/core/themes/app_style.dart';
 import 'package:flutter/material.dart';
 
+/// Các theme được sử dụng trong ứng dụng
 class AppThemes {
+  /// Dark theme
   static ThemeData get darkTheme {
     return ThemeData(
       brightness: Brightness.dark,
@@ -11,21 +13,25 @@ class AppThemes {
       scaffoldBackgroundColor: AppColors.black,
       appBarTheme: const AppBarTheme(
         color: AppColors.black,
-        elevation: 0.0,
+        elevation: 0,
       ),
       inputDecorationTheme: InputDecorationTheme(
-        contentPadding: const EdgeInsets.symmetric(vertical: 12.0),
+        contentPadding: const EdgeInsets.symmetric(vertical: 12),
         labelStyle: AppStyles.p2().copyWith(
           color: AppColors.dimGray,
         ),
         enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: AppColors.eerieBlack)),
+          borderSide: BorderSide(color: AppColors.blackOlive),
+        ),
         border: const UnderlineInputBorder(
-            borderSide: BorderSide(color: AppColors.eerieBlack)),
+          borderSide: BorderSide(color: AppColors.blackOlive),
+        ),
         focusedBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: AppColors.white)),
+          borderSide: BorderSide(color: AppColors.white),
+        ),
         errorBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: AppColors.red)),
+          borderSide: BorderSide(color: AppColors.red),
+        ),
       ),
       textTheme: TextTheme(
         headlineLarge: AppStyles.h1(),

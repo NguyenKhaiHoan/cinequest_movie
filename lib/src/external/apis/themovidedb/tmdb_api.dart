@@ -1,15 +1,17 @@
+import 'package:cinequest/src/external/apis/themovidedb/tmdb_url.dart';
 import 'package:cinequest/src/features/movie/data/models/movie_lists_dto.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
-import 'tmdb_url.dart';
-
 part 'tmdb_api.g.dart';
 
+/// Api TheMovieDb
 @RestApi(baseUrl: TMDBUrl.movieBaseUrl)
 abstract class TMDBApi {
+  ///
   factory TMDBApi(Dio dio) = _TMDBApi;
 
+  /// Now playing
   @GET('/movie/now_playing')
   Future<MovieListsDto> getNowPlayingMovies({
     @Query('language') required String language,
@@ -17,6 +19,7 @@ abstract class TMDBApi {
     @Query('api_key') required String apiKey,
   });
 
+  /// Popular
   @GET('/movie/popular')
   Future<MovieListsDto> getPopularMovies({
     @Query('language') required String language,
@@ -51,6 +54,7 @@ abstract class TMDBApi {
 
   // @GET('/search/movie')
   // Future<> searchMovie({
+  //   @Query('api_key') required String apiKey,
   //   @Query('query') required String query,
   //   @Query('include_adult') required bool includeAdult,
   //   @Query('language') required String language,

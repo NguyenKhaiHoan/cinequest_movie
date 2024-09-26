@@ -1,22 +1,30 @@
+import 'package:cinequest/gen/assets.gen.dart';
+import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:cinequest/src/common/widgets/app_bar_bottom_divider.dart';
 import 'package:cinequest/src/common/widgets/custom_circle_button.dart';
 import 'package:cinequest/src/common/widgets/padding_app_bar.dart';
 import 'package:cinequest/src/common/widgets/svg_icon.dart';
+import 'package:cinequest/src/core/di/injection_container.import.dart';
 import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:cinequest/src/features/movie/presentation/blocs/now_playing_movie/now_playing_movie_bloc.dart';
 import 'package:cinequest/src/features/movie/presentation/blocs/popular_movie/popular_movie_bloc.dart';
 import 'package:cinequest/src/features/movie/presentation/widgets/carousel_now_playing_movie.dart';
+import 'package:cinequest/src/features/movie/presentation/widgets/carousel_popular_movie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../gen/assets.gen.dart';
-import '../../../../common/constants/app_sizes.dart';
-import '../../../../core/injection_container.dart';
-import '../widgets/carousel_popular_movie.dart';
+part '_mixins/home_page.mixin.dart';
 
-class HomePage extends StatelessWidget {
+/// Trang Home
+class HomePage extends StatefulWidget {
+  /// Constructor
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> with HomePageMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +37,7 @@ class HomePage extends StatelessWidget {
             children: [
               SvgIcon(iconPath: AppAssets.images.mapPin.path),
               gapW4,
-              Text('Taskent', style: context.textTheme.bodyMedium)
+              Text('Taskent', style: context.textTheme.bodyMedium),
             ],
           ),
         ),
@@ -37,8 +45,9 @@ class HomePage extends StatelessWidget {
           PaddingAppBar(
             isLeft: false,
             child: CustomCircleButton(
-                iconPath: AppAssets.images.magnifyingGlass.path),
-          )
+              iconPath: AppAssets.images.magnifyingGlass.path,
+            ),
+          ),
         ],
       ),
       body: SingleChildScrollView(

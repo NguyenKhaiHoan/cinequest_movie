@@ -1,5 +1,6 @@
-import 'package:cinequest/src/common/bloc/app/app_auth_bloc.dart';
-import 'package:cinequest/src/core/errors/exceptions/no_internet_exception.dart';
+import 'package:cinequest/src/common/bloc/app/app_bloc.dart';
+import 'package:cinequest/src/common/bloc/connectivity/connectivity_bloc.dart';
+import 'package:cinequest/src/core/di/injection_container.import.dart';
 import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:cinequest/src/core/routes/route_pages.dart';
 import 'package:cinequest/src/core/themes/app_themes.dart';
@@ -7,12 +8,11 @@ import 'package:cinequest/src/core/utils/ui_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'src/common/bloc/connectivity/connectivity_bloc.dart';
-import 'src/core/injection_container.dart';
-
 part 'cinequest_movie.mixin.dart';
 
+/// App
 class CineQuestMovie extends StatefulWidget {
+  /// Constructor
   const CineQuestMovie({super.key});
 
   @override
@@ -29,12 +29,14 @@ class _CineQuestMovieState extends State<CineQuestMovie>
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => ConnectivityBloc(sl()),
+          create: (context) => ConnectivityBloc(connectivityService: sl()),
         ),
         BlocProvider(
-          create: (context) =>
-              AppAuthBloc(firebaseAuth: sl(), useCase: sl(), repository: sl())
-                ..add(const AppAuthEvent.started()),
+          create: (context) => AppBloc(
+            firebaseAuth: sl(),
+            getProfileUserUseCase: sl(),
+            userRepository: sl(),
+          )..add(const AppEvent.started()),
         ),
       ],
       child: MaterialApp.router(
@@ -49,11 +51,11 @@ class _CineQuestMovieState extends State<CineQuestMovie>
                 BlocListener<ConnectivityBloc, ConnectivityState>(
                   listener: _listenerConnectivity,
                 ),
-                BlocListener<AppAuthBloc, AppAuthState>(
-                  listener: _listenerAppAuth,
+                BlocListener<AppBloc, AppState>(
+                  listener: _listenerApp,
                 ),
               ],
-              child: BlocBuilder<AppAuthBloc, AppAuthState>(
+              child: BlocBuilder<AppBloc, AppState>(
                 builder: (context, state) {
                   return child!;
                 },

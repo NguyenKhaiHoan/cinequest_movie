@@ -1,5 +1,6 @@
 part of '../sign_up_page.dart';
 
+/// Mixin của SignUpPage xử lý logic UI
 mixin SignUpPageMixin on State<SignUpPage> {
   late TextEditingController _emailTextEditingController;
   late TextEditingController _setPasswordTextEditingController;
@@ -8,9 +9,7 @@ mixin SignUpPageMixin on State<SignUpPage> {
   final GlobalKey<FormState> _signUpFormKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _verificationCodeFormKey = GlobalKey<FormState>();
 
-  final _pageController = PageController(
-    initialPage: 0,
-  );
+  final _pageController = PageController();
 
   @override
   void initState() {
@@ -36,7 +35,7 @@ mixin SignUpPageMixin on State<SignUpPage> {
     }
     context.read<ButtonBloc>().add(
           ButtonEvent.execute(
-            useCase: SignUpUseCase(sl()),
+            useCase: sl<SignUpUseCase>(),
             params: AuthParams(
               email: _emailTextEditingController.text.trim(),
               password: _setPasswordTextEditingController.text.trim(),
@@ -54,7 +53,7 @@ mixin SignUpPageMixin on State<SignUpPage> {
           curve: Curves.easeInOut,
         );
       },
-      failure: (failure) => context.showSnackbar(failure.message),
+      failure: (failure) => context.showSnackbar(context, failure.message),
     );
   }
 
@@ -65,13 +64,13 @@ mixin SignUpPageMixin on State<SignUpPage> {
     );
   }
 
-  void _verificateCode(BuildContext context) async {
+  Future<void> _verificateCode(BuildContext context) async {
     if (!_verificationCodeFormKey.currentState!.validate()) {
       return;
     }
     context.read<ButtonBloc>().add(
           ButtonEvent.execute(
-            useCase: VerificateCodeUseCase(sl()),
+            useCase: sl<VerificateCodeUseCase>(),
             params: VerificationCodeParams(
               verificationCode:
                   _verificationCodeTextEditingController.text.trim(),
@@ -83,7 +82,7 @@ mixin SignUpPageMixin on State<SignUpPage> {
   void _listenerVerificateCode(BuildContext context, ButtonState state) {
     state.whenOrNull(
       success: () => context.go(AppRoutes.accountSetup.path),
-      failure: (failure) => context.showSnackbar(failure.message),
+      failure: (failure) => context.showSnackbar(context, failure.message),
     );
   }
 }

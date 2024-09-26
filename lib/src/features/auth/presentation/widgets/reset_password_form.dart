@@ -6,24 +6,32 @@ import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:cinequest/src/core/utils/validation_util.dart';
 import 'package:flutter/material.dart';
 
+/// Form của ResetPasswordPage
 class ResetPasswordForm extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final Function(String)? onChanged;
-
-  final GlobalKey<FormState> formKey;
-
-  final TextEditingController emailTextEditingController;
-
+  /// Constructor
   const ResetPasswordForm({
-    super.key,
     required this.title,
     required this.subtitle,
-    this.onChanged,
     required this.formKey,
     required this.emailTextEditingController,
+    super.key,
+    this.onChanged,
   });
 
+  ///
+  final String title;
+
+  ///
+  final String subtitle;
+
+  ///
+  final void Function(String)? onChanged;
+
+  ///
+  final GlobalKey<FormState> formKey;
+
+  ///
+  final TextEditingController emailTextEditingController;
   @override
   Widget build(BuildContext context) {
     return Column(

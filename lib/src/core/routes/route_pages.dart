@@ -1,4 +1,5 @@
-import 'package:cinequest/src/common/bloc/app/app_auth_bloc.dart';
+import 'package:cinequest/src/common/bloc/app/app_bloc.dart';
+import 'package:cinequest/src/core/routes/route_enums.dart';
 import 'package:cinequest/src/core/utils/page_transition_util.dart';
 import 'package:cinequest/src/features/auth/presentation/pages/account_setup_page.dart';
 import 'package:cinequest/src/features/auth/presentation/pages/login_page.dart';
@@ -6,26 +7,26 @@ import 'package:cinequest/src/features/auth/presentation/pages/reset_password_pa
 import 'package:cinequest/src/features/auth/presentation/pages/sign_up_page.dart';
 import 'package:cinequest/src/features/auth/presentation/pages/splash_page.dart';
 import 'package:cinequest/src/features/auth/presentation/pages/welcome_page.dart';
-import 'package:cinequest/src/features/movie/presentation/pages/profile_page.dart';
 import 'package:cinequest/src/features/movie/presentation/pages/home_page.dart';
+import 'package:cinequest/src/features/movie/presentation/pages/profile_page.dart';
 import 'package:cinequest/src/features/movie/presentation/pages/tickets_page.dart';
 import 'package:cinequest/src/features/navigation/presentation/pages/navigation_page.dart';
+import 'package:cinequest/src/features/setting/presentation/pages/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../features/setting/presentation/pages/setting_page.dart';
-import 'route_enums.dart';
-
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
+/// Quản lý tuyến đường trong App
 final class RouterPages {
+  /// Trả về instance duy nhất
+  factory RouterPages() => _instance;
   RouterPages._();
 
   static final RouterPages _instance = RouterPages._();
 
-  factory RouterPages() => _instance;
-
+  /// Khởi tạo router
   static GoRouter router = GoRouter(
     debugLogDiagnostics: true,
     navigatorKey: _rootNavigatorKey,
@@ -119,8 +120,11 @@ final class RouterPages {
             ],
           ),
         ],
-        pageBuilder: (BuildContext context, GoRouterState state,
-                StatefulNavigationShell navigationShell) =>
+        pageBuilder: (
+          BuildContext context,
+          GoRouterState state,
+          StatefulNavigationShell navigationShell,
+        ) =>
             PageTransitionUtil.buildPageWithFadeTransition(
           context: context,
           state: state,
@@ -142,13 +146,19 @@ final class RouterPages {
   );
 
   static String _path = '';
+
+  ///
+  static String get path => _path;
+
+  /// Đặt lại đường dẫn của toàn bộ tuyến đường
   static void refeshPath() {
     _path = '';
   }
 
   static String? _guard(BuildContext context, GoRouterState state) {
     // Đọc trạng thái xác thực của app
-    var appAuthState = context.read<AppAuthBloc>().state;
+    final appAuthState = context.read<AppBloc>().state;
+    print(_path);
 
     // Cập nhật lại path sau mỗi lần điều hướng
     if (_path == '') {
@@ -157,8 +167,8 @@ final class RouterPages {
       _path += state.uri.path;
     }
 
-    var isUnAuthenticated = appAuthState is AppUnAuthenticatedState;
-    var isAuthenticated = appAuthState is AppAuthenticatedState;
+    final isUnAuthenticated = appAuthState is AppUnAuthenticatedState;
+    final isAuthenticated = appAuthState is AppenticatedState;
 
     // Nếu đã đăng nhập mà path hiện tại chưa chứa path của home page
     // thì trả về path của home page

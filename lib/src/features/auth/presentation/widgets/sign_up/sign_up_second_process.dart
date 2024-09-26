@@ -1,29 +1,39 @@
+import 'package:cinequest/gen/colors.gen.dart';
+import 'package:cinequest/src/common/constants/app_sizes.dart';
+import 'package:cinequest/src/common/widgets/auth_app_bar.dart';
 import 'package:cinequest/src/common/widgets/custom_button.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
+import 'package:cinequest/src/features/auth/presentation/blocs/sign_up/sign_up_bloc.dart';
 import 'package:cinequest/src/features/auth/presentation/widgets/verification_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../../gen/colors.gen.dart';
-import '../../../../../common/constants/app_sizes.dart';
-import '../../../../../common/widgets/auth_app_bar.dart';
-import '../../blocs/sign_up/sign_up_bloc.dart';
-
+/// Second process của SignUpPage: Nhập verification code
 class SignUpSecondProcess extends StatelessWidget {
-  final GlobalKey<FormState> verificationCodeFormKey;
-  final TextEditingController verificationCodeTextEditingController;
-  final VoidCallback onBack;
-  final VoidCallback onSignUp;
-  final bool isLoading;
-
+  /// Constructor
   const SignUpSecondProcess({
-    super.key,
     required this.verificationCodeFormKey,
     required this.verificationCodeTextEditingController,
     required this.onBack,
     required this.onSignUp,
     required this.isLoading,
+    super.key,
   });
+
+  ///
+  final GlobalKey<FormState> verificationCodeFormKey;
+
+  ///
+  final TextEditingController verificationCodeTextEditingController;
+
+  ///
+  final VoidCallback onBack;
+
+  ///
+  final VoidCallback onSignUp;
+
+  ///
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +44,11 @@ class SignUpSecondProcess extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(
-            AppSizes.defaultSpace,
-            AppSizes.defaultSpace * 2,
-            AppSizes.defaultSpace,
-            AppSizes.defaultSpace / 2),
+          AppSizes.defaultSpace,
+          AppSizes.defaultSpace * 2,
+          AppSizes.defaultSpace,
+          AppSizes.defaultSpace / 2,
+        ),
         child: BlocBuilder<SignUpBloc, SignUpState>(
           builder: (context, state) {
             return Column(
@@ -61,7 +72,7 @@ class SignUpSecondProcess extends StatelessWidget {
                     const CustomButton(
                       width: 100,
                       text: '0:59',
-                      buttonType: ButtonType.outline,
+                      buttonType: ButtonType.outlined,
                     ),
                     gapW8,
                     Expanded(
@@ -75,12 +86,12 @@ class SignUpSecondProcess extends StatelessWidget {
                             )
                           : CustomButton(
                               text: 'Continue'.hardcoded,
-                              buttonType: ButtonType.outline,
+                              buttonType: ButtonType.outlined,
                               onPressed: onSignUp,
                             ),
-                    )
+                    ),
                   ],
-                )
+                ),
               ],
             );
           },

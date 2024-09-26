@@ -1,40 +1,48 @@
+import 'package:cinequest/src/common/constants/app_keys.dart';
 import 'package:cinequest/src/core/errors/exceptions/firebase_network_exception.dart';
 import 'package:cinequest/src/core/errors/failure.dart';
+import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:cinequest/src/features/auth/data/data_sources/_mapper/user_mapper.dart';
+import 'package:cinequest/src/features/auth/data/models/user_dto.dart';
 import 'package:cinequest/src/features/auth/domain/entities/params/get_profile_user_params.dart';
+import 'package:cinequest/src/features/auth/domain/entities/params/save_profile_params.dart';
+import 'package:cinequest/src/features/auth/domain/entities/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../domain/entities/params/save_profile_user_params.dart';
-import '../../domain/entities/user.dart';
-import '../models/user_dto.dart';
-
+/// Sử dụng Cloud Firestore
 abstract class AuthCloudFirestoreDataSource {
+  ///
   Future<AppUser> getProfileUser(GetProfileUserParams params);
+
+  ///
   Future<void> saveProfileUser(SaveProfileUserParams params);
 }
 
+/// Implementation của AuthCloudFirestoreDataSource
 class AuthCloudFirestoreDataSourceImpl implements AuthCloudFirestoreDataSource {
-  final FirebaseFirestore _firestore;
+  /// Constructor
   AuthCloudFirestoreDataSourceImpl({
     required FirebaseFirestore firestore,
   }) : _firestore = firestore;
+  final FirebaseFirestore _firestore;
 
   final _userMapper = UserMapper();
 
   @override
   Future<AppUser> getProfileUser(GetProfileUserParams params) async {
     try {
-      DocumentSnapshot doc =
-          await _firestore.collection('Users').doc(params.userId).get();
+      final DocumentSnapshot doc =
+          await _firestore.collection(usersKey).doc(params.userId).get();
       if (doc.exists) {
-        final userDto = UserDto.fromJson(doc.data() as Map<String, dynamic>);
+        final userDto = UserDto.fromJson(doc.data()! as Map<String, dynamic>);
         return _userMapper.dtoToEntity(userDto);
       } else {
-        throw Failure(message: 'User not found');
+        throw Failure(message: 'User not found'.hardcoded);
       }
     } on FirebaseException catch (e) {
       throw Failure(
-          message: FirebaseNetworkException.fromFirebaseException(e).message);
+        message: FirebaseNetworkException.fromFirebaseException(e).message,
+      );
     }
   }
 
@@ -43,12 +51,13 @@ class AuthCloudFirestoreDataSourceImpl implements AuthCloudFirestoreDataSource {
     final userDto = _userMapper.entityToDto(params.user);
     try {
       await _firestore
-          .collection('Users')
+          .collection(usersKey)
           .doc(userDto.id)
           .set(userDto.toJson());
     } on FirebaseException catch (e) {
       throw Failure(
-          message: FirebaseNetworkException.fromFirebaseException(e).message);
+        message: FirebaseNetworkException.fromFirebaseException(e).message,
+      );
     }
   }
 }

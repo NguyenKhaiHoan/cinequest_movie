@@ -1,7 +1,6 @@
 import 'package:cinequest/cinequest_movie.dart';
+import 'package:cinequest/src/core/di/injection_container.import.dart';
 import 'package:flutter/material.dart';
-
-import 'src/core/injection_container.dart';
 
 Future<void> main() async {
   await initApp();

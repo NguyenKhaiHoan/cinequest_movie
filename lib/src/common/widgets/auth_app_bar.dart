@@ -1,4 +1,7 @@
 import 'package:cinequest/gen/assets.gen.dart';
+import 'package:cinequest/gen/colors.gen.dart';
+import 'package:cinequest/src/common/constants/app_sizes.dart';
+import 'package:cinequest/src/common/widgets/app_bar_bottom_divider.dart';
 import 'package:cinequest/src/common/widgets/padding_app_bar.dart';
 import 'package:cinequest/src/common/widgets/svg_icon.dart';
 import 'package:cinequest/src/common/widgets/text_upper_case.dart';
@@ -6,22 +9,30 @@ import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../gen/colors.gen.dart';
-import '../constants/app_sizes.dart';
-import 'app_bar_bottom_divider.dart';
-
+/// Appbar dùng chung cho các màn hình xác thực
 class AuthAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final String title;
-  final bool hasLeading;
-  final VoidCallback? onBackTap;
-  final double? appBarHeight;
+  /// Constructor
+  ///
+  /// - [title] : Title nằm bên phải AppBar
+  const AuthAppBar({
+    required this.title,
+    super.key,
+    this.onBackTap,
+    this.hasLeading = true,
+    this.appBarHeight,
+  });
 
-  const AuthAppBar(
-      {super.key,
-      required this.title,
-      this.onBackTap,
-      this.hasLeading = true,
-      this.appBarHeight});
+  ///
+  final String title;
+
+  ///
+  final bool hasLeading;
+
+  ///
+  final VoidCallback? onBackTap;
+
+  ///
+  final double? appBarHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +44,6 @@ class AuthAppBar extends StatelessWidget implements PreferredSizeWidget {
               child: GestureDetector(
                 onTap: onBackTap ?? () => context.pop(),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     SvgIcon(iconPath: AppAssets.images.arrowLeft.path),
                     gapW4,
@@ -52,7 +62,7 @@ class AuthAppBar extends StatelessWidget implements PreferredSizeWidget {
             text: title,
             textColor: AppColors.dimGray,
           ),
-        )
+        ),
       ],
       appBarHeight: appBarHeight,
     );

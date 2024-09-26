@@ -5,7 +5,9 @@ part 'login_event.dart';
 part 'login_state.dart';
 part 'login_bloc.freezed.dart';
 
+/// Quản lý trạng thái của LoginPage
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
+  /// Constructor
   LoginBloc() : super(LoginState.initial()) {
     on<LoginEvent>((events, emit) async {
       events.map(
@@ -16,18 +18,24 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   void _onEmailChanged(EventLoginEmailChanged event, Emitter<LoginState> emit) {
-    emit(state.copyWith(
-      email: event.email,
-      isFormValid: _isFormValid(event.email, state.password),
-    ));
+    emit(
+      state.copyWith(
+        email: event.email,
+        isFormValid: _isFormValid(event.email, state.password),
+      ),
+    );
   }
 
   void _onSetPasswordChanged(
-      EventLoginSetPasswordChanged event, Emitter<LoginState> emit) {
-    emit(state.copyWith(
-      password: event.password,
-      isFormValid: _isFormValid(state.email, event.password),
-    ));
+    EventLoginSetPasswordChanged event,
+    Emitter<LoginState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        password: event.password,
+        isFormValid: _isFormValid(state.email, event.password),
+      ),
+    );
   }
 
   bool _isFormValid(String email, String password) {

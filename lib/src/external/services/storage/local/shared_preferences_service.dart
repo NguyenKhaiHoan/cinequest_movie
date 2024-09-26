@@ -1,38 +1,75 @@
+import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// Shared preferences service
 class SharedPreferencesService {
-  static late SharedPreferences _prefs;
+  static SharedPreferences? _prefs;
 
-  Future<void> initializeStorage() async =>
-      _prefs = await SharedPreferences.getInstance();
-
-  SharedPreferences get prefs => _prefs;
-
-  Future<void> setString(String key, String value) async =>
-      await _prefs.setString(key, value);
-
-  String? getString(String key) {
-    return _prefs.getString(key);
+  /// Initialize storage
+  static Future<void> initializeStorage() async {
+    if (_prefs != null) {
+      await _prefs!.clear();
+    }
+    _prefs = await SharedPreferences.getInstance();
   }
 
-  Future<void> setBool(String key, bool value) async =>
-      await _prefs.setBool(key, value);
+  ///
+  SharedPreferences get prefs {
+    if (_prefs == null) {
+      throw Exception('Shared Preference has not been initialized'.hardcoded);
+    }
+    return _prefs!;
+  }
 
-  bool? getBool(String key) => _prefs.getBool(key);
+  ///
+  Future<void> saveData<T>(String key, T value) async {
+    _prefs = prefs;
+    switch (T) {
+      case String:
+        await _prefs!.setString(key, value as String);
+      case int:
+        await _prefs!.setInt(key, value as int);
+      case bool:
+        await _prefs!.setBool(key, value as bool);
+      case double:
+        await _prefs!.setDouble(key, value as double);
+      default:
+        throw Exception('Unsupported data type');
+    }
+  }
 
-  Future<void> setDouble(String key, double value) async =>
-      await _prefs.setDouble(key, value);
+  ///
+  T? getData<T>(String key) {
+    _prefs = prefs;
+    switch (T) {
+      case String:
+        return _prefs!.getString(key) as T?;
+      case int:
+        return _prefs!.getInt(key) as T?;
+      case bool:
+        return _prefs!.getBool(key) as T?;
+      case double:
+        return _prefs!.getDouble(key) as T?;
+      default:
+        throw Exception('Unsupported data type'.hardcoded);
+    }
+  }
 
-  double? getDouble(String key) => _prefs.getDouble(key);
+  ///
+  Future<void> remove(String key) async {
+    _prefs = prefs;
+    await _prefs!.remove(key);
+  }
 
-  Future<void> setInt(String key, int value) async =>
-      await _prefs.setInt(key, value);
+  ///
+  bool contains(String key) {
+    _prefs = prefs;
+    return _prefs!.containsKey(key);
+  }
 
-  int? getInt(String key) => _prefs.getInt(key);
-
-  Future<void> remove(String key) async => await _prefs.remove(key);
-
-  bool? contains(String key) => _prefs.containsKey(key);
-
-  Future<void> clear() async => await _prefs.clear();
+  ///
+  Future<void> clear() async {
+    _prefs = prefs;
+    await _prefs!.clear();
+  }
 }

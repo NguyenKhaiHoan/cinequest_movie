@@ -5,28 +5,44 @@ import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:cinequest/src/core/utils/validation_util.dart';
 import 'package:flutter/material.dart';
 
+/// Form chung cho các màn hình xác thực: LoginPage, SignUpPage
 class AuthForm extends StatelessWidget {
-  final String title;
-  final GlobalKey<FormState> formKey;
-
-  final TextEditingController emailTextEditingController;
-  final Function(String)? onEmailChanged;
-  final TextEditingController setPasswordTextEditingController;
-  final Function(String)? onSetPasswordChanged;
-  final TextEditingController? confirmPasswordTextEditingController;
-  final Function(String)? onConfirmPasswordChanged;
-
+  /// Constructor
   const AuthForm({
-    super.key,
     required this.title,
     required this.formKey,
     required this.emailTextEditingController,
-    this.onEmailChanged,
     required this.setPasswordTextEditingController,
+    super.key,
+    this.onEmailChanged,
     this.onSetPasswordChanged,
     this.confirmPasswordTextEditingController,
     this.onConfirmPasswordChanged,
   });
+
+  ///
+  final String title;
+
+  ///
+  final GlobalKey<FormState> formKey;
+
+  ///
+  final TextEditingController emailTextEditingController;
+
+  ///
+  final void Function(String)? onEmailChanged;
+
+  ///
+  final TextEditingController setPasswordTextEditingController;
+
+  ///
+  final void Function(String)? onSetPasswordChanged;
+
+  ///
+  final TextEditingController? confirmPasswordTextEditingController;
+
+  ///
+  final void Function(String)? onConfirmPasswordChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +76,9 @@ class AuthForm extends StatelessWidget {
             controller: setPasswordTextEditingController,
             onChanged: onSetPasswordChanged,
             validator: (value) => ValidationUtil.validatePassword(
-                'Set Password'.hardcoded, value),
+              'Set Password'.hardcoded,
+              value,
+            ),
           ),
           if (isSignUp) gapH16,
           if (isSignUp)
@@ -70,9 +88,10 @@ class AuthForm extends StatelessWidget {
               controller: confirmPasswordTextEditingController!,
               onChanged: onConfirmPasswordChanged,
               validator: (value) => ValidationUtil.validateCorrectPassword(
-                  'Confirm Password'.hardcoded,
-                  value,
-                  setPasswordTextEditingController.text),
+                'Confirm Password'.hardcoded,
+                value,
+                setPasswordTextEditingController.text,
+              ),
             ),
         ],
       ),

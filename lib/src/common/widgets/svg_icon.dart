@@ -2,21 +2,38 @@ import 'package:cinequest/gen/colors.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+/// Icon ảnh svg sử dụng chung trong App
 class SvgIcon extends StatelessWidget {
-  final double iconSize;
-  final String iconPath;
-  final bool notNeedColorFilter;
-  final ColorFilter? colorFilter;
-  final VoidCallback? onPressed;
-
+  /// Constructor
+  ///
+  /// - [colorFilter] : Đổi màu cho icon ảnh svg (optional)
+  /// - [notNeedColorFilter] : Không cần đổi màu icon ảnh svg
+  /// (mặc định là `false`)
   const SvgIcon({
-    super.key,
     required this.iconPath,
+    super.key,
     this.notNeedColorFilter = false,
     this.colorFilter,
     this.iconSize = 24,
     this.onPressed,
   });
+
+  ///
+  final double iconSize;
+
+  ///
+  final String iconPath;
+
+  ///
+  final bool notNeedColorFilter;
+
+  ///
+  final ColorFilter? colorFilter;
+
+  ///
+  final VoidCallback? onPressed;
+
+  ///
 
   @override
   Widget build(BuildContext context) {

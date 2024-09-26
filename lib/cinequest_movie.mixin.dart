@@ -1,17 +1,21 @@
 part of 'cinequest_movie.dart';
 
+/// Mixin của CineQuestMovie xử lý logic UI
 mixin CineQuestMovieMixin on State<CineQuestMovie> {
   void _listenerConnectivity(BuildContext context, ConnectivityState state) {
     state.whenOrNull(
-        failure: () =>
-            context.showSnackbar(NoInternetException.fromException().message));
+      failure: (failure) => context.showSnackbar(
+        context,
+        failure.message,
+      ),
+    );
   }
 
-  void _listenerAppAuth(BuildContext context, AppAuthState state) {
+  void _listenerApp(BuildContext context, AppState state) {
     state.whenOrNull(
       unAuthenticated: (failure) {
         if (failure != null) {
-          context.showSnackbar(failure.message);
+          context.showSnackbar(context, failure.message);
         }
       },
     );

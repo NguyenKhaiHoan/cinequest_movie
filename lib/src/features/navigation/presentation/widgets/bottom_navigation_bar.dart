@@ -1,24 +1,32 @@
+import 'package:cinequest/gen/assets.gen.dart';
+import 'package:cinequest/gen/colors.gen.dart';
 import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:cinequest/src/common/widgets/custom_button.dart';
 import 'package:cinequest/src/common/widgets/custom_circle_button.dart';
+import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../gen/assets.gen.dart';
-import '../../../../../gen/colors.gen.dart';
-
+/// Thanh bottom navigation
 class BottomNavBar extends StatelessWidget {
-  final int currentIndex;
-  final Function(int index) onTap;
+  /// Constructor
+  const BottomNavBar({
+    required this.currentIndex,
+    required this.onTap,
+    super.key,
+  });
 
-  const BottomNavBar(
-      {super.key, required this.currentIndex, required this.onTap});
+  ///
+  final int currentIndex;
+
+  ///
+  final void Function(int index) onTap;
 
   @override
   Widget build(BuildContext context) {
     final bottomNavLabelList = [
-      'Tickets',
-      'Home',
-      'Profile',
+      'Tickets'.hardcoded,
+      'Home'.hardcoded,
+      'Profile'.hardcoded,
     ];
     final bottomNavIconList = [
       AppAssets.images.ticket.path,

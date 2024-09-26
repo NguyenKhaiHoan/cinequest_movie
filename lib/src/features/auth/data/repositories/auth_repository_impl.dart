@@ -1,25 +1,21 @@
+import 'package:cinequest/src/core/errors/failure.dart';
+import 'package:cinequest/src/core/generics/type_def.dart';
 import 'package:cinequest/src/core/routes/route_pages.dart';
+import 'package:cinequest/src/features/auth/data/data_sources/auth_cloud_firestore_data_source.dart';
 import 'package:cinequest/src/features/auth/data/data_sources/auth_firebase_data_source.dart';
 import 'package:cinequest/src/features/auth/data/data_sources/auth_firebase_storage_data_source.dart';
+import 'package:cinequest/src/features/auth/domain/entities/params/auth_params.dart';
 import 'package:cinequest/src/features/auth/domain/entities/params/get_profile_user_params.dart';
-import 'package:cinequest/src/features/auth/domain/entities/params/save_profile_photo_params.dart';
-import 'package:cinequest/src/features/auth/domain/entities/params/save_profile_user_params.dart';
+import 'package:cinequest/src/features/auth/domain/entities/params/save_profile_params.dart';
 import 'package:cinequest/src/features/auth/domain/entities/params/verification_code_params.dart';
+import 'package:cinequest/src/features/auth/domain/entities/user.dart';
+import 'package:cinequest/src/features/auth/domain/repositories/auth_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../../../core/errors/failure.dart';
-import '../../../../core/generics/type_def.dart';
-import '../../domain/entities/params/auth_params.dart';
-import '../../domain/entities/user.dart';
-import '../../domain/repositories/auth_repository.dart';
-import '../data_sources/auth_cloud_firestore_data_source.dart';
-
+/// Implementation của AuthRepository
 class AuthRepositoryImpl implements AuthRepository {
-  final AuthFirebaseDataSource _authFirebaseDataSource;
-  final AuthCloudFirestoreDataSource _authCloudFirestoreDataSource;
-  final AuthFirebaseStorageDataSource _authFirebaseStorageDataSource;
-
+  ///Constructor
   AuthRepositoryImpl({
     required AuthFirebaseDataSource authFirebaseDataSource,
     required AuthCloudFirestoreDataSource authCloudFirestoreDataSource,
@@ -27,6 +23,9 @@ class AuthRepositoryImpl implements AuthRepository {
   })  : _authFirebaseDataSource = authFirebaseDataSource,
         _authCloudFirestoreDataSource = authCloudFirestoreDataSource,
         _authFirebaseStorageDataSource = authFirebaseStorageDataSource;
+  final AuthFirebaseDataSource _authFirebaseDataSource;
+  final AuthCloudFirestoreDataSource _authCloudFirestoreDataSource;
+  final AuthFirebaseStorageDataSource _authFirebaseStorageDataSource;
 
   @override
   FutureEither<UserCredential> login(AuthParams params) async {
@@ -94,14 +93,20 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   FutureEither<void> saveProfileUser(SaveProfileUserParams params) async {
     try {
-      final user = params.user;
-      final profilePhoto = await _authFirebaseStorageDataSource
-          .saveProfilePhoto(SaveProfilePhotoParams(
-              profilePhoto: user.profilePhoto, userId: user.id));
       final result = await _authCloudFirestoreDataSource.saveProfileUser(
-        params.copyWith(
-          user: user.copyWith(profilePhoto: profilePhoto),
-        ),
+        params,
+      );
+      return Right(result);
+    } on Failure catch (e) {
+      return Left(e);
+    }
+  }
+
+  @override
+  FutureEither<String> saveProfilePhoto(SaveProfilePhotoParams params) async {
+    try {
+      final result = await _authFirebaseStorageDataSource.saveProfilePhoto(
+        params,
       );
       return Right(result);
     } on Failure catch (e) {

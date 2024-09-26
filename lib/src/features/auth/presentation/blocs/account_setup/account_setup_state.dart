@@ -1,7 +1,9 @@
 part of 'account_setup_bloc.dart';
 
+/// Trạng thái
 @freezed
 class AccountSetupState with _$AccountSetupState {
+  /// Trạng thái
   const factory AccountSetupState({
     required int currentPage,
     required String username,
@@ -15,6 +17,7 @@ class AccountSetupState with _$AccountSetupState {
     required bool isProfilePhotoValid,
   }) = _AccountSetupState;
 
+  /// Trang thái ban đầu
   factory AccountSetupState.initial() => const AccountSetupState(
         currentPage: 0,
         username: '',

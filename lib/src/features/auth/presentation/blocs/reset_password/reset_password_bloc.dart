@@ -5,7 +5,9 @@ part 'reset_password_event.dart';
 part 'reset_password_state.dart';
 part 'reset_password_bloc.freezed.dart';
 
+/// Quản lý trạng thái của ResetPasswordPage
 class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
+  /// Constructor
   ResetPasswordBloc() : super(ResetPasswordState.initial()) {
     on<ResetPasswordEvent>((events, emit) async {
       events.map(
@@ -15,11 +17,15 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
   }
 
   void _onEmailChanged(
-      EventResetPasswordEmailChanged event, Emitter<ResetPasswordState> emit) {
-    emit(state.copyWith(
-      email: event.email,
-      isFormValid: _isFormValid(event.email),
-    ));
+    EventResetPasswordEmailChanged event,
+    Emitter<ResetPasswordState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        email: event.email,
+        isFormValid: _isFormValid(event.email),
+      ),
+    );
   }
 
   bool _isFormValid(String email) {

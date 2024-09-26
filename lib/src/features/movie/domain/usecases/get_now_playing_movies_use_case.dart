@@ -1,14 +1,15 @@
-import '../../../../core/generics/type_def.dart';
-import '../../../../core/generics/usecase.dart';
-import '../entities/movie.dart';
-import '../entities/params/movie_lists_params.dart';
-import '../repositories/movie_repository.dart';
+import 'package:cinequest/src/core/generics/type_def.dart';
+import 'package:cinequest/src/core/generics/usecase.dart';
+import 'package:cinequest/src/features/movie/domain/entities/movie.dart';
+import 'package:cinequest/src/features/movie/domain/entities/params/movie_lists_params.dart';
+import 'package:cinequest/src/features/movie/domain/repositories/movie_repository.dart';
 
+/// Use case lấy dữ liệu danh sách movie đang được công chiếu
 class GetNowPlayingMoviesUseCase
-    implements UseCase<List<Movie>, MovieListsParams> {
-  final MovieRepository _movieRepository;
-
+    extends UseCase<List<Movie>, MovieListsParams> {
+  /// Constructor
   GetNowPlayingMoviesUseCase(this._movieRepository);
+  final MovieRepository _movieRepository;
 
   @override
   FutureEither<List<Movie>> call({MovieListsParams? params}) {

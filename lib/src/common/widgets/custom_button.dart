@@ -1,31 +1,27 @@
+import 'package:cinequest/gen/colors.gen.dart';
+import 'package:cinequest/src/common/constants/app_sizes.dart';
+import 'package:cinequest/src/common/widgets/svg_icon.dart';
 import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 
-import '../../../gen/colors.gen.dart';
-import '../constants/app_sizes.dart';
-import 'svg_icon.dart';
-
+/// Định nghĩa các type của Button
 enum ButtonType {
-  outline,
+  /// Outlined Button
+  outlined,
+
+  /// Elevated Button
   elevated,
 }
 
+/// Buttom chung cho toàn bộ App
 class CustomButton extends StatelessWidget {
-  final bool isUpperCase;
-  final String? text;
-  final double? width;
-  final Color? textColor;
-  final bool isLoading;
-  final String? iconPath;
-  final double iconSize;
-  final Color backgroundColor;
-  final Color? borderColor;
-  final VoidCallback? onPressed;
-  final ColorFilter? colorFilter;
-  final bool notNeedColorFilter;
-  final ButtonType buttonType;
-
+  /// Constructor
+  ///
+  /// - [colorFilter] : Đổi màu cho icon ảnh svg (optional)
+  /// - [notNeedColorFilter] : Không cần đổi màu icon ảnh svg
+  /// (mặc định là `false`)
   const CustomButton({
+    required this.buttonType,
     super.key,
     this.text,
     this.width,
@@ -38,9 +34,49 @@ class CustomButton extends StatelessWidget {
     this.onPressed,
     this.colorFilter,
     this.notNeedColorFilter = false,
-    required this.buttonType,
     this.isUpperCase = true,
   });
+
+  ///
+  final bool isUpperCase;
+
+  ///
+  final String? text;
+
+  ///
+  final double? width;
+
+  ///
+  final Color? textColor;
+
+  ///
+  final bool isLoading;
+
+  ///
+  final String? iconPath;
+
+  ///
+  final double iconSize;
+
+  ///
+  final Color backgroundColor;
+
+  ///
+  final Color? borderColor;
+
+  ///
+  final VoidCallback? onPressed;
+
+  ///
+  final ColorFilter? colorFilter;
+
+  ///
+  final bool notNeedColorFilter;
+
+  ///
+  final ButtonType buttonType;
+
+  ///
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +92,9 @@ class CustomButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppSizes.buttonRadius),
             ),
             side: BorderSide(
-                width: 1.5, color: borderColor ?? AppColors.eerieBlack),
+              width: 1.5,
+              color: borderColor ?? AppColors.blackOlive,
+            ),
           );
 
     final constrainedWidth = width;
@@ -109,7 +147,6 @@ class CustomButton extends StatelessWidget {
       );
     } else {
       return Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SvgIcon(

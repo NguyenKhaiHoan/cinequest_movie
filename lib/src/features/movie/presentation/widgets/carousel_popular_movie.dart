@@ -1,16 +1,17 @@
+import 'package:cinequest/gen/colors.gen.dart';
+import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
+import 'package:cinequest/src/core/utils/ui_util.dart';
+import 'package:cinequest/src/external/apis/themovidedb/tmdb_url.dart';
+import 'package:cinequest/src/features/movie/presentation/blocs/popular_movie/popular_movie_bloc.dart';
 import 'package:cinequest/src/features/movie/presentation/widgets/carousel_home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../gen/colors.gen.dart';
-import '../../../../common/constants/app_sizes.dart';
-import '../../../../core/utils/ui_util.dart';
-import '../../../../external/apis/themovidedb/tmdb_url.dart';
-import '../blocs/popular_movie/popular_movie_bloc.dart';
-
+/// Carousel dành danh sách movie phổ biến
 class CarouselPopularMovie extends StatelessWidget {
+  /// Construtor
   const CarouselPopularMovie({super.key});
 
   @override
@@ -37,10 +38,13 @@ class CarouselPopularMovie extends StatelessWidget {
                 (index) {
                   return Container(
                     decoration: BoxDecoration(
+                      borderRadius:
+                          BorderRadius.circular(AppSizes.borderRadiusLg),
                       color: AppColors.eerieBlack,
                       image: DecorationImage(
                         image: NetworkImage(
-                            TMDBUrl.imageBaseUrl + data[index].backdropPath!),
+                          TMDBUrl.imageBaseUrl + data[index].backdropPath!,
+                        ),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -53,10 +57,12 @@ class CarouselPopularMovie extends StatelessWidget {
                           alignment: Alignment.topLeft,
                           child: Padding(
                             padding: const EdgeInsets.all(16),
-                            child: Text('8.1'.toUpperCase().hardcoded,
-                                style: context.textTheme.bodySmall),
+                            child: Text(
+                              '8.1'.toUpperCase().hardcoded,
+                              style: context.textTheme.bodySmall,
+                            ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   );
@@ -68,7 +74,8 @@ class CarouselPopularMovie extends StatelessWidget {
               width: UiUtil.deviceWidth,
               child: Padding(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: AppSizes.defaultSpace),
+                  horizontal: AppSizes.defaultSpace,
+                ),
                 child: Text(
                   failure.message,
                   style: context.textTheme.bodySmall!

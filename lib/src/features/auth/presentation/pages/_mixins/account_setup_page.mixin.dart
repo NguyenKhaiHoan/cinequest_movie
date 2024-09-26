@@ -1,5 +1,6 @@
 part of '../account_setup_page.dart';
 
+/// Mixin của AccountSetupPage xử lý logic UI
 mixin AccountSetupPageMixin on State<AccountSetupPage> {
   late TextEditingController _usernameTextEditingController;
   late TextEditingController _nameTextEditingController;
@@ -9,9 +10,7 @@ mixin AccountSetupPageMixin on State<AccountSetupPage> {
   final GlobalKey<FormState> _fullNameCodeFormKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _bioFormKey = GlobalKey<FormState>();
 
-  final _pageController = PageController(
-    initialPage: 0,
-  );
+  final _pageController = PageController();
 
   @override
   void initState() {
@@ -48,24 +47,25 @@ mixin AccountSetupPageMixin on State<AccountSetupPage> {
     }
 
     if (currentPage == 3) {
-      print(profilePhoto);
       if (profilePhoto == null) {
         return;
       }
+      final user = sl<FirebaseAuth>().currentUser;
       context.read<ButtonBloc>().add(
             ButtonEvent.execute(
-              useCase: SaveProfileUserUseCase(sl()),
-              params: SaveProfileUserParams(
+              useCase: sl<SaveProfileUseCase>(),
+              params: SaveProfileParams(
                 user: AppUser(
-                  id: sl<FirebaseAuth>().currentUser?.uid ?? const Uuid().v4(),
-                  profilePhoto: profilePhoto,
-                  email: sl<FirebaseAuth>().currentUser!.email ?? '',
+                  id: user?.uid ?? const Uuid().v4(),
+                  profilePhoto: '',
+                  email: user?.email ?? '',
                   username: _usernameTextEditingController.text.trim(),
                   name: _nameTextEditingController.text.trim(),
                   surname: _surnameTextEditingController.text.trim(),
                   createdAt: DateTime.now(),
                   authBy: 'Email',
                 ),
+                profilePhoto: profilePhoto,
               ),
             ),
           );
@@ -78,8 +78,8 @@ mixin AccountSetupPageMixin on State<AccountSetupPage> {
 
   void _listener(BuildContext context, ButtonState state) {
     state.whenOrNull(
-      success: () => context.go(AppRoutes.home.path),
-      failure: (failure) => context.showSnackbar(failure.message),
+      success: () => context.read<AppBloc>().add(const AppEvent.started()),
+      failure: (failure) => context.showSnackbar(context, failure.message),
     );
   }
 

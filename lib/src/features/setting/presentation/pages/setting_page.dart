@@ -1,20 +1,21 @@
+import 'package:cinequest/src/common/bloc/app/app_bloc.dart';
+import 'package:cinequest/src/common/bloc/buttton/button_bloc.dart';
+import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:cinequest/src/common/widgets/auth_app_bar.dart';
+import 'package:cinequest/src/common/widgets/custom_button.dart';
+import 'package:cinequest/src/core/di/injection_container.import.dart';
 import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
+import 'package:cinequest/src/core/generics/usecase.dart';
+import 'package:cinequest/src/features/auth/domain/usecases/sign_out_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../common/bloc/app/app_auth_bloc.dart';
-import '../../../../common/bloc/buttton/button_bloc.dart';
-import '../../../../common/constants/app_sizes.dart';
-import '../../../../common/widgets/custom_button.dart';
-import '../../../../core/generics/usecase.dart';
-import '../../../../core/injection_container.dart';
-import '../../../auth/domain/usecases/sign_out_use_case.dart';
-
 part 'mixins/setting_page.mixin.dart';
 
+/// Trang Setting
 class SettingPage extends StatefulWidget {
+  /// Constructor
   const SettingPage({super.key});
 
   @override
@@ -33,7 +34,7 @@ class _SettingPageState extends State<SettingPage> with SettingPageMixin {
           children: [
             gapH48,
             Text(
-              'Settings',
+              'Settings'.hardcoded,
               style: context.textTheme.headlineMedium,
             ),
             const Spacer(),
@@ -45,7 +46,7 @@ class _SettingPageState extends State<SettingPage> with SettingPageMixin {
                   return SizedBox(
                     width: double.infinity,
                     child: CustomButton(
-                      buttonType: ButtonType.outline,
+                      buttonType: ButtonType.outlined,
                       text: 'Log out'.toUpperCase().hardcoded,
                       isLoading: state is ButtonLoadingState,
                       onPressed: () => _signOut(context),

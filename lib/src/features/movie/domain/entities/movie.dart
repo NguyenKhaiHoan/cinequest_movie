@@ -1,21 +1,8 @@
 import 'package:equatable/equatable.dart';
 
+/// Movie entity
 class Movie extends Equatable {
-  final bool? adult;
-  final String? backdropPath;
-  final List<int>? genreIds;
-  final int? id;
-  final String? originalLanguage;
-  final String? originalTitle;
-  final String? overview;
-  final double? popularity;
-  final String? posterPath;
-  final DateTime? releaseDate;
-  final String? title;
-  final bool? video;
-  final double? voteAverage;
-  final int? voteCount;
-
+  /// Constructor
   const Movie({
     this.adult,
     this.backdropPath,
@@ -32,6 +19,48 @@ class Movie extends Equatable {
     this.voteAverage,
     this.voteCount,
   });
+
+  ///
+  final bool? adult;
+
+  ///
+  final String? backdropPath;
+
+  ///
+  final List<int>? genreIds;
+
+  ///
+  final int? id;
+
+  ///
+  final String? originalLanguage;
+
+  ///
+  final String? originalTitle;
+
+  ///
+  final String? overview;
+
+  ///
+  final double? popularity;
+
+  ///
+  final String? posterPath;
+
+  ///
+  final DateTime? releaseDate;
+
+  ///
+  final String? title;
+
+  ///
+  final bool? video;
+
+  ///
+  final double? voteAverage;
+
+  ///
+  final int? voteCount;
 
   @override
   List<Object?> get props => [

@@ -1,6 +1,10 @@
+import 'package:cinequest/gen/assets.gen.dart';
+import 'package:cinequest/gen/colors.gen.dart';
+import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:cinequest/src/common/widgets/app_bar_bottom_divider.dart';
 import 'package:cinequest/src/common/widgets/custom_circle_button.dart';
 import 'package:cinequest/src/common/widgets/padding_app_bar.dart';
+import 'package:cinequest/src/core/di/injection_container.import.dart';
 import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:cinequest/src/core/repositories/user_repository.dart';
@@ -8,14 +12,11 @@ import 'package:cinequest/src/core/routes/route_enums.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../../gen/assets.gen.dart';
-import '../../../../../gen/colors.gen.dart';
-import '../../../../common/constants/app_sizes.dart';
-import '../../../../core/injection_container.dart';
+part '_mixins/profile_page.mixin.dart';
 
-part 'mixins/profile_page.mixin.dart';
-
+/// Trang Profile
 class ProfilePage extends StatefulWidget {
+  /// Constructor
   const ProfilePage({super.key});
 
   @override
@@ -42,7 +43,7 @@ class _ProfilePageState extends State<ProfilePage> with ProfilePageMixin {
           PaddingAppBar(
             isLeft: false,
             child: CustomCircleButton(iconPath: AppAssets.images.bell.path),
-          )
+          ),
         ],
       ),
       body: Padding(
@@ -73,8 +74,6 @@ class _ProfilePageState extends State<ProfilePage> with ProfilePageMixin {
             return SizedBox(
               width: double.infinity,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   gapH48,
                   Container(

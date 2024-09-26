@@ -5,7 +5,9 @@ part 'text_field_event.dart';
 part 'text_field_state.dart';
 part 'text_field_bloc.freezed.dart';
 
+/// Quản lý trạng thái của TextField
 class TextFieldBloc extends Bloc<TextFieldEvent, TextFieldState> {
+  /// Constructor
   TextFieldBloc() : super(const TextFieldState.obscure()) {
     on<TextFieldEvent>((events, emit) async {
       events.map(
@@ -15,7 +17,9 @@ class TextFieldBloc extends Bloc<TextFieldEvent, TextFieldState> {
   }
 
   void _onToggleVisibility(
-      EventTextFieldToggleVisibility event, Emitter<TextFieldState> emit) {
-    emit(TextFieldState.obscure(obscureText: !state.obscureText));
+    EventTextFieldToggleVisibility event,
+    Emitter<TextFieldState> emit,
+  ) {
+    emit(TextFieldState.obscure(obscure: !state.obscure));
   }
 }

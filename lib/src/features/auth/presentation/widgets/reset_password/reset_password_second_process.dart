@@ -1,36 +1,47 @@
 import 'package:cinequest/gen/assets.gen.dart';
+import 'package:cinequest/gen/colors.gen.dart';
+import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:cinequest/src/common/widgets/auth_app_bar.dart';
+import 'package:cinequest/src/common/widgets/custom_button.dart';
 import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:cinequest/src/core/utils/ui_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../../../gen/colors.gen.dart';
-import '../../../../../common/constants/app_sizes.dart';
-import '../../../../../common/widgets/custom_button.dart';
-
+/// Second process của ResetPasswordPage: Xác nhận link verification và resend
+/// lại link
 class ResetPasswordSecondProcess extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final String email;
-  final VoidCallback onBack;
-  final VoidCallback onResend;
-
+  /// Constructor
   const ResetPasswordSecondProcess({
-    super.key,
     required this.title,
     required this.subtitle,
     required this.email,
     required this.onBack,
     required this.onResend,
+    super.key,
   });
+
+  ///
+  final String title;
+
+  ///
+  final String subtitle;
+
+  ///
+  final String email;
+
+  ///
+  final VoidCallback onBack;
+
+  ///
+  final VoidCallback onResend;
 
   @override
   Widget build(BuildContext context) {
-    List<String> parts = subtitle.split(email);
-    String part1 = parts[0];
-    String part2 = parts[1];
+    final parts = subtitle.split(email);
+    final part1 = parts[0];
+    final part2 = parts[1];
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AuthAppBar(
@@ -39,10 +50,11 @@ class ResetPasswordSecondProcess extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(
-            AppSizes.defaultSpace,
-            AppSizes.defaultSpace * 2,
-            AppSizes.defaultSpace,
-            AppSizes.defaultSpace / 2),
+          AppSizes.defaultSpace,
+          AppSizes.defaultSpace * 2,
+          AppSizes.defaultSpace,
+          AppSizes.defaultSpace / 2,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -85,7 +97,7 @@ class ResetPasswordSecondProcess extends StatelessWidget {
               textColor: AppColors.black,
               buttonType: ButtonType.elevated,
               onPressed: onResend,
-            )
+            ),
           ],
         ),
       ),

@@ -1,30 +1,40 @@
+import 'package:cinequest/src/common/constants/app_sizes.dart';
+import 'package:cinequest/src/common/widgets/custom_text_field.dart';
 import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:cinequest/src/core/utils/validation_util.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../common/constants/app_sizes.dart';
-import '../../../../../common/widgets/custom_text_field.dart';
-
+/// Second process của AccountSetUpPage: Nhập name và surname
 class AccountSetupSecondProcess extends StatelessWidget {
-  final String title;
-  final Function(String)? onNameChanged;
-  final Function(String)? onSurnameChanged;
-
-  final GlobalKey<FormState> formKey;
-
-  final TextEditingController nameTextEditingController;
-  final TextEditingController surnameTextEditingController;
-
+  /// Constructor
   const AccountSetupSecondProcess({
-    super.key,
     required this.title,
-    this.onNameChanged,
-    this.onSurnameChanged,
     required this.formKey,
     required this.nameTextEditingController,
     required this.surnameTextEditingController,
+    super.key,
+    this.onNameChanged,
+    this.onSurnameChanged,
   });
+
+  ///
+  final String title;
+
+  ///
+  final void Function(String)? onNameChanged;
+
+  ///
+  final void Function(String)? onSurnameChanged;
+
+  ///
+  final GlobalKey<FormState> formKey;
+
+  ///
+  final TextEditingController nameTextEditingController;
+
+  ///
+  final TextEditingController surnameTextEditingController;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +70,7 @@ class AccountSetupSecondProcess extends StatelessWidget {
             onChanged: onSurnameChanged,
             validator: (value) =>
                 ValidationUtil.validateEmptyField('Surname', value),
-          )
+          ),
         ],
       ),
     );

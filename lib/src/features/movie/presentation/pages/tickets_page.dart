@@ -4,7 +4,9 @@ import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
 
+/// Trang Tickets
 class TicketsPage extends StatelessWidget {
+  /// Constructor
   const TicketsPage({super.key});
 
   @override
@@ -15,15 +17,19 @@ class TicketsPage extends StatelessWidget {
         leading: PaddingAppBar(
           isLeft: true,
           alignment: Alignment.centerLeft,
-          child: Text('Feb 12'.toUpperCase().hardcoded,
-              style: context.textTheme.bodyMedium),
+          child: Text(
+            'Feb 12'.toUpperCase().hardcoded,
+            style: context.textTheme.bodyMedium,
+          ),
         ),
         actions: [
           PaddingAppBar(
             isLeft: false,
-            child: Text('Tickets'.toUpperCase().hardcoded,
-                style: context.textTheme.bodyMedium),
-          )
+            child: Text(
+              'Tickets'.toUpperCase().hardcoded,
+              style: context.textTheme.bodyMedium,
+            ),
+          ),
         ],
       ),
       body: const Center(

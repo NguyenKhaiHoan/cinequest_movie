@@ -4,18 +4,16 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
+/// Cài đặt client cho Dio
 class DioClient {
-  late final Dio _dio;
-
-  Dio get dio => _dio;
-
+  /// Constructor
   DioClient() {
     _dio = Dio();
 
     _dio
       ..options.headers = {
         HttpHeaders.contentTypeHeader: ContentType.json.mimeType,
-        // HttpHeaders.authorizationHeader: 'Bearer ${Env.apiKey}',
+        // HttpHeaders.authorizationHeader: 'Bearer ${Env.accessToken}',
       }
       ..options.connectTimeout = const Duration(milliseconds: 15000)
       ..options.receiveTimeout = const Duration(milliseconds: 15000)
@@ -27,4 +25,8 @@ class DioClient {
         ),
       );
   }
+  late final Dio _dio;
+
+  /// get dio
+  Dio get dio => _dio;
 }

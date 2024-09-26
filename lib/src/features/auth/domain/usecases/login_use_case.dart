@@ -1,14 +1,14 @@
+import 'package:cinequest/src/core/generics/type_def.dart';
+import 'package:cinequest/src/core/generics/usecase.dart';
+import 'package:cinequest/src/features/auth/domain/entities/params/auth_params.dart';
 import 'package:cinequest/src/features/auth/domain/repositories/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../../../core/generics/type_def.dart';
-import '../../../../core/generics/usecase.dart';
-import '../entities/params/auth_params.dart';
-
-class LoginUseCase implements UseCase<UserCredential, AuthParams> {
-  final AuthRepository _authRepository;
-
+/// Use case đăng nhập
+class LoginUseCase extends UseCase<UserCredential, AuthParams> {
+  /// Constructor
   LoginUseCase(this._authRepository);
+  final AuthRepository _authRepository;
 
   @override
   FutureEither<UserCredential> call({AuthParams? params}) {

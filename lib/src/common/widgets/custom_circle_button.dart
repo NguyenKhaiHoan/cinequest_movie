@@ -1,19 +1,17 @@
+import 'package:cinequest/gen/colors.gen.dart';
+import 'package:cinequest/src/common/constants/app_sizes.dart';
+import 'package:cinequest/src/common/widgets/svg_icon.dart';
 import 'package:flutter/material.dart';
 
-import '../../../gen/colors.gen.dart';
-import '../constants/app_sizes.dart';
-import 'svg_icon.dart';
-
+/// Icon button tròn có border sử dụng trong App
 class CustomCircleButton extends StatelessWidget {
-  final String iconPath;
-  final double iconSize;
-  final Color? borderColor;
-  final double buttonSize;
-  final VoidCallback? onPressed;
-  final ColorFilter? colorFilter;
-  final bool notNeedColorFilter;
-
+  /// Constructor
+  ///
+  /// - [colorFilter] : Đổi màu cho icon ảnh svg (optional)
+  /// - [notNeedColorFilter] : Không cần đổi màu icon ảnh svg
+  /// (mặc định là `false`)
   const CustomCircleButton({
+    required this.iconPath,
     super.key,
     this.iconSize = 24,
     this.borderColor,
@@ -21,8 +19,28 @@ class CustomCircleButton extends StatelessWidget {
     this.onPressed,
     this.colorFilter,
     this.notNeedColorFilter = false,
-    required this.iconPath,
   });
+
+  ///
+  final String iconPath;
+
+  ///
+  final double iconSize;
+
+  ///
+  final Color? borderColor;
+
+  ///
+  final double buttonSize;
+
+  ///
+  final VoidCallback? onPressed;
+
+  ///
+  final ColorFilter? colorFilter;
+
+  ///
+  final bool notNeedColorFilter;
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +51,9 @@ class CustomCircleButton extends StatelessWidget {
         height: buttonSize,
         width: buttonSize,
         decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: AppColors.eerieBlack)),
+          shape: BoxShape.circle,
+          border: Border.all(color: AppColors.blackOlive),
+        ),
         child: Padding(
           padding: EdgeInsets.all(buttonSize * 12.0 / AppSizes.buttonHeight),
           child: SvgIcon(

@@ -1,8 +1,9 @@
+import 'package:cinequest/gen/colors.gen.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../gen/colors.gen.dart';
-
+/// Trang Splash
 class SplashPage extends StatelessWidget {
+  /// Constructor
   const SplashPage({super.key});
 
   @override

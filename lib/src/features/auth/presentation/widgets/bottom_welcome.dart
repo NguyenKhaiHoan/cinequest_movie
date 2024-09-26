@@ -1,13 +1,14 @@
+import 'package:cinequest/gen/colors.gen.dart';
+import 'package:cinequest/src/common/constants/app_sizes.dart';
+import 'package:cinequest/src/common/widgets/custom_button.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
+import 'package:cinequest/src/core/routes/route_enums.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../../gen/colors.gen.dart';
-import '../../../../common/constants/app_sizes.dart';
-import '../../../../common/widgets/custom_button.dart';
-import '../../../../core/routes/route_enums.dart';
-
+/// Bottom của WelcomePagePage
 class BottomWelcome extends StatelessWidget {
+  /// Constructor
   const BottomWelcome({super.key});
 
   @override
@@ -31,9 +32,9 @@ class BottomWelcome extends StatelessWidget {
           CustomButton(
             width: double.infinity,
             text: 'Login'.hardcoded,
-            buttonType: ButtonType.outline,
+            buttonType: ButtonType.outlined,
             onPressed: () => context.push(AppRoutes.login.path),
-          )
+          ),
         ],
       ),
     );

@@ -1,14 +1,15 @@
 import 'package:cinequest/src/core/extensions/string_extension.dart';
+import 'package:cinequest/src/features/auth/presentation/blocs/reset_password/reset_password_bloc.dart';
 import 'package:cinequest/src/features/auth/presentation/widgets/reset_password/reset_password_first_process.dart';
 import 'package:cinequest/src/features/auth/presentation/widgets/reset_password/reset_password_second_process.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../blocs/reset_password/reset_password_bloc.dart';
+part '_mixins/reset_password_page.mixin.dart';
 
-part 'mixins/reset_password_page.mixin.dart';
-
+/// Trang ResetPassword
 class ResetPasswordPage extends StatefulWidget {
+  /// Constructor
   const ResetPasswordPage({super.key});
 
   @override
@@ -23,7 +24,6 @@ class _ResetPasswordPageState extends State<ResetPasswordPage>
       create: (context) => ResetPasswordBloc(),
       child: PageView(
         controller: _pageController,
-        scrollDirection: Axis.horizontal,
         physics: const NeverScrollableScrollPhysics(),
         children: [
           ResetPasswordFirstProcess(

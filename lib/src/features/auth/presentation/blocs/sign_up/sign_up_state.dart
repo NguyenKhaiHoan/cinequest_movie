@@ -1,7 +1,9 @@
 part of 'sign_up_bloc.dart';
 
+/// Trạng thái
 @freezed
 class SignUpState with _$SignUpState {
+  /// Trạng thái
   const factory SignUpState({
     required String email,
     required String password,
@@ -11,6 +13,7 @@ class SignUpState with _$SignUpState {
     required bool isVerificationCodeFormValid,
   }) = _SignUpState;
 
+  /// Trạng thái ban đầu
   factory SignUpState.initial() => const SignUpState(
         email: '',
         password: '',

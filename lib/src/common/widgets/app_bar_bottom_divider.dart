@@ -1,22 +1,33 @@
+import 'package:cinequest/src/common/widgets/custom_divider.dart';
 import 'package:flutter/material.dart';
 
-import 'custom_divider.dart';
-
+/// AppBar có divider ở bottom
 class AppBarBottomDivider extends StatelessWidget
     implements PreferredSizeWidget {
-  final Widget? leading;
-  final double? leadingWidth;
-  final List<Widget>? actions;
-  final VoidCallback? onBackTap;
-  final double? appBarHeight;
+  /// Constructor
+  const AppBarBottomDivider({
+    super.key,
+    this.leadingWidth,
+    this.appBarHeight,
+    this.leading,
+    this.actions,
+    this.onBackTap,
+  });
 
-  const AppBarBottomDivider(
-      {super.key,
-      this.leadingWidth,
-      this.appBarHeight,
-      this.leading,
-      this.actions,
-      this.onBackTap});
+  ///
+  final Widget? leading;
+
+  ///
+  final double? leadingWidth;
+
+  ///
+  final List<Widget>? actions;
+
+  ///
+  final VoidCallback? onBackTap;
+
+  ///
+  final double? appBarHeight;
 
   @override
   Widget build(BuildContext context) {

@@ -1,29 +1,37 @@
+import 'package:cinequest/gen/colors.gen.dart';
+import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:cinequest/src/common/widgets/custom_text_field.dart';
 import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:cinequest/src/core/utils/validation_util.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../../gen/colors.gen.dart';
-import '../../../../../common/constants/app_sizes.dart';
-
+/// First process của AccountSetUpPage: Nhập username
 class AccountSetupFirstProcess extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final Function(String)? onChanged;
-
-  final GlobalKey<FormState> formKey;
-
-  final TextEditingController usernameTextEditingController;
-
+  /// Constructor
   const AccountSetupFirstProcess({
-    super.key,
     required this.title,
     required this.subtitle,
-    this.onChanged,
     required this.formKey,
     required this.usernameTextEditingController,
+    super.key,
+    this.onChanged,
   });
+
+  ///
+  final String title;
+
+  ///
+  final String subtitle;
+
+  ///
+  final void Function(String)? onChanged;
+
+  ///
+  final GlobalKey<FormState> formKey;
+
+  ///
+  final TextEditingController usernameTextEditingController;
 
   @override
   Widget build(BuildContext context) {

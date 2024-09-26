@@ -1,9 +1,16 @@
 import 'package:cinequest/src/core/generics/mapper.dart';
+import 'package:cinequest/src/features/auth/data/models/user_dto.dart';
+import 'package:cinequest/src/features/auth/domain/entities/user.dart';
 
-import '../../../domain/entities/user.dart';
-import '../../models/user_dto.dart';
-
+/// Mapper cho user
 class UserMapper implements Mapper<UserDto, AppUser> {
+  ///
+  factory UserMapper() => _instance;
+
+  UserMapper._();
+
+  static final UserMapper _instance = UserMapper._();
+
   @override
   AppUser dtoToEntity(UserDto dto) {
     return AppUser(
