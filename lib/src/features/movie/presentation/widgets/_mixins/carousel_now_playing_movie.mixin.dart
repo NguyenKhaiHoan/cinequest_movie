@@ -6,7 +6,9 @@ mixin CarouselNowPlayingMovieMixin on State<CarouselNowPlayingMovie> {
     context.read<ButtonBloc>().add(
           ButtonEvent.execute(
             useCase: sl<SaveMovieLocalUseCase>(),
-            params: SaveMovieLocalParams(movie: movie),
+            params: SaveMovieLocalParams(
+              movie: movie,
+            ),
           ),
         );
   }

@@ -1,4 +1,7 @@
 /// Cloud Firestore
+const String authKey = 'Auth';
+
+/// Cloud Firestore
 const String usersKey = 'Users';
 
 /// Firebase Storage

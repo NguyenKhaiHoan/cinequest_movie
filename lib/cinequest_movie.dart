@@ -36,6 +36,7 @@ class _CineQuestMovieState extends State<CineQuestMovie>
             firebaseAuth: sl(),
             getProfileUserUseCase: sl(),
             userRepository: sl(),
+            getStorageService: sl(),
           )..add(const AppEvent.started()),
         ),
       ],

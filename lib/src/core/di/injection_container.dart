@@ -41,6 +41,9 @@ Future<void> initDependencies() async {
     ..registerLazySingleton<SqliteService>(
       SqliteService.new,
     )
+    ..registerLazySingleton<SecureStorageService>(
+      SecureStorageService.new,
+    )
 
     // Data Sources: registerLazySingleton
     ..registerLazySingleton<MovieApiNetworkDataSource>(
@@ -64,6 +67,11 @@ Future<void> initDependencies() async {
         sqliteService: sl<SqliteService>(),
       ),
     )
+    ..registerLazySingleton<AuthLocalStorageDataSource>(
+      () => AuthSecureStorageDataSourceImpl(
+        secureStorageService: sl<SecureStorageService>(),
+      ),
+    )
 
     // Repositories: registerLazySingleton
     ..registerLazySingleton<UserRepository>(UserRepositoryImpl.new)
@@ -78,6 +86,7 @@ Future<void> initDependencies() async {
         authFirebaseDataSource: sl<AuthFirebaseDataSource>(),
         authCloudFirestoreDataSource: sl<AuthCloudFirestoreDataSource>(),
         authFirebaseStorageDataSource: sl<AuthFirebaseStorageDataSource>(),
+        authLocalStorageDataSource: sl<AuthLocalStorageDataSource>(),
       ),
     )
 
@@ -116,6 +125,7 @@ Future<void> initDependencies() async {
         firebaseAuth: sl<FirebaseAuth>(),
         getProfileUserUseCase: sl<GetProfileUserUseCase>(),
         userRepository: sl<UserRepository>(),
+        getStorageService: sl<GetStorageService>(),
       ),
     )
     ..registerFactory<AccountSetupBloc>(AccountSetupBloc.new);

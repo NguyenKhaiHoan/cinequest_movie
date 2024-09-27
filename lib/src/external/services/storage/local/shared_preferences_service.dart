@@ -7,9 +7,6 @@ class SharedPreferencesService {
 
   /// Initialize storage
   static Future<void> initializeStorage() async {
-    if (_prefs != null) {
-      await _prefs!.clear();
-    }
     _prefs = await SharedPreferences.getInstance();
   }
 

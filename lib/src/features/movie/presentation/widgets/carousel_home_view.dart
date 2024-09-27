@@ -89,15 +89,6 @@ class CarouselBox extends StatelessWidget {
         ),
         items: children,
       ),
-      // child: CarouselView(
-      //   shape: RoundedRectangleBorder(
-      //     borderRadius: BorderRadius.circular(AppSizes.borderRadiusLg),
-      //   ),
-      //   itemExtent: 320,
-      //   shrinkExtent: 200,
-      //   onTap: print,
-      //   children: children,
-      // ),
     );
   }
 }

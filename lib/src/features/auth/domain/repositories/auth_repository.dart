@@ -31,4 +31,10 @@ abstract class AuthRepository {
 
   ///
   FutureEither<String> saveProfilePhoto(SaveProfilePhotoParams params);
+
+  ///
+  FutureEither<AuthParams> getEmailPassword();
+
+  ///
+  FutureEither<void> saveEmailPassword(AuthParams params);
 }

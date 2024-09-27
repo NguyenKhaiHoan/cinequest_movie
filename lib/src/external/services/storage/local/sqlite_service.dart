@@ -11,9 +11,9 @@ class SqliteService {
     String dbName,
     Future<void> Function(Database, int)? createDatabase,
   ) async {
-    if (_database != null) {
-      await _database!.close();
-    }
+    // if (_database != null) {
+    //   await _database!.close();
+    // }
     final directory = await getApplicationDocumentsDirectory();
     final path = '${directory.path}/$dbName.db';
     _database = await openDatabase(
@@ -21,7 +21,6 @@ class SqliteService {
       version: 1,
       onCreate: createDatabase,
     );
-    print('Bảng được tạo xong 2');
   }
 
   ///

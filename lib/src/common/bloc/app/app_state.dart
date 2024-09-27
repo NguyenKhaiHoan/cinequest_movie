@@ -7,7 +7,10 @@ class AppState with _$AppState {
   const factory AppState.initial() = AppInitialState;
 
   /// Trạng thái đã được xác thực
-  const factory AppState.authenticated() = AppenticatedState;
+  const factory AppState.authenticated() = AppAuthenticatedState;
+
+  /// Trạng thái đã chưa setup account
+  const factory AppState.accountNotSetup() = AppAccountNotSetupState;
 
   /// Trạng thái chưa được xác thực và đưa ra lỗi nếu có nhận tham số
   ///

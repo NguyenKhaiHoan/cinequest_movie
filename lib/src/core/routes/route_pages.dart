@@ -158,7 +158,6 @@ final class RouterPages {
   static String? _guard(BuildContext context, GoRouterState state) {
     // Đọc trạng thái xác thực của app
     final appAuthState = context.read<AppBloc>().state;
-    print(_path);
 
     // Cập nhật lại path sau mỗi lần điều hướng
     if (_path == '') {
@@ -168,14 +167,19 @@ final class RouterPages {
     }
 
     final isUnAuthenticated = appAuthState is AppUnAuthenticatedState;
-    final isAuthenticated = appAuthState is AppenticatedState;
+    final isAuthenticated = appAuthState is AppAuthenticatedState;
+    final isNotSetup = appAuthState is AppAccountNotSetupState;
 
-    // Nếu đã đăng nhập mà path hiện tại chưa chứa path của home page
+    // Nếu chưa setup account thì trả về AccountSetupPage
+    if (isNotSetup) {
+      return AppRoutes.accountSetup.path;
+    }
+    // Nếu đã đăng nhập mà path hiện tại chưa chứa path của HomePage
     // thì trả về path của home page
-    if (isAuthenticated && !_path.contains(AppRoutes.home.path)) {
+    else if (isAuthenticated && !_path.contains(AppRoutes.home.path)) {
       return AppRoutes.home.path;
     }
-    // Nếu chưa đăng nhập mà path hiện tại chưa chứa path của welcome page
+    // Nếu chưa đăng nhập mà path hiện tại chưa chứa path của WelcomePage
     // thì trả về path của welcome page
     else if (isUnAuthenticated && !_path.contains(AppRoutes.welcome.path)) {
       return AppRoutes.welcome.path;

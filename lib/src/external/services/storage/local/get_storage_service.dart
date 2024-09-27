@@ -7,9 +7,6 @@ class GetStorageService {
 
   /// Khởi tạo storage
   static Future<void> initializeStorage(String id) async {
-    if (_storage != null) {
-      await _storage!.erase();
-    }
     await GetStorage.init(id);
     _storage = GetStorage(id);
   }

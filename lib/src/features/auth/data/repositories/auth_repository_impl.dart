@@ -4,6 +4,7 @@ import 'package:cinequest/src/core/routes/route_pages.dart';
 import 'package:cinequest/src/features/auth/data/data_sources/auth_cloud_firestore_data_source.dart';
 import 'package:cinequest/src/features/auth/data/data_sources/auth_firebase_data_source.dart';
 import 'package:cinequest/src/features/auth/data/data_sources/auth_firebase_storage_data_source.dart';
+import 'package:cinequest/src/features/auth/data/data_sources/auth_local_storage_data_source.dart';
 import 'package:cinequest/src/features/auth/domain/entities/params/auth_params.dart';
 import 'package:cinequest/src/features/auth/domain/entities/params/get_profile_user_params.dart';
 import 'package:cinequest/src/features/auth/domain/entities/params/save_profile_params.dart';
@@ -20,12 +21,15 @@ class AuthRepositoryImpl implements AuthRepository {
     required AuthFirebaseDataSource authFirebaseDataSource,
     required AuthCloudFirestoreDataSource authCloudFirestoreDataSource,
     required AuthFirebaseStorageDataSource authFirebaseStorageDataSource,
+    required AuthLocalStorageDataSource authLocalStorageDataSource,
   })  : _authFirebaseDataSource = authFirebaseDataSource,
         _authCloudFirestoreDataSource = authCloudFirestoreDataSource,
-        _authFirebaseStorageDataSource = authFirebaseStorageDataSource;
+        _authFirebaseStorageDataSource = authFirebaseStorageDataSource,
+        _authLocalStorageDataSource = authLocalStorageDataSource;
   final AuthFirebaseDataSource _authFirebaseDataSource;
   final AuthCloudFirestoreDataSource _authCloudFirestoreDataSource;
   final AuthFirebaseStorageDataSource _authFirebaseStorageDataSource;
+  final AuthLocalStorageDataSource _authLocalStorageDataSource;
 
   @override
   FutureEither<UserCredential> login(AuthParams params) async {
@@ -108,6 +112,27 @@ class AuthRepositoryImpl implements AuthRepository {
       final result = await _authFirebaseStorageDataSource.saveProfilePhoto(
         params,
       );
+      return Right(result);
+    } on Failure catch (e) {
+      return Left(e);
+    }
+  }
+
+  @override
+  FutureEither<AuthParams> getEmailPassword() async {
+    try {
+      final result = await _authLocalStorageDataSource.getEmailPassword();
+      return Right(result);
+    } on Failure catch (e) {
+      return Left(e);
+    }
+  }
+
+  @override
+  FutureEither<void> saveEmailPassword(AuthParams params) async {
+    try {
+      final result =
+          await _authLocalStorageDataSource.saveEmailPassword(params);
       return Right(result);
     } on Failure catch (e) {
       return Left(e);

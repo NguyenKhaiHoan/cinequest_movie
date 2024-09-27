@@ -6,7 +6,7 @@ import 'package:cinequest/src/features/auth/domain/entities/params/save_profile_
 import 'package:firebase_storage/firebase_storage.dart';
 
 /// Sử dụng Firebase Storage
-// ignore: one_member_abstracts
+
 abstract class AuthFirebaseStorageDataSource {
   ///
   Future<String> saveProfilePhoto(SaveProfilePhotoParams params);
