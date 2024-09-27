@@ -1,6 +1,7 @@
 import 'package:cinequest/src/common/widgets/app_bar_bottom_divider.dart';
 import 'package:cinequest/src/common/widgets/padding_app_bar.dart';
 import 'package:cinequest/src/core/extensions/context_extension.dart';
+import 'package:cinequest/src/core/extensions/date_time_extension.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,7 @@ class TicketsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final time = DateTime.now();
     return Scaffold(
       appBar: AppBarBottomDivider(
         leadingWidth: 110,
@@ -18,7 +20,7 @@ class TicketsPage extends StatelessWidget {
           isLeft: true,
           alignment: Alignment.centerLeft,
           child: Text(
-            'Feb 12'.toUpperCase().hardcoded,
+            time.formatToMMMDD().toUpperCase().hardcoded,
             style: context.textTheme.bodyMedium,
           ),
         ),

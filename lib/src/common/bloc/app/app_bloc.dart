@@ -76,7 +76,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         (data) async {
           // Nếu user khác null tức đã đăng nhập thì lấy data từ firestore về
           // dữ liệu user mới trong app
-          _repository.setUser(data);
+          _repository.user = data;
           await _service.saveData<bool>('IsSetupAccout', true);
           await SqliteService.initializeDatabase(user.uid, _createDatabase);
           // Cập nhật trạng thái app đã xác thực

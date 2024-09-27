@@ -118,6 +118,18 @@ Future<void> initDependencies() async {
     ..registerLazySingleton<SaveMovieLocalUseCase>(
       () => SaveMovieLocalUseCase(sl<MovieRepository>()),
     )
+    ..registerLazySingleton<DeleteMovieLocalUseCase>(
+      () => DeleteMovieLocalUseCase(sl<MovieRepository>()),
+    )
+    ..registerLazySingleton<GetMovieLocalUseCase>(
+      () => GetMovieLocalUseCase(sl<MovieRepository>()),
+    )
+    ..registerLazySingleton<GetEmailPasswordUseCase>(
+      () => GetEmailPasswordUseCase(sl<AuthRepository>()),
+    )
+    ..registerLazySingleton<SaveEmailPasswordUseCase>(
+      () => SaveEmailPasswordUseCase(sl<AuthRepository>()),
+    )
 
     // App Logic: registerFactory
     ..registerFactory<AppBloc>(

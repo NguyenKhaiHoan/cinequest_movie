@@ -76,20 +76,20 @@ class MovieMapper implements Mapper<MovieDto, Movie> {
   Movie objectToEntity(Map<String, dynamic> object) {
     return Movie(
       adult: (object['adult'] as int) == 1,
-      backdropPath: object['backdropPath'] as String?,
+      backdropPath: object['backdrop_path'] as String?,
       genreIds:
-          (object['genreIds'] as String?)?.split(',').map(int.parse).toList(),
+          (object['genre_ids'] as String?)?.split(',').map(int.parse).toList(),
       id: object['id'] as int?,
-      originalLanguage: object['originalLanguage'] as String?,
-      originalTitle: object['originalTitle'] as String?,
+      originalLanguage: object['original_language'] as String?,
+      originalTitle: object['original_title'] as String?,
       overview: object['overview'] as String?,
       popularity: object['popularity'] as double?,
-      posterPath: object['posterPath'] as String?,
-      releaseDate: DateTime.tryParse(object['releaseDate'] as String? ?? ''),
+      posterPath: object['poster_path'] as String?,
+      releaseDate: DateTime.tryParse(object['release_date'] as String? ?? ''),
       title: object['title'] as String?,
       video: (object['video'] as int) == 1,
-      voteAverage: object['voteAverage'] as double?,
-      voteCount: object['voteCount'] as int?,
+      voteAverage: object['vote_average'] as double?,
+      voteCount: object['vote_count'] as int?,
     );
   }
 }

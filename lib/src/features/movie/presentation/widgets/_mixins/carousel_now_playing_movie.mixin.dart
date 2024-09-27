@@ -2,27 +2,42 @@ part of '../carousel_now_playing_movie.dart';
 
 /// Mixin của CarouselNowPlayingMovie xử lý logic UI
 mixin CarouselNowPlayingMovieMixin on State<CarouselNowPlayingMovie> {
-  void _saveMovieLocal(BuildContext context, Movie movie) {
-    context.read<ButtonBloc>().add(
-          ButtonEvent.execute(
-            useCase: sl<SaveMovieLocalUseCase>(),
-            params: SaveMovieLocalParams(
-              movie: movie,
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      sl<GetMovieLocalUseCase>().call();
+    });
+  }
+
+  void _toggleFavorite(BuildContext context, Movie movie, bool isFavorite) {
+    if (isFavorite) {
+      context.read<ButtonBloc>().add(
+            ButtonEvent.execute(
+              useCase: sl<DeleteMovieLocalUseCase>(),
+              params: DeleteMovieLocalParams(
+                movieId: movie.id!,
+              ),
             ),
-          ),
-        );
+          );
+    } else {
+      context.read<ButtonBloc>().add(
+            ButtonEvent.execute(
+              useCase: sl<SaveMovieLocalUseCase>(),
+              params: SaveMovieLocalParams(
+                movie: movie,
+              ),
+            ),
+          );
+    }
   }
 
   void _listener(
     BuildContext context,
     ButtonState state,
-    bool isFavorite,
   ) {
     state.whenOrNull(
       failure: (failure) => context.showSnackbar(context, failure.message),
-      success: () => context
-          .read<MovieLocalBloc>()
-          .add(MovieLocalEvent.toggleFavorite(isFavorite: isFavorite)),
     );
   }
 }

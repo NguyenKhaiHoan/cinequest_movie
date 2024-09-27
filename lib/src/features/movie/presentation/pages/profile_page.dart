@@ -1,14 +1,11 @@
 import 'package:cinequest/gen/assets.gen.dart';
-import 'package:cinequest/gen/colors.gen.dart';
 import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:cinequest/src/common/widgets/app_bar_bottom_divider.dart';
 import 'package:cinequest/src/common/widgets/custom_circle_button.dart';
 import 'package:cinequest/src/common/widgets/padding_app_bar.dart';
-import 'package:cinequest/src/core/di/injection_container.import.dart';
-import 'package:cinequest/src/core/extensions/context_extension.dart';
-import 'package:cinequest/src/core/extensions/string_extension.dart';
-import 'package:cinequest/src/core/repositories/user_repository.dart';
 import 'package:cinequest/src/core/routes/route_enums.dart';
+import 'package:cinequest/src/features/movie/presentation/widgets/favorite_movie_profile.dart';
+import 'package:cinequest/src/features/movie/presentation/widgets/profile_photo.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -46,58 +43,15 @@ class _ProfilePageState extends State<ProfilePage> with ProfilePageMixin {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppSizes.defaultSpace),
-        child: StreamBuilder(
-          stream: sl<UserRepository>().authStateChanges(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator(
-                color: AppColors.white,
-              );
-            }
-            if (snapshot.hasError) {
-              return SizedBox(
-                child: Center(
-                  child: Text('Error load data'.hardcoded),
-                ),
-              );
-            }
-            if (!snapshot.hasData || snapshot.data == null) {
-              return SizedBox(
-                child: Center(
-                  child: Text('No data'.hardcoded),
-                ),
-              );
-            }
-            final user = snapshot.data!;
-            return SizedBox(
-              width: double.infinity,
-              child: Column(
-                children: [
-                  gapH48,
-                  Container(
-                    height: 100,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: NetworkImage(user.profilePhoto),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  gapH8,
-                  Text(
-                    '${user.surname} ${user.name} (${user.username})',
-                    style: context.textTheme.bodyMedium,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
-            );
-          },
+      body: const SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: AppSizes.defaultSpace),
+        child: Column(
+          children: [
+            gapH48,
+            ProfilePhoto(),
+            gapH48,
+            FavoriteMovieProfile(),
+          ],
         ),
       ),
     );

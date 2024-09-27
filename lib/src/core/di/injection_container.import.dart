@@ -15,8 +15,10 @@ import 'package:cinequest/src/features/auth/data/data_sources/auth_firebase_stor
 import 'package:cinequest/src/features/auth/data/data_sources/auth_local_storage_data_source.dart';
 import 'package:cinequest/src/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:cinequest/src/features/auth/domain/repositories/auth_repository.dart';
+import 'package:cinequest/src/features/auth/domain/usecases/get_email_password.dart';
 import 'package:cinequest/src/features/auth/domain/usecases/get_profile_user_use_case.dart';
 import 'package:cinequest/src/features/auth/domain/usecases/login_use_case.dart';
+import 'package:cinequest/src/features/auth/domain/usecases/save_email_password.dart';
 import 'package:cinequest/src/features/auth/domain/usecases/save_profile_use_case.dart';
 import 'package:cinequest/src/features/auth/domain/usecases/sign_out_use_case.dart';
 import 'package:cinequest/src/features/auth/domain/usecases/sign_up_use_case.dart';
@@ -26,6 +28,8 @@ import 'package:cinequest/src/features/movie/data/data_sources/movie_api_network
 import 'package:cinequest/src/features/movie/data/data_sources/movie_local_data_source.dart';
 import 'package:cinequest/src/features/movie/data/repositories/movie_repository_impl.dart';
 import 'package:cinequest/src/features/movie/domain/repositories/movie_repository.dart';
+import 'package:cinequest/src/features/movie/domain/usecases/delete_movie_local_use_case.dart';
+import 'package:cinequest/src/features/movie/domain/usecases/get_movies_local_use_case.dart';
 import 'package:cinequest/src/features/movie/domain/usecases/get_now_playing_movies_use_case.dart';
 import 'package:cinequest/src/features/movie/domain/usecases/get_popular_movie_use_case.dart';
 import 'package:cinequest/src/features/movie/domain/usecases/save_movie_local_use_case.dart';

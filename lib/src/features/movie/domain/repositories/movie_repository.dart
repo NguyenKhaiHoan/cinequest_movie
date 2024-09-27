@@ -25,4 +25,7 @@ abstract class MovieRepository {
 
   ///
   FutureEither<bool> isFavoriteLocal(IsFavoriteLocalParams params);
+
+  ///
+  Stream<List<Movie>> favoriteMoviesStateChanges();
 }

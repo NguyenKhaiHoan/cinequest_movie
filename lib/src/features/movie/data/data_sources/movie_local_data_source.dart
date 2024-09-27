@@ -11,13 +11,13 @@ import 'package:cinequest/src/features/movie/domain/entities/params/save_movie_l
 /// Sử dụng GetStorageService, Shared Preferences, Hive, Sqlite, ...
 abstract class MovieLocalDataSource {
   ///
-  Future<void> saveMovieLocal(SaveMovieLocalParams params);
+  Future<List<Movie>> saveMovieLocal(SaveMovieLocalParams params);
 
   ///
   Future<List<Movie>> getMoviesLocal();
 
   ///
-  Future<void> deleteMovieLocal(DeleteMovieLocalParams params);
+  Future<List<Movie>> deleteMovieLocal(DeleteMovieLocalParams params);
 
   ///
   Future<bool> isFavoriteLocal(IsFavoriteLocalParams params);
@@ -33,16 +33,16 @@ class MovieSqliteServiceDataSourceImpl implements MovieLocalDataSource {
   final _movieMapper = MovieMapper();
 
   @override
-  Future<void> saveMovieLocal(SaveMovieLocalParams params) async {
+  Future<List<Movie>> saveMovieLocal(SaveMovieLocalParams params) async {
     try {
       final movie = params.movie;
-      if (!await isFavoriteLocal(IsFavoriteLocalParams(movieId: movie.id!))) {
-        final object = _movieMapper.entityToObject(movie);
-        await _sqliteService.insertData(
-          favouriteMoviesTableKey,
-          object,
-        );
-      }
+      final object = _movieMapper.entityToObject(movie);
+      await _sqliteService.insertData(
+        favouriteMoviesTableKey,
+        object,
+      );
+      final movies = await getMoviesLocal();
+      return movies;
     } catch (e) {
       throw Failure(
         message: DataLocalException.fromException(e).message,
@@ -67,16 +67,16 @@ class MovieSqliteServiceDataSourceImpl implements MovieLocalDataSource {
   }
 
   @override
-  Future<void> deleteMovieLocal(DeleteMovieLocalParams params) async {
+  Future<List<Movie>> deleteMovieLocal(DeleteMovieLocalParams params) async {
     try {
       final movieId = params.movieId;
-      if (!await isFavoriteLocal(IsFavoriteLocalParams(movieId: movieId))) {
-        await _sqliteService.deleteData(
-          'movies',
-          'id = ?',
-          [movieId],
-        );
-      }
+      await _sqliteService.deleteData(
+        favouriteMoviesTableKey,
+        'id = ?',
+        [movieId],
+      );
+      final movies = await getMoviesLocal();
+      return movies;
     } catch (e) {
       throw Failure(
         message: DataLocalException.fromException(e).message,
@@ -87,8 +87,9 @@ class MovieSqliteServiceDataSourceImpl implements MovieLocalDataSource {
   @override
   Future<bool> isFavoriteLocal(IsFavoriteLocalParams params) async {
     try {
+      final movieId = params.movieId;
       final movies = await getMoviesLocal();
-      return movies.any((movie) => movie.id == params.movieId);
+      return movies.any((movie) => movie.id == movieId);
     } catch (e) {
       throw Failure(
         message: DataLocalException.fromException(e).message,

@@ -43,7 +43,7 @@ class CarouselPopularMovie extends StatelessWidget {
                       color: AppColors.eerieBlack,
                       image: DecorationImage(
                         image: NetworkImage(
-                          TMDBUrl.imageBaseUrl + data[index].backdropPath!,
+                          TMDBUrl.imageBaseUrl + data[index].posterPath!,
                         ),
                         fit: BoxFit.cover,
                       ),
@@ -58,7 +58,11 @@ class CarouselPopularMovie extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.all(16),
                             child: Text(
-                              '8.1'.toUpperCase().hardcoded,
+                              data[index]
+                                  .voteAverage
+                                  .toString()
+                                  .toUpperCase()
+                                  .hardcoded,
                               style: context.textTheme.bodySmall,
                             ),
                           ),

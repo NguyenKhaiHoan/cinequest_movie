@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cinequest/src/core/errors/failure.dart';
 import 'package:cinequest/src/core/generics/type_def.dart';
+import 'package:cinequest/src/external/services/storage/cache/in_memory_store_service.dart';
 import 'package:cinequest/src/features/movie/data/data_sources/movie_api_network_data_source.dart';
 import 'package:cinequest/src/features/movie/data/data_sources/movie_local_data_source.dart';
 import 'package:cinequest/src/features/movie/domain/entities/movie.dart';
@@ -47,7 +48,8 @@ class MovieRepositoryImpl implements MovieRepository {
   FutureEither<void> saveMovieLocal(SaveMovieLocalParams params) async {
     try {
       final result = await _movieLocalDataSource.saveMovieLocal(params);
-      return Right(result);
+      favoriteMovies = result;
+      return const Right(null);
     } on Failure catch (e) {
       return Left(e);
     }
@@ -57,6 +59,7 @@ class MovieRepositoryImpl implements MovieRepository {
   FutureEither<List<Movie>> getMoviesLocal() async {
     try {
       final result = await _movieLocalDataSource.getMoviesLocal();
+      favoriteMovies = result;
       return Right(result);
     } on Failure catch (e) {
       return Left(e);
@@ -67,7 +70,8 @@ class MovieRepositoryImpl implements MovieRepository {
   FutureEither<void> deleteMovieLocal(DeleteMovieLocalParams params) async {
     try {
       final result = await _movieLocalDataSource.deleteMovieLocal(params);
-      return Right(result);
+      favoriteMovies = result;
+      return const Right(null);
     } on Failure catch (e) {
       return Left(e);
     }
@@ -81,5 +85,19 @@ class MovieRepositoryImpl implements MovieRepository {
     } on Failure catch (e) {
       return Left(e);
     }
+  }
+
+  final _favoriteMoviesState = InMemoryStoreService<List<Movie>>([]);
+
+  @override
+  Stream<List<Movie>> favoriteMoviesStateChanges() =>
+      _favoriteMoviesState.stream;
+
+// Getter cho _favoriteMoviesState.value
+  List<Movie> get favoriteMovies => _favoriteMoviesState.value;
+
+// Setter cho _favoriteMoviesState.value
+  set favoriteMovies(List<Movie> movies) {
+    _favoriteMoviesState.value = movies;
   }
 }

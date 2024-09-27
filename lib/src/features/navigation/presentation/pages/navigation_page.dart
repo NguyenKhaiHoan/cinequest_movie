@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+part '_mixins/navigation_page.mixin.dart';
+
 /// Trang điều hướng
 class NavigationPage extends StatefulWidget {
   /// Constructor
@@ -20,20 +22,6 @@ class NavigationPage extends StatefulWidget {
 }
 
 class _NavigationPageState extends State<NavigationPage> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _showBottomSheet();
-    });
-  }
-
-  void _showBottomSheet() {
-    if (RouterPages.path.contains(AppRoutes.accountSetup.path)) {
-      BottomSheetUtil.showSucessSignUp(context);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

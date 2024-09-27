@@ -7,10 +7,10 @@ abstract class UserRepository {
   Stream<AppUser?> authStateChanges();
 
   ///
-  AppUser? get currentUser;
+  AppUser? get user;
 
   ///
-  void setUser(AppUser? user);
+  set user(AppUser? user);
 }
 
 /// Implementation của UserRepository
@@ -21,10 +21,10 @@ class UserRepositoryImpl implements UserRepository {
   Stream<AppUser?> authStateChanges() => _authState.stream;
 
   @override
-  AppUser? get currentUser => _authState.value;
+  AppUser? get user => _authState.value;
 
   @override
-  void setUser(AppUser? user) {
+  set user(AppUser? user) {
     _authState.value = user;
   }
 }
