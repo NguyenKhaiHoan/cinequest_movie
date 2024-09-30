@@ -26,31 +26,14 @@ class CustomTextField extends StatelessWidget {
     this.counter = 0,
   });
 
-  ///
   final String label;
-
-  ///
   final bool isPassword;
-
-  ///
   final bool isVerificationCode;
-
-  ///
   final TextEditingController controller;
-
-  ///
   final void Function(String)? onChanged;
-
-  ///
   final String? Function(String?)? validator;
-
-  ///
   final bool checkCharacterCounter;
-
-  ///
   final int counter;
-
-  ///
 
   @override
   Widget build(BuildContext context) {

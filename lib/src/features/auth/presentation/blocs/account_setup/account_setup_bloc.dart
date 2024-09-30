@@ -11,27 +11,27 @@ part 'account_setup_state.dart';
 class AccountSetupBloc extends Bloc<AccountSetupEvent, AccountSetupState> {
   /// Constructor
   AccountSetupBloc() : super(AccountSetupState.initial()) {
-    on<AccountSetupEvent>((events, emit) async {
-      events.map(
-        pageChanged: (event) => _onPageChanged(event, emit),
-        usernameChanged: (event) => _onUsernameChanged(event, emit),
-        nameChanged: (event) => _onNameChanged(event, emit),
-        surnameChanged: (event) => _onSurnameChanged(event, emit),
-        bioChanged: (event) => _onBioChanged(event, emit),
-        profilePhotoChanged: (event) => _onProfilePhotoChanged(event, emit),
+    on<AccountSetupEvent>((event, emit) async {
+      event.map(
+        pageChanged: (e) => _onPageChanged(e, emit),
+        usernameChanged: (e) => _onUsernameChanged(e, emit),
+        nameChanged: (e) => _onNameChanged(e, emit),
+        surnameChanged: (e) => _onSurnameChanged(e, emit),
+        bioChanged: (e) => _onBioChanged(e, emit),
+        profilePhotoChanged: (e) => _onProfilePhotoChanged(e, emit),
       );
     });
   }
 
   void _onPageChanged(
-    EventAccountSetupPageChanged event,
+    _AccountSetupPageChangedEvent event,
     Emitter<AccountSetupState> emit,
   ) {
     emit(state.copyWith(currentPage: event.index));
   }
 
   void _onUsernameChanged(
-    EventAccountSetupUsenameChanged event,
+    _AccountSetupUsenameChangedEvent event,
     Emitter<AccountSetupState> emit,
   ) {
     emit(
@@ -43,7 +43,7 @@ class AccountSetupBloc extends Bloc<AccountSetupEvent, AccountSetupState> {
   }
 
   void _onNameChanged(
-    EventAccountSetupNameChanged event,
+    _AccountSetupNameChangedEvent event,
     Emitter<AccountSetupState> emit,
   ) {
     emit(
@@ -55,7 +55,7 @@ class AccountSetupBloc extends Bloc<AccountSetupEvent, AccountSetupState> {
   }
 
   void _onSurnameChanged(
-    EventAccountSetupSurnameChanged event,
+    _AccountSetupSurnameChangedEvent event,
     Emitter<AccountSetupState> emit,
   ) {
     emit(
@@ -67,7 +67,7 @@ class AccountSetupBloc extends Bloc<AccountSetupEvent, AccountSetupState> {
   }
 
   void _onBioChanged(
-    EventAccountSetupBioChanged event,
+    _AccountSetupBioChangedEvent event,
     Emitter<AccountSetupState> emit,
   ) {
     emit(
@@ -79,7 +79,7 @@ class AccountSetupBloc extends Bloc<AccountSetupEvent, AccountSetupState> {
   }
 
   void _onProfilePhotoChanged(
-    EventAccountSetupProfilePhotoChanged event,
+    _AccountSetupProfilePhotoChangedEvent event,
     Emitter<AccountSetupState> emit,
   ) {
     emit(

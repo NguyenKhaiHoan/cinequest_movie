@@ -4,9 +4,10 @@ part of 'login_bloc.dart';
 @freezed
 class LoginEvent with _$LoginEvent {
   /// Sự kiện thay đổi email
-  const factory LoginEvent.emailChanged(String email) = EventLoginEmailChanged;
+  const factory LoginEvent.emailChanged({required String email}) =
+      _LoginEmailChangedEvent;
 
   /// Sự kiện thay đổi password
-  const factory LoginEvent.setPasswordChanged(String password) =
-      EventLoginSetPasswordChanged;
+  const factory LoginEvent.setPasswordChanged({required String password}) =
+      _LoginSetPasswordChangedEvent;
 }

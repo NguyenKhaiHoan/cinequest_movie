@@ -10,7 +10,6 @@ class SharedPreferencesService {
     _prefs = await SharedPreferences.getInstance();
   }
 
-  ///
   SharedPreferences get prefs {
     if (_prefs == null) {
       throw Exception('Shared Preference has not been initialized'.hardcoded);
@@ -18,7 +17,6 @@ class SharedPreferencesService {
     return _prefs!;
   }
 
-  ///
   Future<void> saveData<T>(String key, T value) async {
     _prefs = prefs;
     switch (T) {
@@ -35,7 +33,6 @@ class SharedPreferencesService {
     }
   }
 
-  ///
   T? getData<T>(String key) {
     _prefs = prefs;
     switch (T) {
@@ -52,19 +49,16 @@ class SharedPreferencesService {
     }
   }
 
-  ///
   Future<void> remove(String key) async {
     _prefs = prefs;
     await _prefs!.remove(key);
   }
 
-  ///
   bool contains(String key) {
     _prefs = prefs;
     return _prefs!.containsKey(key);
   }
 
-  ///
   Future<void> clear() async {
     _prefs = prefs;
     await _prefs!.clear();

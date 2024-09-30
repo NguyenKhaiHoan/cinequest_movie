@@ -4,7 +4,7 @@ import 'package:cinequest/src/core/repositories/user_repository.dart';
 import 'package:cinequest/src/core/routes/route_pages.dart';
 import 'package:cinequest/src/external/services/storage/local/get_storage_service.dart';
 import 'package:cinequest/src/external/services/storage/local/sqlite_service.dart';
-import 'package:cinequest/src/features/auth/domain/entities/params/get_profile_user_params.dart';
+import 'package:cinequest/src/features/auth/domain/usecases/params/get_profile_user_params.dart';
 import 'package:cinequest/src/features/auth/domain/usecases/get_profile_user_use_case.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,40 +25,41 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     required UserRepository userRepository,
     required GetStorageService getStorageService,
   })  : _firebaseAuth = firebaseAuth,
-        _useCase = getProfileUserUseCase,
-        _repository = userRepository,
-        _service = getStorageService,
-        super(const AppInitialState()) {
+        _getProfileUseCase = getProfileUserUseCase,
+        _userRepository = userRepository,
+        _getService = getStorageService,
+        super(const AppState.initial()) {
     on<AppEvent>((event, emit) async {
       await event.map(
-        started: (event) async => _onStarted(event, emit),
+        started: (e) async => _onStarted(e, emit),
       );
     });
   }
 
   final FirebaseAuth _firebaseAuth;
-  final GetProfileUserUseCase _useCase;
-  final UserRepository _repository;
-  final GetStorageService _service;
+  final GetProfileUserUseCase _getProfileUseCase;
+  final UserRepository _userRepository;
+  final GetStorageService _getService;
 
   Future<void> _onStarted(
-    EventAppStarted event,
+    _AppStartedEvent event,
     Emitter<AppState> emit,
   ) async {
     final user = _firebaseAuth.currentUser;
     // Xét nếu user của firebase là null tức app chưa được đăng nhập
     if (user != null) {
       // Nếu user khác null tức đã đăng nhập thì lấy data từ firestore về
-      final result = await _useCase.call(
+      final result = await _getProfileUseCase.call(
         params: GetProfileUserParams(userId: user.uid),
       );
 
       /// Khởi tạo storage để lưu trạng thái đã setup account hay chưa.
       /// Nếu trạng thái là null thì cho mặc định là `false`
       await GetStorageService.initializeStorage(user.uid);
-      if (_service.getData<bool>('IsSetupAccout') == null) {
-        await _service.saveData<bool>('IsSetupAccout', false);
+      if (_getService.getData<bool>('IsSetupAccout') == null) {
+        await _getService.saveData<bool>('IsSetupAccout', false);
       }
+
       await result.fold(
         (failure) async {
           /// Lỗi không lấy được data xảy ra 2 trường hợp
@@ -67,24 +68,24 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           /// vì vậy Firebase sẽ đưa ra lỗi
           /// - Do các lỗi Firebase khác: lỗi mạng không thể truy cập vào
           /// Firebase để lấy dữ liệu, ...
-          if (_service.getData<bool>('IsSetupAccout') == false) {
+          if (_getService.getData<bool>('IsSetupAccout') == false) {
             emit(const AppState.accountNotSetup());
           } else {
-            emit(AppState.unAuthenticated(failure: failure));
+            emit(AppState.unauthenticated(failure: failure));
           }
         },
         (data) async {
           // Nếu user khác null tức đã đăng nhập thì lấy data từ firestore về
           // dữ liệu user mới trong app
-          _repository.user = data;
-          await _service.saveData<bool>('IsSetupAccout', true);
+          _userRepository.user = data;
+          await _getService.saveData<bool>('IsSetupAccout', true);
           await SqliteService.initializeDatabase(user.uid, _createDatabase);
           // Cập nhật trạng thái app đã xác thực
           emit(const AppState.authenticated());
         },
       );
     } else {
-      emit(const AppState.unAuthenticated());
+      emit(const AppState.unauthenticated());
     }
     RouterPages.router.refresh();
   }

@@ -5,7 +5,6 @@ import 'package:cinequest/src/external/services/connectivity/connectivity_servic
 class ConnectivityUtil {
   ConnectivityUtil._();
 
-  ///
   static Future<bool> checkConnectivity() async {
     final connectivityService = sl<ConnectivityService>();
     return connectivityService.isConnected();

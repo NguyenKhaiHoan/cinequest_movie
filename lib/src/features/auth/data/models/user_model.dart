@@ -1,13 +1,13 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'user_dto.freezed.dart';
-part 'user_dto.g.dart';
+part 'user_model.freezed.dart';
+part 'user_model.g.dart';
 
 /// Dto
 @freezed
-class UserDto with _$UserDto {
+class UserModel with _$UserModel {
   /// Dto
-  const factory UserDto({
+  const factory UserModel({
     required String id,
     @JsonKey(name: 'profile_photo') required String profilePhoto,
     required String email,
@@ -19,6 +19,6 @@ class UserDto with _$UserDto {
   }) = _UserDto;
 
   /// fromJson
-  factory UserDto.fromJson(Map<String, Object?> json) =>
-      _$UserDtoFromJson(json);
+  factory UserModel.fromJson(Map<String, Object?> json) =>
+      _$UserModelFromJson(json);
 }

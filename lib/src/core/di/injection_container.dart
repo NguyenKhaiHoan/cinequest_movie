@@ -17,21 +17,14 @@ Future<void> initFirebase() async {
 /// Khởi tạo phụ thuộc
 Future<void> initDependencies() async {
   sl
-    // Dio: registerLazySingleton
-    ..registerLazySingleton<DioClient>(DioClient.new)
+      // Dio: registerLazySingleton
+      .registerLazySingleton<DioClient>(DioClient.new);
 
-    // Firebase & Google: registerLazySingleton
-    ..registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance)
-    ..registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance)
-    ..registerLazySingleton<FirebaseStorage>(() => FirebaseStorage.instance)
-    ..registerLazySingleton<GoogleSignIn>(GoogleSignIn.new)
+  // Common
+  CommonDependency.init();
 
-    // Common: registerLazySingleton
-    ..registerLazySingleton<ConnectivityBloc>(
-      () => ConnectivityBloc(connectivityService: sl<ConnectivityService>()),
-    )
-
-    // External Dependencies: registerLazySingleton
+  // External Dependencies: registerLazySingleton
+  sl
     ..registerLazySingleton<TMDBApi>(() => TMDBApi(sl<DioClient>().dio))
     ..registerLazySingleton<ConnectivityService>(ConnectivityService.new)
     ..registerLazySingleton<GetStorageService>(GetStorageService.new)
@@ -43,102 +36,50 @@ Future<void> initDependencies() async {
     )
     ..registerLazySingleton<SecureStorageService>(
       SecureStorageService.new,
-    )
+    );
+  AuthDependency.init();
 
-    // Data Sources: registerLazySingleton
-    ..registerLazySingleton<MovieApiNetworkDataSource>(
-      () => MovieApiNetworkDataSourceImpl(tmdbApi: sl<TMDBApi>()),
-    )
-    ..registerLazySingleton<AuthFirebaseDataSource>(
-      () => AuthFirebaseDataSourceImpl(
-        firebaseAuth: sl<FirebaseAuth>(),
-        googleSignIn: sl<GoogleSignIn>(),
-      ),
-    )
-    ..registerLazySingleton<AuthCloudFirestoreDataSource>(
-      () =>
-          AuthCloudFirestoreDataSourceImpl(firestore: sl<FirebaseFirestore>()),
-    )
-    ..registerLazySingleton<AuthFirebaseStorageDataSource>(
-      () => AuthFirebaseStorageDataSourceImpl(storage: sl<FirebaseStorage>()),
-    )
-    ..registerLazySingleton<MovieLocalDataSource>(
-      () => MovieSqliteServiceDataSourceImpl(
-        sqliteService: sl<SqliteService>(),
-      ),
-    )
-    ..registerLazySingleton<AuthLocalStorageDataSource>(
-      () => AuthSecureStorageDataSourceImpl(
-        secureStorageService: sl<SecureStorageService>(),
-      ),
-    )
+  // Data Sources: registerLazySingleton
+  // ..registerLazySingleton<MovieApiNetworkDataSource>(
+  //   () => MovieApiNetworkDataSourceImpl(tmdbApi: sl<TMDBApi>()),
+  // )
+  // ..registerLazySingleton<MovieLocalDataSource>(
+  //   () => MovieSqliteServiceDataSourceImpl(
+  //     sqliteService: sl<SqliteService>(),
+  //   ),
+  // )
 
-    // Repositories: registerLazySingleton
-    ..registerLazySingleton<UserRepository>(UserRepositoryImpl.new)
-    ..registerLazySingleton<MovieRepository>(
-      () => MovieRepositoryImpl(
-        movieApiNetworkDataSource: sl<MovieApiNetworkDataSource>(),
-        movieLocalDataSource: sl<MovieLocalDataSource>(),
-      ),
-    )
-    ..registerLazySingleton<AuthRepository>(
-      () => AuthRepositoryImpl(
-        authFirebaseDataSource: sl<AuthFirebaseDataSource>(),
-        authCloudFirestoreDataSource: sl<AuthCloudFirestoreDataSource>(),
-        authFirebaseStorageDataSource: sl<AuthFirebaseStorageDataSource>(),
-        authLocalStorageDataSource: sl<AuthLocalStorageDataSource>(),
-      ),
-    )
+  // Repositories: registerLazySingleton
+  sl.registerLazySingleton<UserRepository>(UserRepositoryImpl.new);
+  // ..registerLazySingleton<MovieRepository>(
+  //   () => MovieRepositoryImpl(
+  //     movieApiNetworkDataSource: sl<MovieApiNetworkDataSource>(),
+  //     movieLocalDataSource: sl<MovieLocalDataSource>(),
+  //   ),
+  // )
 
-    // Use Cases: registerLazySingleton
-    ..registerLazySingleton<LoginUseCase>(
-      () => LoginUseCase(sl<AuthRepository>()),
-    )
-    ..registerLazySingleton<SignUpUseCase>(
-      () => SignUpUseCase(sl<AuthRepository>()),
-    )
-    ..registerLazySingleton<VerificateCodeUseCase>(
-      () => VerificateCodeUseCase(sl<AuthRepository>()),
-    )
-    ..registerLazySingleton<SignOutUseCase>(
-      () => SignOutUseCase(sl<AuthRepository>()),
-    )
-    ..registerLazySingleton<GetNowPlayingMoviesUseCase>(
-      () => GetNowPlayingMoviesUseCase(sl<MovieRepository>()),
-    )
-    ..registerLazySingleton<GetPopularMoviesUseCase>(
-      () => GetPopularMoviesUseCase(sl<MovieRepository>()),
-    )
-    ..registerLazySingleton<GetProfileUserUseCase>(
-      () => GetProfileUserUseCase(sl<AuthRepository>()),
-    )
-    ..registerLazySingleton<SaveProfileUseCase>(
-      () => SaveProfileUseCase(sl<AuthRepository>()),
-    )
-    ..registerLazySingleton<SaveMovieLocalUseCase>(
-      () => SaveMovieLocalUseCase(sl<MovieRepository>()),
-    )
-    ..registerLazySingleton<DeleteMovieLocalUseCase>(
-      () => DeleteMovieLocalUseCase(sl<MovieRepository>()),
-    )
-    ..registerLazySingleton<GetMovieLocalUseCase>(
-      () => GetMovieLocalUseCase(sl<MovieRepository>()),
-    )
-    ..registerLazySingleton<GetEmailPasswordUseCase>(
-      () => GetEmailPasswordUseCase(sl<AuthRepository>()),
-    )
-    ..registerLazySingleton<SaveEmailPasswordUseCase>(
-      () => SaveEmailPasswordUseCase(sl<AuthRepository>()),
-    )
+  // Use Cases: registerLazySingleton
+  // ..registerLazySingleton<GetNowPlayingMoviesUseCase>(
+  //   () => GetNowPlayingMoviesUseCase(sl<MovieRepository>()),
+  // )
+  // ..registerLazySingleton<GetPopularMoviesUseCase>(
+  //   () => GetPopularMoviesUseCase(sl<MovieRepository>()),
+  // )
+  // ..registerLazySingleton<GetProfileUserUseCase>(
+  //   () => GetProfileUserUseCase(sl<AuthRepository>()),
+  // )
+  // ..registerLazySingleton<SaveProfileUserUseCase>(
+  //   () => SaveProfileUserUseCase(sl<AuthRepository>()),
+  // )
+  // ..registerLazySingleton<SaveMovieLocalUseCase>(
+  //   () => SaveMovieLocalUseCase(sl<MovieRepository>()),
+  // )
+  // ..registerLazySingleton<DeleteMovieLocalUseCase>(
+  //   () => DeleteMovieLocalUseCase(sl<MovieRepository>()),
+  // )
+  // ..registerLazySingleton<GetMovieLocalUseCase>(
+  //   () => GetMovieLocalUseCase(sl<MovieRepository>()),
+  // )
 
-    // App Logic: registerFactory
-    ..registerFactory<AppBloc>(
-      () => AppBloc(
-        firebaseAuth: sl<FirebaseAuth>(),
-        getProfileUserUseCase: sl<GetProfileUserUseCase>(),
-        userRepository: sl<UserRepository>(),
-        getStorageService: sl<GetStorageService>(),
-      ),
-    )
-    ..registerFactory<AccountSetupBloc>(AccountSetupBloc.new);
+  // App Logic: registerFactory
 }

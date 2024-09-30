@@ -6,32 +6,23 @@ import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:cinequest/src/core/utils/validation_util.dart';
 import 'package:flutter/material.dart';
 
-/// First process của AccountSetUpPage: Nhập username
-class AccountSetupFirstProcess extends StatelessWidget {
+/// Form của ResetPasswordPage
+class ResetPasswordForm extends StatelessWidget {
   /// Constructor
-  const AccountSetupFirstProcess({
+  const ResetPasswordForm({
     required this.title,
     required this.subtitle,
     required this.formKey,
-    required this.usernameTextEditingController,
+    required this.emailTextEditingController,
     super.key,
-    this.onChanged,
+    this.onEmailChanged,
   });
 
-  ///
   final String title;
-
-  ///
   final String subtitle;
-
-  ///
-  final void Function(String)? onChanged;
-
-  ///
+  final void Function(String)? onEmailChanged;
   final GlobalKey<FormState> formKey;
-
-  ///
-  final TextEditingController usernameTextEditingController;
+  final TextEditingController emailTextEditingController;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +34,7 @@ class AccountSetupFirstProcess extends StatelessWidget {
           style: context.textTheme.headlineMedium,
         ),
         gapH24,
-        _buildCustomizeYourAccountForm(),
+        _buildResetPasswordForm(),
         gapH16,
         Text(
           subtitle,
@@ -54,15 +45,15 @@ class AccountSetupFirstProcess extends StatelessWidget {
     );
   }
 
-  Widget _buildCustomizeYourAccountForm() {
+  Widget _buildResetPasswordForm() {
     return Form(
       key: formKey,
       child: CustomTextField(
-        label: 'Username'.hardcoded,
-        controller: usernameTextEditingController,
-        onChanged: onChanged,
+        label: 'Email'.hardcoded,
+        controller: emailTextEditingController,
+        onChanged: onEmailChanged,
         validator: (value) =>
-            ValidationUtil.validateEmptyField('Username', value),
+            ValidationUtil.validateEmail('Email'.hardcoded, value),
       ),
     );
   }

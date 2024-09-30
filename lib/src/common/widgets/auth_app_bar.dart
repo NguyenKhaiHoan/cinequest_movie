@@ -22,16 +22,9 @@ class AuthAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.appBarHeight,
   });
 
-  ///
   final String title;
-
-  ///
   final bool hasLeading;
-
-  ///
-  final VoidCallback? onBackTap;
-
-  ///
+  final void Function()? onBackTap;
   final double? appBarHeight;
 
   @override

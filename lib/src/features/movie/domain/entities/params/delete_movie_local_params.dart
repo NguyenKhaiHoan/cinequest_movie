@@ -7,7 +7,6 @@ class DeleteMovieLocalParams extends Equatable {
     required this.movieId,
   });
 
-  ///
   final int movieId;
 
   @override

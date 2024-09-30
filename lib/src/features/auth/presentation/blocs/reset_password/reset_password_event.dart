@@ -4,6 +4,6 @@ part of 'reset_password_bloc.dart';
 @freezed
 class ResetPasswordEvent with _$ResetPasswordEvent {
   /// Sự kiện thay đổi email
-  const factory ResetPasswordEvent.emailChanged(String email) =
-      EventResetPasswordEmailChanged;
+  const factory ResetPasswordEvent.emailChanged({required String email}) =
+      _ResetPasswordEmailChangedEvent;
 }

@@ -9,20 +9,18 @@ part 'sign_up_bloc.freezed.dart';
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   /// Constructor
   SignUpBloc() : super(SignUpState.initial()) {
-    on<SignUpEvent>((events, emit) async {
-      events.map(
-        emailChanged: (event) => _onEmailChanged(event, emit),
-        setPasswordChanged: (event) => _onSetPasswordChanged(event, emit),
-        confirmPasswordChanged: (event) =>
-            _onConfirmPasswordChanged(event, emit),
-        verificationCodeChanged: (event) =>
-            _onVerificationCodeChanged(event, emit),
+    on<SignUpEvent>((event, emit) async {
+      event.map(
+        emailChanged: (e) => _onEmailChanged(e, emit),
+        setPasswordChanged: (e) => _onSetPasswordChanged(e, emit),
+        confirmPasswordChanged: (e) => _onConfirmPasswordChanged(e, emit),
+        verificationCodeChanged: (e) => _onVerificationCodeChanged(e, emit),
       );
     });
   }
 
   void _onEmailChanged(
-    EventSignUpEmailChanged event,
+    _SignUpEmailChangedEvent event,
     Emitter<SignUpState> emit,
   ) {
     emit(
@@ -38,7 +36,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   }
 
   void _onSetPasswordChanged(
-    EventSignUpSetPasswordChanged event,
+    _SignUpSetPasswordChangedEvent event,
     Emitter<SignUpState> emit,
   ) {
     emit(
@@ -54,7 +52,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   }
 
   void _onConfirmPasswordChanged(
-    EventSignUpConfirmPasswordChanged event,
+    _SignUpConfirmPasswordChangedEvent event,
     Emitter<SignUpState> emit,
   ) {
     emit(
@@ -70,7 +68,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   }
 
   void _onVerificationCodeChanged(
-    EventSignUpVerificationCodeChanged event,
+    _SignUpVerificationCodeChangedEvent event,
     Emitter<SignUpState> emit,
   ) {
     emit(

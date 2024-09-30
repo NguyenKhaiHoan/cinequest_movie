@@ -9,26 +9,26 @@ part 'reset_password_bloc.freezed.dart';
 class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
   /// Constructor
   ResetPasswordBloc() : super(ResetPasswordState.initial()) {
-    on<ResetPasswordEvent>((events, emit) async {
-      events.map(
-        emailChanged: (event) => _onEmailChanged(event, emit),
+    on<ResetPasswordEvent>((event, emit) async {
+      event.map(
+        emailChanged: (e) => _onEmailChanged(e, emit),
       );
     });
   }
 
   void _onEmailChanged(
-    EventResetPasswordEmailChanged event,
+    _ResetPasswordEmailChangedEvent event,
     Emitter<ResetPasswordState> emit,
   ) {
     emit(
       state.copyWith(
         email: event.email,
-        isFormValid: _isFormValid(event.email),
+        isFormValided: _isFormValided(event.email),
       ),
     );
   }
 
-  bool _isFormValid(String email) {
+  bool _isFormValided(String email) {
     return email.isNotEmpty;
   }
 }

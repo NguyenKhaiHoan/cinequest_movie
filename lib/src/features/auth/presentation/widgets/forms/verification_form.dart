@@ -19,22 +19,11 @@ class VerificationForm extends StatelessWidget {
     this.onVerificationCodeChanged,
   });
 
-  ///
   final String title;
-
-  ///
   final String subtitle;
-
-  ///
   final String email;
-
-  ///
   final GlobalKey<FormState> formKey;
-
-  ///
   final TextEditingController verificationCodeTextEditingController;
-
-  ///
   final void Function(String)? onVerificationCodeChanged;
 
   @override

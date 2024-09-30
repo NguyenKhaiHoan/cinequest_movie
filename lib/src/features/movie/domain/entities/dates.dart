@@ -8,10 +8,8 @@ class Dates extends Equatable {
     this.minimum,
   });
 
-  ///
   final DateTime? maximum;
 
-  ///
   final DateTime? minimum;
 
   @override

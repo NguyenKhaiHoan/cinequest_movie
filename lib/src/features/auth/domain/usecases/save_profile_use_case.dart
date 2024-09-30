@@ -1,12 +1,12 @@
 import 'package:cinequest/src/core/generics/type_def.dart';
 import 'package:cinequest/src/core/generics/usecase.dart';
-import 'package:cinequest/src/features/auth/domain/entities/params/save_profile_params.dart';
 import 'package:cinequest/src/features/auth/domain/repositories/auth_repository.dart';
+import 'package:cinequest/src/features/auth/domain/usecases/params/save_profile_params.dart';
 
 /// Use case lưu hồ sơ dữ liệu của người dùng
-class SaveProfileUseCase extends UseCase<void, SaveProfileParams> {
+class SaveProfileUserUseCase extends UseCase<void, SaveProfileParams> {
   /// Constructor
-  SaveProfileUseCase(this._authRepository);
+  SaveProfileUserUseCase(this._authRepository);
   final AuthRepository _authRepository;
 
   @override

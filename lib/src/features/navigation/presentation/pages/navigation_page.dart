@@ -14,7 +14,6 @@ class NavigationPage extends StatefulWidget {
   /// Constructor
   const NavigationPage({required this.child, super.key});
 
-  ///
   final StatefulNavigationShell child;
 
   @override

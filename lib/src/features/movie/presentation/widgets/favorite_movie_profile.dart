@@ -72,12 +72,10 @@ class FavoriteMovieProfile extends StatelessWidget {
   }
 }
 
-///
+/// Danh sách các bộ phim yêu thích
 class FavoriteMovieList extends StatelessWidget {
-  ///
   const FavoriteMovieList({required this.favoriteMovies, super.key});
 
-  ///
   final List<Movie> favoriteMovies;
 
   @override

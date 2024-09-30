@@ -4,5 +4,5 @@ part of 'app_bloc.dart';
 @freezed
 class AppEvent with _$AppEvent {
   /// Sự kiện chạy các logic khi app bắt đầu
-  const factory AppEvent.started() = EventAppStarted;
+  const factory AppEvent.started() = _AppStartedEvent;
 }

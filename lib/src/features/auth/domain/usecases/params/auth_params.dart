@@ -8,7 +8,6 @@ class AuthParams extends Equatable {
     required this.password,
   });
 
-  ///
   factory AuthParams.fromJson(Map<String, dynamic> json) {
     return AuthParams(
       email: json['email'] as String,
@@ -16,16 +15,13 @@ class AuthParams extends Equatable {
     );
   }
 
-  ///
   final String email;
 
-  ///
   final String password;
 
   @override
   List<Object?> get props => [email, password];
 
-  ///
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'email': email,

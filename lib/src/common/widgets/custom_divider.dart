@@ -10,10 +10,7 @@ class CustomDivider extends StatelessWidget {
   /// - [height] : Độ cao của divider (optional)
   const CustomDivider({super.key, this.text, this.height});
 
-  ///
   final String? text;
-
-  ///
   final double? height;
 
   @override

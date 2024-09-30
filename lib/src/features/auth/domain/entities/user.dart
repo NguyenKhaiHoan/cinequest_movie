@@ -14,28 +14,20 @@ class AppUser extends Equatable {
     required this.authBy,
   });
 
-  ///
   final String id;
 
-  ///
   final String profilePhoto;
 
-  ///
   final String email;
 
-  ///
   final String username;
 
-  ///
   final String name;
 
-  ///
   final String surname;
 
-  ///
   final DateTime createdAt;
 
-  ///
   final String authBy;
 
   @override

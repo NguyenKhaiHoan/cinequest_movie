@@ -7,20 +7,17 @@ import 'package:cinequest/src/features/auth/presentation/blocs/account_setup/acc
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-/// Forth process của AccountSetUpPage: Thêm profile photo
-class AccountSetupForthProcess extends StatelessWidget {
+/// View thêm profile photo
+class ASProfilePhotoView extends StatelessWidget {
   /// Constructor
-  const AccountSetupForthProcess({
+  const ASProfilePhotoView({
     required this.title,
     required this.onPressed,
     super.key,
   });
 
-  ///
   final String title;
-
-  ///
-  final VoidCallback onPressed;
+  final void Function() onPressed;
 
   @override
   Widget build(BuildContext context) {

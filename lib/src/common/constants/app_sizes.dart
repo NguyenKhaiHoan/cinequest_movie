@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs
-
 import 'package:flutter/material.dart';
 
 /// Các hằng số kích thước trong App
@@ -25,8 +23,8 @@ class AppSizes {
   static const double buttonWidth = 120;
 
   /// Image Sizes
-  static const double imageThumbSize = 80;
-  static const double imageCarouselHeight = 200;
+  static const double imageNowPlayingCarouselHeight = 200;
+  static const double imagePopularCarouselHeight = 200;
 
   /// Spacing
   static const double defaultSpace = 24;
@@ -38,6 +36,8 @@ class AppSizes {
 
   /// Loading Indicator Size
   static const double loadingIndicatorSize = 36;
+
+  static const double defaultAppBarHeight = 60;
 }
 
 /// Các khoảng cách ngang

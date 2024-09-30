@@ -1,13 +1,12 @@
 import 'package:equatable/equatable.dart';
 
 /// Params của VerificationCodeUseCase
-class VerificationCodeParams extends Equatable {
+class VerificateCodeParams extends Equatable {
   /// Constructor
-  const VerificationCodeParams({
+  const VerificateCodeParams({
     required this.verificationCode,
   });
 
-  ///
   final String verificationCode;
 
   @override

@@ -1,3 +1,4 @@
+import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:cinequest/src/common/widgets/custom_divider.dart';
 import 'package:flutter/material.dart';
 
@@ -14,19 +15,10 @@ class AppBarBottomDivider extends StatelessWidget
     this.onBackTap,
   });
 
-  ///
   final Widget? leading;
-
-  ///
   final double? leadingWidth;
-
-  ///
   final List<Widget>? actions;
-
-  ///
-  final VoidCallback? onBackTap;
-
-  ///
+  final void Function()? onBackTap;
   final double? appBarHeight;
 
   @override
@@ -43,5 +35,6 @@ class AppBarBottomDivider extends StatelessWidget
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(appBarHeight ?? 60);
+  Size get preferredSize =>
+      Size.fromHeight(appBarHeight ?? AppSizes.defaultAppBarHeight);
 }

@@ -8,7 +8,6 @@ part 'tmdb_api.g.dart';
 /// Api TheMovieDb
 @RestApi(baseUrl: TMDBUrl.movieBaseUrl)
 abstract class TMDBApi {
-  ///
   factory TMDBApi(Dio dio) = _TMDBApi;
 
   /// Now playing

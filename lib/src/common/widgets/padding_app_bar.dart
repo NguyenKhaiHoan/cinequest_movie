@@ -13,13 +13,8 @@ class PaddingAppBar extends StatelessWidget {
     this.alignment,
   });
 
-  ///
   final bool isLeft;
-
-  ///
   final Widget child;
-
-  ///
   final Alignment? alignment;
 
   @override

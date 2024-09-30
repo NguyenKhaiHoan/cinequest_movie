@@ -1,7 +1,7 @@
 part of '../sign_up_page.dart';
 
 /// Mixin của SignUpPage xử lý logic UI
-mixin SignUpPageMixin on State<SignUpPage> {
+mixin _PageMixin on State<_Page> {
   late TextEditingController _emailTextEditingController;
   late TextEditingController _setPasswordTextEditingController;
   late TextEditingController _confirmPasswordTextEditingController;
@@ -29,7 +29,7 @@ mixin SignUpPageMixin on State<SignUpPage> {
     _verificationCodeTextEditingController.dispose();
   }
 
-  void _signUp(BuildContext context) {
+  void _signUp() {
     if (!_signUpFormKey.currentState!.validate()) {
       return;
     }
@@ -64,14 +64,14 @@ mixin SignUpPageMixin on State<SignUpPage> {
     );
   }
 
-  Future<void> _verificateCode(BuildContext context) async {
+  Future<void> _verificateCode() async {
     if (!_verificationCodeFormKey.currentState!.validate()) {
       return;
     }
     context.read<ButtonBloc>().add(
           ButtonEvent.execute(
             useCase: sl<VerificateCodeUseCase>(),
-            params: VerificationCodeParams(
+            params: VerificateCodeParams(
               verificationCode:
                   _verificationCodeTextEditingController.text.trim(),
             ),
@@ -84,5 +84,27 @@ mixin SignUpPageMixin on State<SignUpPage> {
       success: () => context.go(AppRoutes.accountSetup.path),
       failure: (failure) => context.showSnackbar(context, failure.message),
     );
+  }
+
+  void _changeEmail(String value) {
+    context.read<SignUpBloc>().add(SignUpEvent.emailChanged(email: value));
+  }
+
+  void _changeSetPassword(String value) {
+    context
+        .read<SignUpBloc>()
+        .add(SignUpEvent.setPasswordChanged(password: value));
+  }
+
+  void _changeConfirmPassword(String value) {
+    context
+        .read<SignUpBloc>()
+        .add(SignUpEvent.confirmPasswordChanged(confirmPassword: value));
+  }
+
+  void _changeVerificationCode(String value) {
+    context
+        .read<SignUpBloc>()
+        .add(SignUpEvent.verificationCodeChanged(verificationCode: value));
   }
 }

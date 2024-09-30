@@ -1,10 +1,10 @@
 part of '../login_page.dart';
 
 /// Mixin của LoginPage xử lý logic UI
-mixin LoginPageMixin on State<LoginPage> {
+mixin _PageMixin on State<_Page> {
   late TextEditingController _emailTextEditingController;
   late TextEditingController _setPasswordTextEditingController;
-  final GlobalKey<FormState> _loginKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -17,6 +17,14 @@ mixin LoginPageMixin on State<LoginPage> {
           (data) {
         _emailTextEditingController.text = data.email;
         _setPasswordTextEditingController.text = data.password;
+        context.read<LoginBloc>().add(
+              LoginEvent.emailChanged(email: _emailTextEditingController.text),
+            );
+        context.read<LoginBloc>().add(
+              LoginEvent.setPasswordChanged(
+                password: _setPasswordTextEditingController.text,
+              ),
+            );
       });
     });
   }
@@ -28,8 +36,8 @@ mixin LoginPageMixin on State<LoginPage> {
     _setPasswordTextEditingController.dispose();
   }
 
-  Future<void> _login(BuildContext context) async {
-    if (!_loginKey.currentState!.validate()) {
+  Future<void> _login() async {
+    if (!_loginFormKey.currentState!.validate()) {
       return;
     }
     context.read<ButtonBloc>().add(
@@ -58,5 +66,15 @@ mixin LoginPageMixin on State<LoginPage> {
         );
       },
     );
+  }
+
+  void _changeEmail(String value) {
+    context.read<LoginBloc>().add(LoginEvent.emailChanged(email: value));
+  }
+
+  void _changeSetPassword(String value) {
+    context.read<LoginBloc>().add(
+          LoginEvent.setPasswordChanged(password: value),
+        );
   }
 }

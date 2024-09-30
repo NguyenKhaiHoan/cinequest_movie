@@ -11,13 +11,8 @@ class TextUpperCase extends StatelessWidget {
     this.textColor,
   });
 
-  ///
   final String text;
-
-  ///
   final TextStyle? textStyle;
-
-  ///
   final Color? textColor;
 
   @override

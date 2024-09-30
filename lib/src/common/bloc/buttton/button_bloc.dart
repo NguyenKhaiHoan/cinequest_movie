@@ -24,7 +24,7 @@ class ButtonBloc extends Bloc<ButtonEvent, ButtonState> {
   }
 
   Future<void> _onExecute(
-    EventButtonExecute event,
+    _ButtonExecuteEvent event,
     Emitter<ButtonState> emit, {
     required UseCase<dynamic, dynamic> useCase,
     dynamic params,

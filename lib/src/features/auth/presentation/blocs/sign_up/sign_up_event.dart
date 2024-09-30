@@ -4,18 +4,20 @@ part of 'sign_up_bloc.dart';
 @freezed
 class SignUpEvent with _$SignUpEvent {
   /// Sự kiện thay đổi email
-  const factory SignUpEvent.emailChanged(String email) =
-      EventSignUpEmailChanged;
+  const factory SignUpEvent.emailChanged({required String email}) =
+      _SignUpEmailChangedEvent;
 
   /// Sự kiện thay đổi password
-  const factory SignUpEvent.setPasswordChanged(String password) =
-      EventSignUpSetPasswordChanged;
+  const factory SignUpEvent.setPasswordChanged({required String password}) =
+      _SignUpSetPasswordChangedEvent;
 
   /// Sự kiện thay đổi confirm password
-  const factory SignUpEvent.confirmPasswordChanged(String confirmPassword) =
-      EventSignUpConfirmPasswordChanged;
+  const factory SignUpEvent.confirmPasswordChanged({
+    required String confirmPassword,
+  }) = _SignUpConfirmPasswordChangedEvent;
 
   /// Sự kiện thay đổi vefication code
-  const factory SignUpEvent.verificationCodeChanged(String verificationCode) =
-      EventSignUpVerificationCodeChanged;
+  const factory SignUpEvent.verificationCodeChanged({
+    required String verificationCode,
+  }) = _SignUpVerificationCodeChangedEvent;
 }

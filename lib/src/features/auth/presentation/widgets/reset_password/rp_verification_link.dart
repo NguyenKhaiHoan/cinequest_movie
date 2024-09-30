@@ -9,11 +9,10 @@ import 'package:cinequest/src/core/utils/ui_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-/// Second process của ResetPasswordPage: Xác nhận link verification và resend
-/// lại link
-class ResetPasswordSecondProcess extends StatelessWidget {
+/// View hiển thị xác nhận link verification và resend lại link
+class RPVerificationLinkView extends StatelessWidget {
   /// Constructor
-  const ResetPasswordSecondProcess({
+  const RPVerificationLinkView({
     required this.title,
     required this.subtitle,
     required this.email,
@@ -22,20 +21,11 @@ class ResetPasswordSecondProcess extends StatelessWidget {
     super.key,
   });
 
-  ///
   final String title;
-
-  ///
   final String subtitle;
-
-  ///
   final String email;
-
-  ///
-  final VoidCallback onBack;
-
-  ///
-  final VoidCallback onResend;
+  final void Function() onBack;
+  final void Function() onResend;
 
   @override
   Widget build(BuildContext context) {

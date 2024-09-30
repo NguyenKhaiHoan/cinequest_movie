@@ -3,22 +3,20 @@ import 'package:equatable/equatable.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 /// Exception của Firebase
-class FirebaseNetworkException extends Equatable {
+class FirebaseRemoteException extends Equatable {
   /// Lấy message từ lỗi [firebaseException]
-  FirebaseNetworkException.fromFirebaseException(
+  FirebaseRemoteException.fromFirebaseException(
     FirebaseException firebaseException,
   ) {
-    switch (firebaseException.code) {
-      default:
-        message = firebaseException.message ??
-            'An unexpected error occurred'.hardcoded;
-        break;
-    }
+    message =
+        firebaseException.message ?? 'An unexpected error occurred'.hardcoded;
+    exception = firebaseException;
   }
 
-  ///
   late final String message;
 
+  late final Exception exception;
+
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [message, exception];
 }

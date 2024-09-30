@@ -5,5 +5,5 @@ part of 'text_field_bloc.dart';
 class TextFieldEvent with _$TextFieldEvent {
   /// Sự kiện bật/tắt ẩn mật khẩu
   const factory TextFieldEvent.toggleVisibility() =
-      EventTextFieldToggleVisibility;
+      _TextFieldToggleVisibilityEvent;
 }

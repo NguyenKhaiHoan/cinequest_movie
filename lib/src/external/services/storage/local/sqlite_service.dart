@@ -23,7 +23,6 @@ class SqliteService {
     );
   }
 
-  ///
   Database get database {
     if (_database == null) {
       throw Exception('Database has not been initialized'.hardcoded);
@@ -31,13 +30,11 @@ class SqliteService {
     return _database!;
   }
 
-  ///
   Future<int> insertData(String table, Map<String, dynamic> data) async {
     _database = database;
     return _database!.insert(table, data);
   }
 
-  ///
   Future<int> updateData(
     String table,
     Map<String, dynamic> data,
@@ -53,7 +50,6 @@ class SqliteService {
     );
   }
 
-  ///
   Future<int> deleteData(
     String table,
     String where,
@@ -63,7 +59,6 @@ class SqliteService {
     return _database!.delete(table, where: where, whereArgs: whereArgs);
   }
 
-  ///
   Future<List<Map<String, dynamic>>> queryData(
     String table, {
     String? orderBy,
@@ -72,7 +67,6 @@ class SqliteService {
     return _database!.query(table, orderBy: orderBy);
   }
 
-  ///
   Future<void> clear() async {
     _database = database;
     await _database!.close();

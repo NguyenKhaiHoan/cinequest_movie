@@ -20,28 +20,13 @@ class AuthForm extends StatelessWidget {
     this.onConfirmPasswordChanged,
   });
 
-  ///
   final String title;
-
-  ///
   final GlobalKey<FormState> formKey;
-
-  ///
   final TextEditingController emailTextEditingController;
-
-  ///
   final void Function(String)? onEmailChanged;
-
-  ///
   final TextEditingController setPasswordTextEditingController;
-
-  ///
   final void Function(String)? onSetPasswordChanged;
-
-  ///
   final TextEditingController? confirmPasswordTextEditingController;
-
-  ///
   final void Function(String)? onConfirmPasswordChanged;
 
   @override

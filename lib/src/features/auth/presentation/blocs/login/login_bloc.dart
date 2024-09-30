@@ -9,36 +9,39 @@ part 'login_bloc.freezed.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   /// Constructor
   LoginBloc() : super(LoginState.initial()) {
-    on<LoginEvent>((events, emit) async {
-      events.map(
-        emailChanged: (event) => _onEmailChanged(event, emit),
-        setPasswordChanged: (event) => _onSetPasswordChanged(event, emit),
+    on<LoginEvent>((event, emit) async {
+      event.map(
+        emailChanged: (e) => _onEmailChanged(e, emit),
+        setPasswordChanged: (e) => _onSetPasswordChanged(e, emit),
       );
     });
   }
 
-  void _onEmailChanged(EventLoginEmailChanged event, Emitter<LoginState> emit) {
+  void _onEmailChanged(
+    _LoginEmailChangedEvent event,
+    Emitter<LoginState> emit,
+  ) {
     emit(
       state.copyWith(
         email: event.email,
-        isFormValid: _isFormValid(event.email, state.password),
+        isFormValided: _isFormValided(event.email, state.password),
       ),
     );
   }
 
   void _onSetPasswordChanged(
-    EventLoginSetPasswordChanged event,
+    _LoginSetPasswordChangedEvent event,
     Emitter<LoginState> emit,
   ) {
     emit(
       state.copyWith(
         password: event.password,
-        isFormValid: _isFormValid(state.email, event.password),
+        isFormValided: _isFormValided(state.email, event.password),
       ),
     );
   }
 
-  bool _isFormValid(String email, String password) {
+  bool _isFormValided(String email, String password) {
     return email.isNotEmpty && password.isNotEmpty;
   }
 }

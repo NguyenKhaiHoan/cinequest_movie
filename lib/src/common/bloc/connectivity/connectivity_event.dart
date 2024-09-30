@@ -6,7 +6,7 @@ class ConnectivityEvent with _$ConnectivityEvent {
   /// Sự kiện trạng trạng kết nối mạng bị thay đổi nhận tham số
   ///
   /// - [isConnected] (bool) : Tình trạng kết nối
-  const factory ConnectivityEvent.connectivityChanged({
+  const factory ConnectivityEvent.changed({
     required bool isConnected,
-  }) = EventConnectivityChanged;
+  }) = _ConnectivityChangedEvent;
 }

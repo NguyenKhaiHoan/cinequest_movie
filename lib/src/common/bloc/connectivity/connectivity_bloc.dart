@@ -19,9 +19,9 @@ class ConnectivityBloc extends Bloc<ConnectivityEvent, ConnectivityState> {
         super(const ConnectivityState.initial()) {
     _initializeConnectivitySubscription();
 
-    on<ConnectivityEvent>((events, emit) async {
-      events.map(
-        connectivityChanged: (event) => _onConnectivityChanged(event, emit),
+    on<ConnectivityEvent>((event, emit) async {
+      event.map(
+        changed: (e) => _onChanged(e, emit),
       );
     });
   }
@@ -34,13 +34,13 @@ class ConnectivityBloc extends Bloc<ConnectivityEvent, ConnectivityState> {
       (List<ConnectivityResult> result) {
         /// Lấy tình trạng kết nối mới nhất để so sánh
         final isConnected = result.last != ConnectivityResult.none;
-        add(EventConnectivityChanged(isConnected: isConnected));
+        add(ConnectivityEvent.changed(isConnected: isConnected));
       },
     );
   }
 
-  void _onConnectivityChanged(
-    EventConnectivityChanged event,
+  void _onChanged(
+    _ConnectivityChangedEvent event,
     Emitter<ConnectivityState> emit,
   ) {
     if (event.isConnected) {

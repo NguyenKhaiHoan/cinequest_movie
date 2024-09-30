@@ -1,7 +1,7 @@
 part of '../reset_password_page.dart';
 
 /// Mixin của ResetPasswordPage xử lý logic UI
-mixin ResetPasswordPageMixin on State<ResetPasswordPage> {
+mixin _PageMixin on State<_Page> {
   late TextEditingController _emailTextEditingController;
   final GlobalKey<FormState> _resetPasswordFormKey = GlobalKey<FormState>();
 
@@ -38,4 +38,10 @@ mixin ResetPasswordPageMixin on State<ResetPasswordPage> {
   }
 
   void _resend() {}
+
+  void _changeEmail(String value) {
+    context
+        .read<ResetPasswordBloc>()
+        .add(ResetPasswordEvent.emailChanged(email: value));
+  }
 }

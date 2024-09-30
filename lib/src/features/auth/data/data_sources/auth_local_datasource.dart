@@ -4,17 +4,16 @@ import 'package:cinequest/src/common/constants/app_keys.dart';
 import 'package:cinequest/src/core/errors/exceptions/data_local_exception.dart';
 import 'package:cinequest/src/core/errors/failure.dart';
 import 'package:cinequest/src/external/services/storage/local/secure_storage_service.dart';
-import 'package:cinequest/src/features/auth/domain/entities/params/auth_params.dart';
+import 'package:cinequest/src/features/auth/domain/usecases/params/auth_params.dart';
 
-/// Sử dụng Local Storage
-abstract class AuthLocalStorageDataSource {
-  ///
+/// Local DataSource
+abstract class AuthLocalDataSource {
   Future<AuthParams> getEmailPassword();
   Future<void> saveEmailPassword(AuthParams params);
 }
 
-/// Implementation của AuthLocalStorageDataSource sử dụng SecureStorage
-class AuthSecureStorageDataSourceImpl implements AuthLocalStorageDataSource {
+/// Implementation của AuthLocalDataSource sử dụng SecureStorage
+class AuthSecureStorageDataSourceImpl implements AuthLocalDataSource {
   /// Constructor
   AuthSecureStorageDataSourceImpl({
     required SecureStorageService secureStorageService,
@@ -37,7 +36,7 @@ class AuthSecureStorageDataSourceImpl implements AuthLocalStorageDataSource {
       return const AuthParams(email: '', password: '');
     } catch (e) {
       throw Failure(
-        message: DataLocalException.fromException(e).message,
+        message: DataLocalException.fromException().message,
       );
     }
   }
@@ -51,7 +50,7 @@ class AuthSecureStorageDataSourceImpl implements AuthLocalStorageDataSource {
       );
     } catch (e) {
       throw Failure(
-        message: DataLocalException.fromException(e).message,
+        message: DataLocalException.fromException().message,
       );
     }
   }

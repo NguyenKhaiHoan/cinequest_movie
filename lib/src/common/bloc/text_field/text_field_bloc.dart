@@ -9,15 +9,15 @@ part 'text_field_bloc.freezed.dart';
 class TextFieldBloc extends Bloc<TextFieldEvent, TextFieldState> {
   /// Constructor
   TextFieldBloc() : super(const TextFieldState.obscure()) {
-    on<TextFieldEvent>((events, emit) async {
-      events.map(
-        toggleVisibility: (event) => _onToggleVisibility(event, emit),
+    on<TextFieldEvent>((event, emit) async {
+      event.map(
+        toggleVisibility: (e) => _onToggleVisibility(e, emit),
       );
     });
   }
 
   void _onToggleVisibility(
-    EventTextFieldToggleVisibility event,
+    _TextFieldToggleVisibilityEvent event,
     Emitter<TextFieldState> emit,
   ) {
     emit(TextFieldState.obscure(obscure: !state.obscure));

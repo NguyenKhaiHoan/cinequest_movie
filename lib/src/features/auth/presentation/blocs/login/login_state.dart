@@ -7,13 +7,13 @@ class LoginState with _$LoginState {
   const factory LoginState({
     required String email,
     required String password,
-    required bool isFormValid,
+    required bool isFormValided,
   }) = _LoginState;
 
   /// Trạng thái ban đầu
   factory LoginState.initial() => const LoginState(
         email: '',
         password: '',
-        isFormValid: false,
+        isFormValided: false,
       );
 }

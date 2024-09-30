@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 class PageTransitionUtil {
   PageTransitionUtil._();
 
-  ///
   static Page<dynamic> Function(BuildContext, GoRouterState) customPageBuilder({
     required Widget child,
     PageTransitionDirection direction = PageTransitionDirection.left,
@@ -27,7 +26,6 @@ class PageTransitionUtil {
               );
       };
 
-  ///
   static CustomTransitionPage<Widget> buildPageWithFadeTransition({
     required BuildContext context,
     required GoRouterState state,
@@ -41,7 +39,6 @@ class PageTransitionUtil {
     );
   }
 
-  ///
   static CustomTransitionPage<Widget> buildPageWithDirectionTransition({
     required BuildContext context,
     required GoRouterState state,
@@ -61,7 +58,6 @@ class PageTransitionUtil {
     );
   }
 
-  ///
   static Offset _getBeginOffset(PageTransitionDirection direction) {
     switch (direction) {
       case PageTransitionDirection.up:

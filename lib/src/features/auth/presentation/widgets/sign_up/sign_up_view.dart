@@ -1,43 +1,85 @@
 import 'package:cinequest/gen/assets.gen.dart';
 import 'package:cinequest/gen/colors.gen.dart';
+import 'package:cinequest/src/common/bloc/buttton/button_bloc.dart';
 import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:cinequest/src/common/widgets/auth_app_bar.dart';
 import 'package:cinequest/src/common/widgets/custom_button.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:cinequest/src/features/auth/presentation/blocs/sign_up/sign_up_bloc.dart';
-import 'package:cinequest/src/features/auth/presentation/widgets/auth_form.dart';
+import 'package:cinequest/src/features/auth/presentation/widgets/forms/auth_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-/// First process của SignUpPage: Nhập email, password và confirm password
-class SignUpFirstProcess extends StatelessWidget {
+/// View đăng ký: Nhập email, password và confirm password
+class SignUpView extends StatelessWidget {
+  const SignUpView({
+    required this.listener,
+    required this.formKey,
+    required this.emailTextEditingController,
+    required this.setPasswordTextEditingController,
+    required this.confirmPasswordTextEditingController,
+    required this.onSignUp,
+    super.key,
+    this.onEmailChanged,
+    this.onSetPasswordChanged,
+    this.onConfirmPasswordChanged,
+  });
+  final void Function(BuildContext, ButtonState) listener;
+  final GlobalKey<FormState> formKey;
+  final TextEditingController emailTextEditingController;
+  final void Function(String)? onEmailChanged;
+  final TextEditingController setPasswordTextEditingController;
+  final void Function(String)? onSetPasswordChanged;
+  final TextEditingController confirmPasswordTextEditingController;
+  final void Function(String)? onConfirmPasswordChanged;
+  final void Function() onSignUp;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<ButtonBloc, ButtonState>(
+      listener: listener,
+      builder: (context, state) {
+        return SignUpViewBody(
+          signUpFormKey: formKey,
+          emailTextEditingController: emailTextEditingController,
+          setPasswordTextEditingController: setPasswordTextEditingController,
+          confirmPasswordTextEditingController:
+              confirmPasswordTextEditingController,
+          onSignUp: onSignUp,
+          onEmailChanged: onEmailChanged,
+          onSetPasswordChanged: onSetPasswordChanged,
+          onConfirmPasswordChanged: onConfirmPasswordChanged,
+          isLoading: state == const ButtonState.loading(),
+        );
+      },
+    );
+  }
+}
+
+/// Body
+class SignUpViewBody extends StatelessWidget {
   /// Constructor
-  const SignUpFirstProcess({
+  const SignUpViewBody({
     required this.signUpFormKey,
     required this.emailTextEditingController,
     required this.setPasswordTextEditingController,
     required this.confirmPasswordTextEditingController,
-    required this.onNext,
+    required this.onSignUp,
     required this.isLoading,
+    this.onEmailChanged,
+    this.onSetPasswordChanged,
+    this.onConfirmPasswordChanged,
     super.key,
   });
 
-  ///
   final GlobalKey<FormState> signUpFormKey;
-
-  ///
   final TextEditingController emailTextEditingController;
-
-  ///
+  final void Function(String)? onEmailChanged;
   final TextEditingController setPasswordTextEditingController;
-
-  ///
+  final void Function(String)? onSetPasswordChanged;
   final TextEditingController? confirmPasswordTextEditingController;
-
-  ///
-  final VoidCallback onNext;
-
-  ///
+  final void Function(String)? onConfirmPasswordChanged;
+  final void Function() onSignUp;
   final bool isLoading;
 
   @override
@@ -62,19 +104,13 @@ class SignUpFirstProcess extends StatelessWidget {
                   title: "Let's Get Started!".hardcoded,
                   formKey: signUpFormKey,
                   emailTextEditingController: emailTextEditingController,
-                  onEmailChanged: (value) => context
-                      .read<SignUpBloc>()
-                      .add(SignUpEvent.emailChanged(value)),
+                  onEmailChanged: onEmailChanged,
                   setPasswordTextEditingController:
                       setPasswordTextEditingController,
-                  onSetPasswordChanged: (value) => context
-                      .read<SignUpBloc>()
-                      .add(SignUpEvent.setPasswordChanged(value)),
+                  onSetPasswordChanged: onSetPasswordChanged,
                   confirmPasswordTextEditingController:
                       confirmPasswordTextEditingController,
-                  onConfirmPasswordChanged: (value) => context
-                      .read<SignUpBloc>()
-                      .add(SignUpEvent.confirmPasswordChanged(value)),
+                  onConfirmPasswordChanged: onConfirmPasswordChanged,
                 ),
                 const Spacer(),
                 if (state.isSignUpFormValid)
@@ -86,7 +122,7 @@ class SignUpFirstProcess extends StatelessWidget {
                       BlendMode.srcIn,
                     ),
                     buttonType: ButtonType.elevated,
-                    onPressed: onNext,
+                    onPressed: onSignUp,
                     isLoading: isLoading,
                   )
                 else
@@ -94,7 +130,7 @@ class SignUpFirstProcess extends StatelessWidget {
                     width: 170,
                     iconPath: AppAssets.images.arrowRight.path,
                     buttonType: ButtonType.outlined,
-                    onPressed: onNext,
+                    onPressed: onSignUp,
                   ),
               ],
             );

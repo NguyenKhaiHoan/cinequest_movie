@@ -7,10 +7,10 @@ import 'package:cinequest/src/features/auth/presentation/blocs/account_setup/acc
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-/// Third process của AccountSetUpPage: Nhập bio
-class AccountSetupThirdProcess extends StatelessWidget {
+/// View nhập bio
+class ASBioView extends StatelessWidget {
   /// Constructor
-  const AccountSetupThirdProcess({
+  const ASBioView({
     required this.title,
     required this.formKey,
     required this.bioTextEditingController,
@@ -18,16 +18,9 @@ class AccountSetupThirdProcess extends StatelessWidget {
     this.onChanged,
   });
 
-  ///
   final String title;
-
-  ///
   final void Function(String)? onChanged;
-
-  ///
   final GlobalKey<FormState> formKey;
-
-  ///
   final TextEditingController bioTextEditingController;
 
   @override

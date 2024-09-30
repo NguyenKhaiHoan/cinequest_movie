@@ -4,7 +4,6 @@ import 'package:cinequest/src/core/extensions/string_extension.dart';
 class ValidationUtil {
   ValidationUtil._();
 
-  ///
   static String? validateEmptyField(String fieldName, String? value) {
     if (value == null || value.isEmpty) {
       return '$fieldName is required.'.hardcoded;
@@ -12,7 +11,6 @@ class ValidationUtil {
     return null;
   }
 
-  ///
   static String? validateEmail(String fieldName, String? value) {
     validateEmptyField('Email', value);
 
@@ -24,7 +22,6 @@ class ValidationUtil {
     return null;
   }
 
-  ///
   static String? validatePassword(String fieldName, String? value) {
     validateEmptyField(fieldName, value);
 
@@ -46,7 +43,6 @@ class ValidationUtil {
     return null;
   }
 
-  ///
   static String? validateCorrectPassword(
     String fieldName,
     String? value,
@@ -59,7 +55,6 @@ class ValidationUtil {
     return null;
   }
 
-  ///
   static String? validatePhoneNumber(String fieldName, String? value) {
     validateEmptyField(fieldName, value);
 

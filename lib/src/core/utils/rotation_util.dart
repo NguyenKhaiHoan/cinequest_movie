@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 class RotationUtil {
   RotationUtil._();
 
-  ///
   static Widget rotate({
     required Widget child,
     required double angle,

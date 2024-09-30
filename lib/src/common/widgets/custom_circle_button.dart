@@ -13,7 +13,7 @@ class CustomCircleButton extends StatelessWidget {
   const CustomCircleButton({
     required this.iconPath,
     super.key,
-    this.iconSize = 24,
+    this.iconSize = AppSizes.iconMd,
     this.borderColor,
     this.buttonSize = AppSizes.buttonHeight,
     this.onPressed,
@@ -21,25 +21,12 @@ class CustomCircleButton extends StatelessWidget {
     this.notNeedColorFilter = false,
   });
 
-  ///
   final String iconPath;
-
-  ///
   final double iconSize;
-
-  ///
   final Color? borderColor;
-
-  ///
   final double buttonSize;
-
-  ///
-  final VoidCallback? onPressed;
-
-  ///
+  final void Function()? onPressed;
   final ColorFilter? colorFilter;
-
-  ///
   final bool notNeedColorFilter;
 
   @override

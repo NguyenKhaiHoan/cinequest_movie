@@ -10,5 +10,5 @@ class ButtonEvent with _$ButtonEvent {
   const factory ButtonEvent.execute({
     required UseCase<dynamic, dynamic> useCase,
     dynamic params,
-  }) = EventButtonExecute;
+  }) = _ButtonExecuteEvent;
 }

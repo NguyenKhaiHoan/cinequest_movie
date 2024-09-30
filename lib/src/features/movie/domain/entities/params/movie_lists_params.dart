@@ -6,9 +6,7 @@ class MovieListsParams {
     this.language = 'en',
   });
 
-  ///
   final int page;
 
-  ///
   final String language;
 }

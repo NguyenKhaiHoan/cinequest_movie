@@ -1,7 +1,7 @@
 import 'package:cinequest/src/features/auth/domain/entities/user.dart';
 import 'package:equatable/equatable.dart';
 
-/// Params của SaveProfileUseCase
+/// Params của SaveProfileUserUseCase
 class SaveProfileParams extends Equatable {
   /// Constructor
   const SaveProfileParams({
@@ -9,10 +9,8 @@ class SaveProfileParams extends Equatable {
     required this.profilePhoto,
   });
 
-  ///
   final AppUser user;
 
-  ///
   final String profilePhoto;
 
   @override
@@ -37,10 +35,8 @@ class SaveProfilePhotoParams extends Equatable {
     required this.userId,
   });
 
-  ///
   final String profilePhoto;
 
-  ///
   final String userId;
 
   @override
@@ -54,7 +50,6 @@ class SaveProfileUserParams extends Equatable {
     required this.user,
   });
 
-  ///
   final AppUser user;
 
   /// CopyWith

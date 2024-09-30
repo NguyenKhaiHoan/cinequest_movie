@@ -8,24 +8,17 @@ import 'package:cinequest/src/features/movie/domain/entities/params/save_movie_l
 
 /// Movie repository
 abstract class MovieRepository {
-  ///
   FutureEither<List<Movie>> getNowPlayingMovies(MovieListsParams params);
 
-  ///
   FutureEither<List<Movie>> getPopularMovies(MovieListsParams params);
 
-  ///
   FutureEither<void> saveMovieLocal(SaveMovieLocalParams params);
 
-  ///
   FutureEither<List<Movie>> getMoviesLocal();
 
-  ///
   FutureEither<void> deleteMovieLocal(DeleteMovieLocalParams params);
 
-  ///
   FutureEither<bool> isFavoriteLocal(IsFavoriteLocalParams params);
 
-  ///
   Stream<List<Movie>> favoriteMoviesStateChanges();
 }

@@ -6,12 +6,12 @@ class ResetPasswordState with _$ResetPasswordState {
   /// Trạng thái
   const factory ResetPasswordState({
     required String email,
-    required bool isFormValid,
+    required bool isFormValided,
   }) = _ResetPasswordState;
 
   /// Trạng thái ban đầu
   factory ResetPasswordState.initial() => const ResetPasswordState(
         email: '',
-        isFormValid: false,
+        isFormValided: false,
       );
 }

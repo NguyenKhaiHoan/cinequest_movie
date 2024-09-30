@@ -13,7 +13,7 @@ mixin CineQuestMovieMixin on State<CineQuestMovie> {
 
   void _listenerApp(BuildContext context, AppState state) {
     state.whenOrNull(
-      unAuthenticated: (failure) {
+      unauthenticated: (failure) {
         if (failure != null) {
           context.showSnackbar(context, failure.message);
         }

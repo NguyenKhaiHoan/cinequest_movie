@@ -15,10 +15,8 @@ class BottomNavBar extends StatelessWidget {
     super.key,
   });
 
-  ///
   final int currentIndex;
 
-  ///
   final void Function(int index) onTap;
 
   @override

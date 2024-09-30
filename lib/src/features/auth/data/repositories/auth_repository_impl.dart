@@ -1,16 +1,14 @@
 import 'package:cinequest/src/core/errors/failure.dart';
 import 'package:cinequest/src/core/generics/type_def.dart';
 import 'package:cinequest/src/core/routes/route_pages.dart';
-import 'package:cinequest/src/features/auth/data/data_sources/auth_cloud_firestore_data_source.dart';
-import 'package:cinequest/src/features/auth/data/data_sources/auth_firebase_data_source.dart';
-import 'package:cinequest/src/features/auth/data/data_sources/auth_firebase_storage_data_source.dart';
-import 'package:cinequest/src/features/auth/data/data_sources/auth_local_storage_data_source.dart';
-import 'package:cinequest/src/features/auth/domain/entities/params/auth_params.dart';
-import 'package:cinequest/src/features/auth/domain/entities/params/get_profile_user_params.dart';
-import 'package:cinequest/src/features/auth/domain/entities/params/save_profile_params.dart';
-import 'package:cinequest/src/features/auth/domain/entities/params/verification_code_params.dart';
+import 'package:cinequest/src/features/auth/data/data_sources/auth_local_datasource.dart';
+import 'package:cinequest/src/features/auth/data/data_sources/auth_remote_datasource.dart';
 import 'package:cinequest/src/features/auth/domain/entities/user.dart';
 import 'package:cinequest/src/features/auth/domain/repositories/auth_repository.dart';
+import 'package:cinequest/src/features/auth/domain/usecases/params/auth_params.dart';
+import 'package:cinequest/src/features/auth/domain/usecases/params/get_profile_user_params.dart';
+import 'package:cinequest/src/features/auth/domain/usecases/params/save_profile_params.dart';
+import 'package:cinequest/src/features/auth/domain/usecases/params/verification_code_params.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -18,76 +16,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 class AuthRepositoryImpl implements AuthRepository {
   ///Constructor
   AuthRepositoryImpl({
-    required AuthFirebaseDataSource authFirebaseDataSource,
-    required AuthCloudFirestoreDataSource authCloudFirestoreDataSource,
-    required AuthFirebaseStorageDataSource authFirebaseStorageDataSource,
-    required AuthLocalStorageDataSource authLocalStorageDataSource,
-  })  : _authFirebaseDataSource = authFirebaseDataSource,
-        _authCloudFirestoreDataSource = authCloudFirestoreDataSource,
-        _authFirebaseStorageDataSource = authFirebaseStorageDataSource,
-        _authLocalStorageDataSource = authLocalStorageDataSource;
-  final AuthFirebaseDataSource _authFirebaseDataSource;
-  final AuthCloudFirestoreDataSource _authCloudFirestoreDataSource;
-  final AuthFirebaseStorageDataSource _authFirebaseStorageDataSource;
-  final AuthLocalStorageDataSource _authLocalStorageDataSource;
-
-  @override
-  FutureEither<UserCredential> login(AuthParams params) async {
-    try {
-      final result = await _authFirebaseDataSource.login(params);
-      return Right(result);
-    } on Failure catch (e) {
-      return Left(e);
-    }
-  }
-
-  @override
-  FutureEither<UserCredential> signUp(AuthParams params) async {
-    try {
-      final result = await _authFirebaseDataSource.signUp(params);
-      return Right(result);
-    } on Failure catch (e) {
-      return Left(e);
-    }
-  }
-
-  @override
-  FutureEither<UserCredential> signInWithGoogle() async {
-    try {
-      final result = await _authFirebaseDataSource.signInWithGoogle();
-      return Right(result);
-    } on Failure catch (e) {
-      return Left(e);
-    }
-  }
-
-  @override
-  FutureEither<void> signOut() async {
-    try {
-      final result = await _authFirebaseDataSource.signOut();
-      // Đặt lại path bằng rỗng để tránh bị xét lại rằng đã có
-      // path của welcome page, home page do đã được thêm vào từ trước
-      RouterPages.refeshPath();
-      return Right(result);
-    } on Failure catch (e) {
-      return Left(e);
-    }
-  }
-
-  @override
-  FutureEither<void> verificateCode(VerificationCodeParams params) async {
-    try {
-      final result = await _authFirebaseDataSource.verificateCode(params);
-      return Right(result);
-    } on Failure catch (e) {
-      return Left(e);
-    }
-  }
+    required AuthRemoteDataSource authRemoteDataSource,
+    required AuthLocalDataSource authLocalDataSource,
+  })  : _authRemoteDataSource = authRemoteDataSource,
+        _authLocalDataSource = authLocalDataSource;
+  final AuthRemoteDataSource _authRemoteDataSource;
+  final AuthLocalDataSource _authLocalDataSource;
 
   @override
   FutureEither<AppUser> getProfileUser(GetProfileUserParams params) async {
     try {
-      final result = await _authCloudFirestoreDataSource.getProfileUser(params);
+      final result = await _authRemoteDataSource.getProfileUser(params);
       return Right(result);
     } on Failure catch (e) {
       return Left(e);
@@ -97,7 +36,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   FutureEither<void> saveProfileUser(SaveProfileUserParams params) async {
     try {
-      final result = await _authCloudFirestoreDataSource.saveProfileUser(
+      final result = await _authRemoteDataSource.saveProfileUser(
         params,
       );
       return Right(result);
@@ -107,9 +46,62 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  FutureEither<UserCredential> login(AuthParams params) async {
+    try {
+      final result = await _authRemoteDataSource.login(params);
+      return Right(result);
+    } on Failure catch (e) {
+      return Left(e);
+    }
+  }
+
+  @override
+  FutureEither<UserCredential> signUp(AuthParams params) async {
+    try {
+      final result = await _authRemoteDataSource.signUp(params);
+      return Right(result);
+    } on Failure catch (e) {
+      return Left(e);
+    }
+  }
+
+  @override
+  FutureEither<UserCredential> signInWithGoogle() async {
+    try {
+      final result = await _authRemoteDataSource.signInWithGoogle();
+      return Right(result);
+    } on Failure catch (e) {
+      return Left(e);
+    }
+  }
+
+  @override
+  FutureEither<void> signOut() async {
+    try {
+      final result = await _authRemoteDataSource.signOut();
+      // Đặt lại path bằng rỗng để tránh bị xét lại rằng đã có
+      // path của welcome page, home page do đã được thêm vào từ trước
+      RouterPages.refreshPath();
+      return Right(result);
+    } on Failure catch (e) {
+      return Left(e);
+    }
+  }
+
+  @override
+  FutureEither<void> verificateCode(VerificateCodeParams params) async {
+    try {
+      final result = await _authRemoteDataSource.verificateCode(params);
+      return Right(result);
+    } on Failure catch (e) {
+      return Left(e);
+    }
+  }
+
+  @override
   FutureEither<String> saveProfilePhoto(SaveProfilePhotoParams params) async {
     try {
-      final result = await _authFirebaseStorageDataSource.saveProfilePhoto(
+      final result = await _authRemoteDataSource.saveProfilePhoto(
         params,
       );
       return Right(result);
@@ -121,7 +113,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   FutureEither<AuthParams> getEmailPassword() async {
     try {
-      final result = await _authLocalStorageDataSource.getEmailPassword();
+      final result = await _authLocalDataSource.getEmailPassword();
       return Right(result);
     } on Failure catch (e) {
       return Left(e);
@@ -131,8 +123,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   FutureEither<void> saveEmailPassword(AuthParams params) async {
     try {
-      final result =
-          await _authLocalStorageDataSource.saveEmailPassword(params);
+      final result = await _authLocalDataSource.saveEmailPassword(params);
       return Right(result);
     } on Failure catch (e) {
       return Left(e);

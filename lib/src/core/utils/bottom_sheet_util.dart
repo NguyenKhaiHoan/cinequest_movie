@@ -15,7 +15,6 @@ import 'package:flutter/material.dart';
 class BottomSheetUtil {
   BottomSheetUtil._();
 
-  ///
   static Future<File?> showTakeImageBottomSheet(BuildContext context) async {
     return showModalBottomSheet<File?>(
       context: context,
@@ -86,7 +85,6 @@ class BottomSheetUtil {
     );
   }
 
-  ///
   static Future<void> showSucessSignUp(BuildContext context) async {
     return showModalBottomSheet<void>(
       context: context,

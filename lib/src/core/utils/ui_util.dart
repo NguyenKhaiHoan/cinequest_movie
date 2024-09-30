@@ -14,9 +14,7 @@ class UiUtil {
     _deviceHeight = context.screenHeight;
   }
 
-  ///
   static double get deviceWidth => _deviceWidth;
 
-  ///
   static double get deviceHeight => _deviceHeight;
 }

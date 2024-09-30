@@ -3,13 +3,10 @@ import 'package:cinequest/src/features/auth/domain/entities/user.dart';
 
 /// UserReporitory được sử dụng để quản lý dữ liệu user trong vòng đời của App
 abstract class UserRepository {
-  ///
   Stream<AppUser?> authStateChanges();
 
-  ///
   AppUser? get user;
 
-  ///
   set user(AppUser? user);
 }
 

@@ -5,22 +5,24 @@ import 'package:cinequest/src/common/widgets/auth_app_bar.dart';
 import 'package:cinequest/src/common/widgets/custom_button.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:cinequest/src/features/auth/presentation/blocs/reset_password/reset_password_bloc.dart';
-import 'package:cinequest/src/features/auth/presentation/widgets/reset_password_form.dart';
+import 'package:cinequest/src/features/auth/presentation/widgets/forms/reset_password_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-/// First process của ResetPasswordPage: Nhập email
-class ResetPasswordFirstProcess extends StatelessWidget {
+/// View nhập email
+class RPResetPasswordView extends StatelessWidget {
   /// Constructor
-  const ResetPasswordFirstProcess({
+  const RPResetPasswordView({
     required this.resetPasswordFormKey,
     required this.emailTextEditingController,
     required this.onSend,
     super.key,
+    this.onEmailChanged,
   });
   final GlobalKey<FormState> resetPasswordFormKey;
   final TextEditingController emailTextEditingController;
-  final VoidCallback onSend;
+  final void Function(String)? onEmailChanged;
+  final void Function() onSend;
 
   @override
   Widget build(BuildContext context) {
@@ -45,12 +47,10 @@ class ResetPasswordFirstProcess extends StatelessWidget {
                           .hardcoded,
                   formKey: resetPasswordFormKey,
                   emailTextEditingController: emailTextEditingController,
-                  onChanged: (value) => context
-                      .read<ResetPasswordBloc>()
-                      .add(ResetPasswordEvent.emailChanged(value)),
+                  onEmailChanged: onEmailChanged,
                 ),
                 const Spacer(),
-                if (state.isFormValid)
+                if (state.isFormValided)
                   CustomButton(
                     width: 170,
                     iconPath: AppAssets.images.arrowRight.path,

@@ -1,7 +1,7 @@
 part of '../account_setup_page.dart';
 
 /// Mixin của AccountSetupPage xử lý logic UI
-mixin AccountSetupPageMixin on State<AccountSetupPage> {
+mixin _PageMixin on State<_Page> {
   late TextEditingController _usernameTextEditingController;
   late TextEditingController _nameTextEditingController;
   late TextEditingController _surnameTextEditingController;
@@ -30,7 +30,8 @@ mixin AccountSetupPageMixin on State<AccountSetupPage> {
     _bioTextEditingController.dispose();
   }
 
-  void _next(BuildContext context, int currentPage, String? profilePhoto) {
+  void _next(String? profilePhoto) {
+    final currentPage = _pageController.page;
     if (currentPage == 0) {
       if (!_usernameFormKey.currentState!.validate()) {
         return;
@@ -44,6 +45,8 @@ mixin AccountSetupPageMixin on State<AccountSetupPage> {
       if (!_bioFormKey.currentState!.validate()) {
         return;
       }
+    } else {
+      throw Failure(message: 'Page is not valid');
     }
 
     if (currentPage == 3) {
@@ -53,7 +56,7 @@ mixin AccountSetupPageMixin on State<AccountSetupPage> {
       final user = sl<FirebaseAuth>().currentUser;
       context.read<ButtonBloc>().add(
             ButtonEvent.execute(
-              useCase: sl<SaveProfileUseCase>(),
+              useCase: sl<SaveProfileUserUseCase>(),
               params: SaveProfileParams(
                 user: AppUser(
                   id: user?.uid ?? const Uuid().v4(),
@@ -90,12 +93,38 @@ mixin AccountSetupPageMixin on State<AccountSetupPage> {
     );
   }
 
-  void _changePhoto(BuildContext context) {
-    BottomSheetUtil.showTakeImageBottomSheet(context).then((value) {
-      if (!context.mounted) return;
-      context
-          .read<AccountSetupBloc>()
-          .add(AccountSetupEvent.profilePhotoChanged(value));
-    });
+  void _changePhoto() {
+    BottomSheetUtil.showTakeImageBottomSheet(context).then(
+      (profilePhoto) {
+        if (!mounted) return;
+        context.read<AccountSetupBloc>().add(
+              AccountSetupEvent.profilePhotoChanged(profilePhoto: profilePhoto),
+            );
+      },
+    );
+  }
+
+  void _changePage(int value) {
+    context
+        .read<AccountSetupBloc>()
+        .add(AccountSetupEvent.pageChanged(index: value));
+  }
+
+  void _changeUsername(String value) {
+    context.read<AccountSetupBloc>().add(
+          AccountSetupEvent.usernameChanged(username: value),
+        );
+  }
+
+  void _changeSurname(String value) {
+    context.read<AccountSetupBloc>().add(
+          AccountSetupEvent.surnameChanged(surname: value),
+        );
+  }
+
+  void _changeBio(String value) {
+    context
+        .read<AccountSetupBloc>()
+        .add(AccountSetupEvent.bioChanged(bio: value));
   }
 }

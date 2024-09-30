@@ -28,7 +28,7 @@ class CustomButton extends StatelessWidget {
     this.textColor,
     this.isLoading = false,
     this.iconPath,
-    this.iconSize = 24,
+    this.iconSize = AppSizes.iconMd,
     this.backgroundColor = AppColors.white,
     this.borderColor,
     this.onPressed,
@@ -37,46 +37,19 @@ class CustomButton extends StatelessWidget {
     this.isUpperCase = true,
   });
 
-  ///
   final bool isUpperCase;
-
-  ///
   final String? text;
-
-  ///
   final double? width;
-
-  ///
   final Color? textColor;
-
-  ///
   final bool isLoading;
-
-  ///
   final String? iconPath;
-
-  ///
   final double iconSize;
-
-  ///
   final Color backgroundColor;
-
-  ///
   final Color? borderColor;
-
-  ///
-  final VoidCallback? onPressed;
-
-  ///
+  final void Function()? onPressed;
   final ColorFilter? colorFilter;
-
-  ///
   final bool notNeedColorFilter;
-
-  ///
   final ButtonType buttonType;
-
-  ///
 
   @override
   Widget build(BuildContext context) {

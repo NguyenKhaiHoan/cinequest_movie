@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 
 /// Item của NowPlayingMovieCarousel
 class NowPlayingMovieCarouselItem extends StatelessWidget {
-  ///
+  /// Constructor
   const NowPlayingMovieCarouselItem({
     required this.movie,
     required this.listener,
@@ -19,20 +19,16 @@ class NowPlayingMovieCarouselItem extends StatelessWidget {
     super.key,
   });
 
-  ///
   final void Function(
     BuildContext context,
     ButtonState state,
   ) listener;
 
-  ///
   final bool isFavorite;
 
-  ///
   final void Function(BuildContext context, Movie movie, bool isFavorite)
       toggleFavorite;
 
-  ///
   final Movie movie;
 
   @override

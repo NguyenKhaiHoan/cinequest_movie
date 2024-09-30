@@ -8,7 +8,6 @@ class NoInternetException extends Equatable {
     message = 'No internet connection'.hardcoded;
   }
 
-  ///
   late final String message;
 
   @override

@@ -8,7 +8,6 @@ class SaveMovieLocalParams extends Equatable {
     required this.movie,
   });
 
-  ///
   final Movie movie;
 
   @override

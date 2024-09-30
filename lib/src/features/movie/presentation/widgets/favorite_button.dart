@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// Button nhấn yêu thích movie
 class FavoriteButton extends StatelessWidget {
-  ///
   const FavoriteButton({
     required this.movie,
     required this.listener,
@@ -17,19 +16,15 @@ class FavoriteButton extends StatelessWidget {
     super.key,
   });
 
-  ///
   final Movie movie;
 
-  ///
   final bool isFavorite;
 
-  ///
   final void Function(
     BuildContext context,
     ButtonState state,
   ) listener;
 
-  ///
   final void Function(BuildContext context, Movie movie, bool isFavorite)
       toggleFavorite;
 

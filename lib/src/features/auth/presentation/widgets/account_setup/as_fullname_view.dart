@@ -5,10 +5,10 @@ import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:cinequest/src/core/utils/validation_util.dart';
 import 'package:flutter/material.dart';
 
-/// Second process của AccountSetUpPage: Nhập name và surname
-class AccountSetupSecondProcess extends StatelessWidget {
+/// View nhập name và surname
+class ASFullnameView extends StatelessWidget {
   /// Constructor
-  const AccountSetupSecondProcess({
+  const ASFullnameView({
     required this.title,
     required this.formKey,
     required this.nameTextEditingController,
@@ -18,22 +18,11 @@ class AccountSetupSecondProcess extends StatelessWidget {
     this.onSurnameChanged,
   });
 
-  ///
   final String title;
-
-  ///
   final void Function(String)? onNameChanged;
-
-  ///
   final void Function(String)? onSurnameChanged;
-
-  ///
   final GlobalKey<FormState> formKey;
-
-  ///
   final TextEditingController nameTextEditingController;
-
-  ///
   final TextEditingController surnameTextEditingController;
 
   @override
@@ -61,7 +50,7 @@ class AccountSetupSecondProcess extends StatelessWidget {
             controller: nameTextEditingController,
             onChanged: onNameChanged,
             validator: (value) =>
-                ValidationUtil.validateEmptyField('Name', value),
+                ValidationUtil.validateEmptyField('Name'.hardcoded, value),
           ),
           gapH16,
           CustomTextField(
@@ -69,7 +58,7 @@ class AccountSetupSecondProcess extends StatelessWidget {
             controller: surnameTextEditingController,
             onChanged: onSurnameChanged,
             validator: (value) =>
-                ValidationUtil.validateEmptyField('Surname', value),
+                ValidationUtil.validateEmptyField('Surname'.hardcoded, value),
           ),
         ],
       ),

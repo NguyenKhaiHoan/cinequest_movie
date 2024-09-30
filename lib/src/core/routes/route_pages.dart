@@ -145,13 +145,14 @@ final class RouterPages {
     ],
   );
 
+  ///
   static String _path = '';
 
   ///
   static String get path => _path;
 
-  /// Đặt lại đường dẫn của toàn bộ tuyến đường
-  static void refeshPath() {
+  ///
+  static void refreshPath() {
     _path = '';
   }
 
@@ -166,22 +167,20 @@ final class RouterPages {
       _path += state.uri.path;
     }
 
-    final isUnAuthenticated = appAuthState is AppUnAuthenticatedState;
-    final isAuthenticated = appAuthState is AppAuthenticatedState;
-    final isNotSetup = appAuthState is AppAccountNotSetupState;
-
     // Nếu chưa setup account thì trả về AccountSetupPage
-    if (isNotSetup) {
+    if (appAuthState == const AppState.accountNotSetup()) {
       return AppRoutes.accountSetup.path;
     }
     // Nếu đã đăng nhập mà path hiện tại chưa chứa path của HomePage
     // thì trả về path của home page
-    else if (isAuthenticated && !_path.contains(AppRoutes.home.path)) {
+    else if (appAuthState == const AppState.authenticated() &&
+        !_path.contains(AppRoutes.home.path)) {
       return AppRoutes.home.path;
     }
     // Nếu chưa đăng nhập mà path hiện tại chưa chứa path của WelcomePage
     // thì trả về path của welcome page
-    else if (isUnAuthenticated && !_path.contains(AppRoutes.welcome.path)) {
+    else if (appAuthState == const AppState.unauthenticated() &&
+        !_path.contains(AppRoutes.welcome.path)) {
       return AppRoutes.welcome.path;
     }
 

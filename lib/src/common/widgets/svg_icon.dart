@@ -1,4 +1,5 @@
 import 'package:cinequest/gen/colors.gen.dart';
+import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -14,26 +15,15 @@ class SvgIcon extends StatelessWidget {
     super.key,
     this.notNeedColorFilter = false,
     this.colorFilter,
-    this.iconSize = 24,
+    this.iconSize = AppSizes.iconMd,
     this.onPressed,
   });
 
-  ///
   final double iconSize;
-
-  ///
   final String iconPath;
-
-  ///
   final bool notNeedColorFilter;
-
-  ///
   final ColorFilter? colorFilter;
-
-  ///
-  final VoidCallback? onPressed;
-
-  ///
+  final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {

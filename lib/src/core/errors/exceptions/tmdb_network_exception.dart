@@ -39,7 +39,6 @@ class TMDBNetworkException extends Equatable {
     }
   }
 
-  ///
   late final String message;
 
   @override

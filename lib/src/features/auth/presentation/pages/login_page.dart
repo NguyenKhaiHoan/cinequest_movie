@@ -1,65 +1,58 @@
 import 'package:cinequest/src/common/bloc/app/app_bloc.dart';
 import 'package:cinequest/src/common/bloc/buttton/button_bloc.dart';
-import 'package:cinequest/src/common/constants/app_sizes.dart';
-import 'package:cinequest/src/common/widgets/auth_app_bar.dart';
 import 'package:cinequest/src/core/di/injection_container.import.dart';
 import 'package:cinequest/src/core/extensions/context_extension.dart';
-import 'package:cinequest/src/core/extensions/string_extension.dart';
-import 'package:cinequest/src/features/auth/domain/entities/params/auth_params.dart';
 import 'package:cinequest/src/features/auth/domain/usecases/get_email_password.dart';
 import 'package:cinequest/src/features/auth/domain/usecases/login_use_case.dart';
+import 'package:cinequest/src/features/auth/domain/usecases/params/auth_params.dart';
 import 'package:cinequest/src/features/auth/domain/usecases/save_email_password.dart';
 import 'package:cinequest/src/features/auth/presentation/blocs/login/login_bloc.dart';
-import 'package:cinequest/src/features/auth/presentation/widgets/login_body.dart';
+import 'package:cinequest/src/features/auth/presentation/widgets/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part '_mixins/login_page.mixin.dart';
 
 /// Trang Login
-class LoginPage extends StatefulWidget {
+class LoginPage extends StatelessWidget {
   /// Constructor
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => LoginBloc(),
+        ),
+        BlocProvider(
+          create: (context) => ButtonBloc(),
+        ),
+      ],
+      child: const _Page(),
+    );
+  }
 }
 
-class _LoginPageState extends State<LoginPage> with LoginPageMixin {
+class _Page extends StatefulWidget {
+  const _Page();
+
+  @override
+  State<_Page> createState() => _PageState();
+}
+
+class _PageState extends State<_Page> with _PageMixin {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AuthAppBar(title: 'Login'.hardcoded),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(
-          AppSizes.defaultSpace,
-          AppSizes.defaultSpace * 2,
-          AppSizes.defaultSpace,
-          AppSizes.defaultSpace / 2,
-        ),
-        child: MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (context) => LoginBloc(),
-            ),
-            BlocProvider(
-              create: (context) => ButtonBloc(),
-            ),
-          ],
-          child: BlocConsumer<ButtonBloc, ButtonState>(
-            listener: _listener,
-            builder: (context, state) {
-              return LoginBody(
-                loginKey: _loginKey,
-                emailTextEditingController: _emailTextEditingController,
-                setPasswordTextEditingController:
-                    _setPasswordTextEditingController,
-                onLogin: () => _login(context),
-                isLoading: state is ButtonLoadingState,
-              );
-            },
-          ),
-        ),
+    return BlocListener<ButtonBloc, ButtonState>(
+      listener: _listener,
+      child: LoginView(
+        formKey: _loginFormKey,
+        emailTextEditingController: _emailTextEditingController,
+        setPasswordTextEditingController: _setPasswordTextEditingController,
+        onLogin: _login,
+        onEmailChanged: _changeEmail,
+        onSetPasswordChanged: _changeSetPassword,
       ),
     );
   }

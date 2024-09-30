@@ -6,32 +6,24 @@ import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:cinequest/src/core/utils/validation_util.dart';
 import 'package:flutter/material.dart';
 
-/// Form của ResetPasswordPage
-class ResetPasswordForm extends StatelessWidget {
+/// View nhập username
+class ASUsernameView extends StatelessWidget {
   /// Constructor
-  const ResetPasswordForm({
+  const ASUsernameView({
     required this.title,
     required this.subtitle,
     required this.formKey,
-    required this.emailTextEditingController,
+    required this.usernameTextEditingController,
     super.key,
-    this.onChanged,
+    this.onUsernameChanged,
   });
 
-  ///
   final String title;
-
-  ///
   final String subtitle;
-
-  ///
-  final void Function(String)? onChanged;
-
-  ///
   final GlobalKey<FormState> formKey;
+  final TextEditingController usernameTextEditingController;
+  final void Function(String)? onUsernameChanged;
 
-  ///
-  final TextEditingController emailTextEditingController;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -42,7 +34,7 @@ class ResetPasswordForm extends StatelessWidget {
           style: context.textTheme.headlineMedium,
         ),
         gapH24,
-        _buildResetPasswordForm(),
+        _buildCustomizeYourAccountForm(),
         gapH16,
         Text(
           subtitle,
@@ -53,15 +45,15 @@ class ResetPasswordForm extends StatelessWidget {
     );
   }
 
-  Widget _buildResetPasswordForm() {
+  Widget _buildCustomizeYourAccountForm() {
     return Form(
       key: formKey,
       child: CustomTextField(
-        label: 'Email'.hardcoded,
-        controller: emailTextEditingController,
-        onChanged: onChanged,
+        label: 'Username'.hardcoded,
+        controller: usernameTextEditingController,
+        onChanged: onUsernameChanged,
         validator: (value) =>
-            ValidationUtil.validateEmail('Email'.hardcoded, value),
+            ValidationUtil.validateEmptyField('Username'.hardcoded, value),
       ),
     );
   }

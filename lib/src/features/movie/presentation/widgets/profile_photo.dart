@@ -62,12 +62,11 @@ class ProfilePhoto extends StatelessWidget {
   }
 }
 
-///
+/// Ảnh người dùng
 class UserAvatar extends StatelessWidget {
   /// Constructor
   const UserAvatar({required this.imageUrl, super.key});
 
-  ///
   final String imageUrl;
 
   @override

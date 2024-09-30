@@ -9,13 +9,10 @@ class Failure with EquatableMixin implements Exception {
     this.stackTrace = StackTrace.empty,
   });
 
-  ///
   final String message;
 
-  ///
   final Exception? exception;
 
-  ///
   final StackTrace stackTrace;
 
   @override

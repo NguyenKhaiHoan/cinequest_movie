@@ -48,7 +48,7 @@ class _SettingPageState extends State<SettingPage> with SettingPageMixin {
                     child: CustomButton(
                       buttonType: ButtonType.outlined,
                       text: 'Log out'.toUpperCase().hardcoded,
-                      isLoading: state is ButtonLoadingState,
+                      isLoading: state == const ButtonState.loading(),
                       onPressed: () => _signOut(context),
                     ),
                   );

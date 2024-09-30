@@ -9,7 +9,6 @@ import 'package:permission_handler/permission_handler.dart';
 class AppUtil {
   AppUtil._();
 
-  ///
   static Future<File?> pickImage(ImageSource source) async {
     try {
       final permissionStatus = await _requestPermission(source);
@@ -26,7 +25,6 @@ class AppUtil {
     }
   }
 
-  ///
   static Future<PermissionStatus> _requestPermission(ImageSource source) async {
     if (Platform.isAndroid) {
       final deviceInfo = DeviceInfoPlugin();
@@ -43,7 +41,6 @@ class AppUtil {
     return PermissionStatus.granted;
   }
 
-  ///
   static Future<File?> cropImage(File image) async {
     final croppedImage = await ImageCropper().cropImage(
       sourcePath: image.path,
@@ -55,9 +52,7 @@ class AppUtil {
     return croppedImage != null ? File(croppedImage.path) : null;
   }
 
-  ///
   static Future<File?> pickImageFromGallery() => pickImage(ImageSource.gallery);
 
-  ///
   static Future<File?> pickImageFromCamera() => pickImage(ImageSource.camera);
 }
