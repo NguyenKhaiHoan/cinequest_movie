@@ -1,4 +1,4 @@
-import 'package:cinequest/src/core/di/injection_container.import.dart';
+import 'package:cinequest/src/core/di/injection_container.dart';
 import 'package:cinequest/src/external/services/connectivity/connectivity_service.dart';
 
 /// Các util dành cho Connectivity

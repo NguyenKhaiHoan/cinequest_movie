@@ -5,5 +5,5 @@ part of 'bottom_nav_bloc.dart';
 class BottomNavEvent with _$BottomNavEvent {
   /// Sự kiện chọn index ở thanh bottom navigation của HomePage
   const factory BottomNavEvent.selectedIndex(int index) =
-      EventBottomNavIndexSelected;
+      _BottomNavSelectedIndexEvent;
 }

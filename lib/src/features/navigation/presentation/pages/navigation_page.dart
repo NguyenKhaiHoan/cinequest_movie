@@ -28,24 +28,28 @@ class _NavigationPageState extends State<NavigationPage> {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         body: widget.child,
-        bottomNavigationBar: BlocBuilder<BottomNavBloc, BottomNavState>(
-          builder: (context, state) {
-            final currentIndex = state.currentIndex;
-            return BottomNavBar(
-              currentIndex: currentIndex,
-              onTap: (index) {
-                context
-                    .read<BottomNavBloc>()
-                    .add(BottomNavEvent.selectedIndex(index));
-                widget.child.goBranch(
-                  index,
-                  initialLocation: index == currentIndex,
-                );
-              },
+        bottomNavigationBar: _buildBottomNavigationBar(),
+      ),
+    );
+  }
+
+  Widget _buildBottomNavigationBar() {
+    return BlocBuilder<BottomNavBloc, BottomNavState>(
+      builder: (context, state) {
+        final currentIndex = state.currentIndex;
+        return BottomNavBar(
+          currentIndex: currentIndex,
+          onTap: (index) {
+            context
+                .read<BottomNavBloc>()
+                .add(BottomNavEvent.selectedIndex(index));
+            widget.child.goBranch(
+              index,
+              initialLocation: index == currentIndex,
             );
           },
-        ),
-      ),
+        );
+      },
     );
   }
 }

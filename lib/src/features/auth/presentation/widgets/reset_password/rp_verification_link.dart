@@ -34,63 +34,88 @@ class RPVerificationLinkView extends StatelessWidget {
     final part2 = parts[1];
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AuthAppBar(
-        title: 'Reset Password'.hardcoded,
-        onBackTap: onBack,
+      appBar: _buildAppBar(),
+      body: _buildBody(context, part1, part2),
+    );
+  }
+
+  Widget _buildBody(BuildContext context, String part1, String part2) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        AppSizes.defaultSpace,
+        AppSizes.defaultSpace * 2,
+        AppSizes.defaultSpace,
+        AppSizes.defaultSpace / 2,
       ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(
-          AppSizes.defaultSpace,
-          AppSizes.defaultSpace * 2,
-          AppSizes.defaultSpace,
-          AppSizes.defaultSpace / 2,
+      child: Column(
+        children: [
+          _buildTitleAndSubtitle(context, part1, part2),
+          gapH48,
+          _buildImage(),
+          const Spacer(),
+          _buildResendOrPopBackButton(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildResendOrPopBackButton() {
+    return CustomButton(
+      width: double.infinity,
+      text: 'Resend email'.hardcoded,
+      textColor: AppColors.black,
+      buttonType: ButtonType.elevated,
+      onPressed: onResend,
+    );
+  }
+
+  Widget _buildImage() {
+    return Center(
+      child: SvgPicture.asset(
+        AppAssets.images.sendEmail.path,
+        width: UiUtil.deviceWidth * 0.7,
+        fit: BoxFit.cover,
+      ),
+    );
+  }
+
+  AuthAppBar _buildAppBar() {
+    return AuthAppBar(
+      title: 'Reset Password'.hardcoded,
+      onBackTap: onBack,
+    );
+  }
+
+  Widget _buildTitleAndSubtitle(
+    BuildContext context,
+    String part1,
+    String part2,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: context.textTheme.headlineMedium,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: context.textTheme.headlineMedium,
-            ),
-            gapH16,
-            Text.rich(
+        gapH16,
+        Text.rich(
+          TextSpan(
+            text: '$part1\n',
+            style: context.textTheme.bodyMedium!
+                .copyWith(color: AppColors.dimGray),
+            children: [
               TextSpan(
-                text: '$part1\n',
-                style: context.textTheme.bodyMedium!
-                    .copyWith(color: AppColors.dimGray),
-                children: [
-                  TextSpan(
-                    text: '$email\n',
-                    style: context.textTheme.bodyMedium,
-                  ),
-                  TextSpan(
-                    text: part2,
-                  ),
-                ],
+                text: '$email\n',
+                style: context.textTheme.bodyMedium,
               ),
-            ),
-            gapH48,
-            SizedBox(
-              width: double.infinity,
-              child: Center(
-                child: SvgPicture.asset(
-                  AppAssets.images.sendEmail.path,
-                  width: UiUtil.deviceWidth * 0.7,
-                  fit: BoxFit.cover,
-                ),
+              TextSpan(
+                text: part2,
               ),
-            ),
-            const Spacer(),
-            CustomButton(
-              width: double.infinity,
-              text: 'Resend email'.hardcoded,
-              textColor: AppColors.black,
-              buttonType: ButtonType.elevated,
-              onPressed: onResend,
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }

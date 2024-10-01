@@ -16,6 +16,7 @@ class NowPlayingMovieCarouselItem extends StatelessWidget {
     required this.listener,
     required this.toggleFavorite,
     required this.isFavorite,
+    required this.favoriteMovies,
     super.key,
   });
 
@@ -25,9 +26,14 @@ class NowPlayingMovieCarouselItem extends StatelessWidget {
   ) listener;
 
   final bool isFavorite;
+  final List<Movie> favoriteMovies;
 
-  final void Function(BuildContext context, Movie movie, bool isFavorite)
-      toggleFavorite;
+  final void Function(
+    BuildContext context,
+    List<Movie> favoriteMovies,
+    Movie movie,
+    bool isFavorite,
+  ) toggleFavorite;
 
   final Movie movie;
 
@@ -59,6 +65,7 @@ class NowPlayingMovieCarouselItem extends StatelessWidget {
                   const Spacer(),
                   FavoriteButton(
                     movie: movie,
+                    favoriteMovies: favoriteMovies,
                     listener: listener,
                     toggleFavorite: toggleFavorite,
                     isFavorite: isFavorite,

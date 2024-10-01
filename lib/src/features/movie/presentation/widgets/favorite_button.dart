@@ -13,40 +13,42 @@ class FavoriteButton extends StatelessWidget {
     required this.listener,
     required this.toggleFavorite,
     required this.isFavorite,
+    required this.favoriteMovies,
     super.key,
   });
 
   final Movie movie;
-
   final bool isFavorite;
+  final List<Movie> favoriteMovies;
 
   final void Function(
     BuildContext context,
     ButtonState state,
   ) listener;
 
-  final void Function(BuildContext context, Movie movie, bool isFavorite)
-      toggleFavorite;
+  final void Function(
+    BuildContext context,
+    List<Movie> favoriteMovies,
+    Movie movie,
+    bool isFavorite,
+  ) toggleFavorite;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ButtonBloc(),
-      child: Builder(
-        builder: (context) {
-          return BlocListener<ButtonBloc, ButtonState>(
-            listener: listener,
-            child: CustomButton(
-              buttonType:
-                  isFavorite ? ButtonType.elevated : ButtonType.outlined,
-              colorFilter: isFavorite
-                  ? const ColorFilter.mode(AppColors.black, BlendMode.srcIn)
-                  : const ColorFilter.mode(AppColors.white, BlendMode.srcIn),
-              iconPath: isFavorite
-                  ? AppAssets.images.check.path
-                  : AppAssets.images.plus.path,
-              onPressed: () => toggleFavorite(context, movie, isFavorite),
-            ),
+      child: BlocBuilder<ButtonBloc, ButtonState>(
+        builder: (context, state) {
+          return CustomButton(
+            buttonType: isFavorite ? ButtonType.elevated : ButtonType.outlined,
+            colorFilter: isFavorite
+                ? const ColorFilter.mode(AppColors.black, BlendMode.srcIn)
+                : const ColorFilter.mode(AppColors.white, BlendMode.srcIn),
+            iconPath: isFavorite
+                ? AppAssets.images.check.path
+                : AppAssets.images.plus.path,
+            onPressed: () =>
+                toggleFavorite(context, favoriteMovies, movie, isFavorite),
           );
         },
       ),

@@ -36,12 +36,12 @@ class AuthForm extends StatelessWidget {
       children: [
         _buildTitle(context),
         gapH24,
-        _buildAuthForm(),
+        _buildForm(),
       ],
     );
   }
 
-  Widget _buildAuthForm() {
+  Widget _buildForm() {
     final isSignUp = confirmPasswordTextEditingController != null;
     return Form(
       key: formKey,

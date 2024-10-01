@@ -29,7 +29,7 @@ class TMDBNetworkException extends Equatable {
       case DioExceptionType.badResponse:
 
         /// Lấy Object lỗi từ TheMovieDb
-        final dto = TMDBApiErrorDto.fromJson(
+        final dto = TMDBApiErrorModel.fromJson(
           dioException.response?.data as Map<String, dynamic>,
         );
         message = dto.statusMessage ??

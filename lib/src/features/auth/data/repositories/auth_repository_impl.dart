@@ -6,11 +6,10 @@ import 'package:cinequest/src/features/auth/data/data_sources/auth_remote_dataso
 import 'package:cinequest/src/features/auth/domain/entities/user.dart';
 import 'package:cinequest/src/features/auth/domain/repositories/auth_repository.dart';
 import 'package:cinequest/src/features/auth/domain/usecases/params/auth_params.dart';
-import 'package:cinequest/src/features/auth/domain/usecases/params/get_profile_user_params.dart';
-import 'package:cinequest/src/features/auth/domain/usecases/params/save_profile_params.dart';
+import 'package:cinequest/src/features/auth/domain/usecases/params/profile_params.dart';
+import 'package:cinequest/src/features/auth/domain/usecases/params/user_params.dart';
 import 'package:cinequest/src/features/auth/domain/usecases/params/verification_code_params.dart';
 import 'package:dartz/dartz.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 /// Implementation của AuthRepository
 class AuthRepositoryImpl implements AuthRepository {
@@ -24,9 +23,9 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthLocalDataSource _authLocalDataSource;
 
   @override
-  FutureEither<AppUser> getProfileUser(GetProfileUserParams params) async {
+  FutureEither<AppUser> getProfileUser() async {
     try {
-      final result = await _authRemoteDataSource.getProfileUser(params);
+      final result = await _authRemoteDataSource.getProfileUser();
       return Right(result);
     } on Failure catch (e) {
       return Left(e);
@@ -34,10 +33,10 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  FutureEither<void> saveProfileUser(SaveProfileUserParams params) async {
+  FutureEither<void> saveProfileUser(UserParams params) async {
     try {
       final result = await _authRemoteDataSource.saveProfileUser(
-        params,
+        user: params.user,
       );
       return Right(result);
     } on Failure catch (e) {
@@ -46,30 +45,36 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  FutureEither<UserCredential> login(AuthParams params) async {
+  FutureEither<void> login(AuthParams params) async {
     try {
-      final result = await _authRemoteDataSource.login(params);
-      return Right(result);
+      await _authRemoteDataSource.login(
+        email: params.email,
+        password: params.password,
+      );
+      return const Right(null);
     } on Failure catch (e) {
       return Left(e);
     }
   }
 
   @override
-  FutureEither<UserCredential> signUp(AuthParams params) async {
+  FutureEither<void> signUp(AuthParams params) async {
     try {
-      final result = await _authRemoteDataSource.signUp(params);
-      return Right(result);
+      await _authRemoteDataSource.signUp(
+        email: params.email,
+        password: params.password,
+      );
+      return const Right(null);
     } on Failure catch (e) {
       return Left(e);
     }
   }
 
   @override
-  FutureEither<UserCredential> signInWithGoogle() async {
+  FutureEither<void> signInWithGoogle() async {
     try {
-      final result = await _authRemoteDataSource.signInWithGoogle();
-      return Right(result);
+      await _authRemoteDataSource.signInWithGoogle();
+      return const Right(null);
     } on Failure catch (e) {
       return Left(e);
     }
@@ -89,9 +94,11 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  FutureEither<void> verificateCode(VerificateCodeParams params) async {
+  FutureEither<void> verificateCode(VerificattionCodeParams params) async {
     try {
-      final result = await _authRemoteDataSource.verificateCode(params);
+      final result = await _authRemoteDataSource.verificateCode(
+        verificationCode: params.verificationCode,
+      );
       return Right(result);
     } on Failure catch (e) {
       return Left(e);
@@ -99,10 +106,10 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  FutureEither<String> saveProfilePhoto(SaveProfilePhotoParams params) async {
+  FutureEither<String> saveProfilePhoto(ProfileParams params) async {
     try {
       final result = await _authRemoteDataSource.saveProfilePhoto(
-        params,
+        profilePhoto: params.profilePhoto,
       );
       return Right(result);
     } on Failure catch (e) {
@@ -123,7 +130,10 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   FutureEither<void> saveEmailPassword(AuthParams params) async {
     try {
-      final result = await _authLocalDataSource.saveEmailPassword(params);
+      final result = await _authLocalDataSource.saveEmailPassword(
+        email: params.email,
+        password: params.password,
+      );
       return Right(result);
     } on Failure catch (e) {
       return Left(e);

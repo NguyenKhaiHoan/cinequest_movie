@@ -29,23 +29,30 @@ class ResetPasswordForm extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: context.textTheme.headlineMedium,
-        ),
+        _buildTitle(context),
         gapH24,
-        _buildResetPasswordForm(),
+        _buildForm(),
         gapH16,
-        Text(
-          subtitle,
-          style:
-              context.textTheme.bodyMedium!.copyWith(color: AppColors.dimGray),
-        ),
+        _buildSubtitle(context),
       ],
     );
   }
 
-  Widget _buildResetPasswordForm() {
+  Text _buildSubtitle(BuildContext context) {
+    return Text(
+      subtitle,
+      style: context.textTheme.bodyMedium!.copyWith(color: AppColors.dimGray),
+    );
+  }
+
+  Text _buildTitle(BuildContext context) {
+    return Text(
+      title,
+      style: context.textTheme.headlineMedium,
+    );
+  }
+
+  Widget _buildForm() {
     return Form(
       key: formKey,
       child: CustomTextField(

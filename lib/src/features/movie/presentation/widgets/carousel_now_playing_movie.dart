@@ -1,19 +1,17 @@
 import 'package:cinequest/gen/colors.gen.dart';
 import 'package:cinequest/src/common/bloc/buttton/button_bloc.dart';
 import 'package:cinequest/src/common/constants/app_sizes.dart';
-import 'package:cinequest/src/core/di/injection_container.import.dart';
+import 'package:cinequest/src/core/di/injection_container.dart';
 import 'package:cinequest/src/core/errors/failure.dart';
 import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:cinequest/src/core/extensions/date_time_extension.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:cinequest/src/core/utils/ui_util.dart';
 import 'package:cinequest/src/features/movie/domain/entities/movie.dart';
-import 'package:cinequest/src/features/movie/domain/entities/params/delete_movie_local_params.dart';
-import 'package:cinequest/src/features/movie/domain/entities/params/save_movie_local_params.dart';
-import 'package:cinequest/src/features/movie/domain/repositories/movie_repository.dart';
-import 'package:cinequest/src/features/movie/domain/usecases/delete_movie_local_use_case.dart';
-import 'package:cinequest/src/features/movie/domain/usecases/get_movies_local_use_case.dart';
-import 'package:cinequest/src/features/movie/domain/usecases/save_movie_local_use_case.dart';
+import 'package:cinequest/src/features/movie/domain/usecases/delete_movie_local_usecase.dart';
+import 'package:cinequest/src/features/movie/domain/usecases/params/movie_params.dart';
+import 'package:cinequest/src/features/movie/domain/usecases/save_movie_local_usecase.dart';
+import 'package:cinequest/src/features/movie/domain/usecases/stream_favorite_movie_usecase.dart';
 import 'package:cinequest/src/features/movie/presentation/blocs/now_playing_movie/now_playing_movie_bloc.dart';
 import 'package:cinequest/src/features/movie/presentation/widgets/carousel_home_view.dart';
 import 'package:cinequest/src/features/movie/presentation/widgets/now_playing_movie_carousel_item.dart';
@@ -67,11 +65,14 @@ class _CarouselNowPlayingMovieState extends State<CarouselNowPlayingMovie>
 
   Widget _buildSuccessState(List<Movie> data) {
     return StreamBuilder(
-      stream: sl<MovieRepository>().favoriteMoviesStateChanges(),
+      stream: sl<StreamFavoriteMovieUsecase>().call(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator(
-            color: AppColors.white,
+          return SizedBox(
+            width: UiUtil.deviceWidth,
+            child: const CircularProgressIndicator(
+              color: AppColors.white,
+            ),
           );
         }
         if (snapshot.hasError) {
@@ -81,6 +82,7 @@ class _CarouselNowPlayingMovieState extends State<CarouselNowPlayingMovie>
               data.length,
               (index) => NowPlayingMovieCarouselItem(
                 movie: data[index],
+                favoriteMovies: data,
                 listener: _listener,
                 toggleFavorite: _toggleFavorite,
                 isFavorite: false,
@@ -95,6 +97,7 @@ class _CarouselNowPlayingMovieState extends State<CarouselNowPlayingMovie>
             data.length,
             (index) => NowPlayingMovieCarouselItem(
               movie: data[index],
+              favoriteMovies: data,
               listener: _listener,
               toggleFavorite: _toggleFavorite,
               isFavorite:

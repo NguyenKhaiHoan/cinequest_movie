@@ -29,12 +29,9 @@ class ASUsernameView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: context.textTheme.headlineMedium,
-        ),
+        _buildTitle(context),
         gapH24,
-        _buildCustomizeYourAccountForm(),
+        _buildForm(),
         gapH16,
         Text(
           subtitle,
@@ -45,7 +42,14 @@ class ASUsernameView extends StatelessWidget {
     );
   }
 
-  Widget _buildCustomizeYourAccountForm() {
+  Widget _buildTitle(BuildContext context) {
+    return Text(
+      title,
+      style: context.textTheme.headlineMedium,
+    );
+  }
+
+  Widget _buildForm() {
     return Form(
       key: formKey,
       child: CustomTextField(

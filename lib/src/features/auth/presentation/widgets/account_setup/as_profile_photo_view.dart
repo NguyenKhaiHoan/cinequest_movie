@@ -27,38 +27,45 @@ class ASProfilePhotoView extends StatelessWidget {
       builder: (context, state) {
         return Column(
           children: [
-            Text(
-              title,
-              style: context.textTheme.headlineMedium,
-            ),
+            _buildTitle(context),
             gapH62,
-            if (state.profilePhoto == null)
-              CustomCircleButton(
-                iconPath: AppAssets.images.plus.path,
-                buttonSize: 150,
-                colorFilter: const ColorFilter.mode(
-                  AppColors.dimGray,
-                  BlendMode.srcIn,
-                ),
-                onPressed: onPressed,
-              )
-            else
-              InkWell(
-                onTap: onPressed,
-                child: Container(
-                  height: 150,
-                  width: 150,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      image: FileImage(state.profilePhoto!),
-                    ),
-                  ),
-                ),
-              ),
+            _buildProfilePhoto(state),
           ],
         );
       },
     );
+  }
+
+  Widget _buildTitle(BuildContext context) {
+    return Text(
+      title,
+      style: context.textTheme.headlineMedium,
+    );
+  }
+
+  Widget _buildProfilePhoto(AccountSetupState state) {
+    return state.profilePhoto == null
+        ? CustomCircleButton(
+            iconPath: AppAssets.images.plus.path,
+            buttonSize: 150,
+            colorFilter: const ColorFilter.mode(
+              AppColors.dimGray,
+              BlendMode.srcIn,
+            ),
+            onPressed: onPressed,
+          )
+        : InkWell(
+            onTap: onPressed,
+            child: Container(
+              height: 150,
+              width: 150,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: FileImage(state.profilePhoto!),
+                ),
+              ),
+            ),
+          );
   }
 }

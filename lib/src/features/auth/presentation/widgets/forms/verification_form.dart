@@ -29,6 +29,31 @@ class VerificationForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      children: [
+        _buildTitleAndSubtitle(context),
+        gapH24,
+        _buildForm(),
+      ],
+    );
+  }
+
+  Widget _buildForm() {
+    return Form(
+      key: formKey,
+      child: CustomTextField(
+        label: 'Verification Code'.hardcoded,
+        controller: verificationCodeTextEditingController,
+        onChanged: onVerificationCodeChanged,
+        validator: (value) => ValidationUtil.validateEmptyField(
+          'Verification Code'.hardcoded,
+          value,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTitleAndSubtitle(BuildContext context) {
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
@@ -49,24 +74,7 @@ class VerificationForm extends StatelessWidget {
             ],
           ),
         ),
-        gapH24,
-        _buildVerificationForm(),
       ],
-    );
-  }
-
-  Widget _buildVerificationForm() {
-    return Form(
-      key: formKey,
-      child: CustomTextField(
-        label: 'Verification Code'.hardcoded,
-        controller: verificationCodeTextEditingController,
-        onChanged: onVerificationCodeChanged,
-        validator: (value) => ValidationUtil.validateEmptyField(
-          'Verification Code'.hardcoded,
-          value,
-        ),
-      ),
     );
   }
 }

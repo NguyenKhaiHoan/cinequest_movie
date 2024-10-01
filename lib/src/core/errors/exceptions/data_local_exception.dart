@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 class DataLocalException extends Equatable {
   /// Lấy message từ lỗi
   DataLocalException.fromException() {
-    message = 'Error while processing data in local'.hardcoded;
+    message = 'Error when processing data in local'.hardcoded;
   }
 
   late final String message;

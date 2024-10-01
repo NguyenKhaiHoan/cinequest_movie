@@ -3,11 +3,11 @@ import 'package:cinequest/src/common/bloc/buttton/button_bloc.dart';
 import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:cinequest/src/common/widgets/auth_app_bar.dart';
 import 'package:cinequest/src/common/widgets/custom_button.dart';
-import 'package:cinequest/src/core/di/injection_container.import.dart';
+import 'package:cinequest/src/core/di/injection_container.dart';
 import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
 import 'package:cinequest/src/core/generics/usecase.dart';
-import 'package:cinequest/src/features/auth/domain/usecases/sign_out_use_case.dart';
+import 'package:cinequest/src/features/auth/domain/usecases/sign_out_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,6 +1,6 @@
 import 'package:cinequest/src/common/bloc/app/app_bloc.dart';
 import 'package:cinequest/src/common/bloc/connectivity/connectivity_bloc.dart';
-import 'package:cinequest/src/core/di/injection_container.import.dart';
+import 'package:cinequest/src/core/di/injection_container.dart';
 import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:cinequest/src/core/routes/route_pages.dart';
 import 'package:cinequest/src/core/themes/app_themes.dart';
@@ -33,10 +33,7 @@ class _CineQuestMovieState extends State<CineQuestMovie>
         ),
         BlocProvider(
           create: (context) => AppBloc(
-            firebaseAuth: sl(),
             getProfileUserUseCase: sl(),
-            userRepository: sl(),
-            getStorageService: sl(),
           )..add(const AppEvent.started()),
         ),
       ],

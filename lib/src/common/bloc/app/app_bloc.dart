@@ -1,11 +1,10 @@
 import 'package:cinequest/src/common/constants/app_keys.dart';
 import 'package:cinequest/src/core/errors/failure.dart';
-import 'package:cinequest/src/core/repositories/user_repository.dart';
 import 'package:cinequest/src/core/routes/route_pages.dart';
 import 'package:cinequest/src/external/services/storage/local/get_storage_service.dart';
 import 'package:cinequest/src/external/services/storage/local/sqlite_service.dart';
-import 'package:cinequest/src/features/auth/domain/usecases/params/get_profile_user_params.dart';
-import 'package:cinequest/src/features/auth/domain/usecases/get_profile_user_use_case.dart';
+import 'package:cinequest/src/features/auth/domain/entities/user.dart';
+import 'package:cinequest/src/features/auth/domain/usecases/get_profile_user_usecase.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -20,14 +19,8 @@ part 'app_state.dart';
 class AppBloc extends Bloc<AppEvent, AppState> {
   /// Constructor
   AppBloc({
-    required FirebaseAuth firebaseAuth,
     required GetProfileUserUseCase getProfileUserUseCase,
-    required UserRepository userRepository,
-    required GetStorageService getStorageService,
-  })  : _firebaseAuth = firebaseAuth,
-        _getProfileUseCase = getProfileUserUseCase,
-        _userRepository = userRepository,
-        _getService = getStorageService,
+  })  : _getProfileUseCase = getProfileUserUseCase,
         super(const AppState.initial()) {
     on<AppEvent>((event, emit) async {
       await event.map(
@@ -36,10 +29,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     });
   }
 
-  final FirebaseAuth _firebaseAuth;
   final GetProfileUserUseCase _getProfileUseCase;
-  final UserRepository _userRepository;
-  final GetStorageService _getService;
+  final _firebaseAuth = FirebaseAuth.instance;
 
   Future<void> _onStarted(
     _AppStartedEvent event,
@@ -49,16 +40,14 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     // Xét nếu user của firebase là null tức app chưa được đăng nhập
     if (user != null) {
       // Nếu user khác null tức đã đăng nhập thì lấy data từ firestore về
-      final result = await _getProfileUseCase.call(
-        params: GetProfileUserParams(userId: user.uid),
-      );
+      final result = await _getProfileUseCase.call();
 
       /// Khởi tạo storage để lưu trạng thái đã setup account hay chưa.
       /// Nếu trạng thái là null thì cho mặc định là `false`
       await GetStorageService.initializeStorage(user.uid);
-      if (_getService.getData<bool>('IsSetupAccout') == null) {
-        await _getService.saveData<bool>('IsSetupAccout', false);
-      }
+      // if (_getService.getData<bool>('IsSetupAccout') == null) {
+      //   await _getService.saveData<bool>('IsSetupAccout', false);
+      // }
 
       await result.fold(
         (failure) async {
@@ -68,20 +57,21 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           /// vì vậy Firebase sẽ đưa ra lỗi
           /// - Do các lỗi Firebase khác: lỗi mạng không thể truy cập vào
           /// Firebase để lấy dữ liệu, ...
-          if (_getService.getData<bool>('IsSetupAccout') == false) {
-            emit(const AppState.accountNotSetup());
-          } else {
-            emit(AppState.unauthenticated(failure: failure));
-          }
+          // if (_getService.getData<bool>('IsSetupAccout') == false) {
+          //   emit(const AppState.accountNotSetup());
+          // } else {
+          //   emit(AppState.unauthenticated(failure: failure));
+          // }
+          emit(AppState.unauthenticated(failure: failure));
         },
         (data) async {
           // Nếu user khác null tức đã đăng nhập thì lấy data từ firestore về
           // dữ liệu user mới trong app
-          _userRepository.user = data;
-          await _getService.saveData<bool>('IsSetupAccout', true);
+          // await _getService.saveData<bool>('IsSetupAccout', true);
           await SqliteService.initializeDatabase(user.uid, _createDatabase);
           // Cập nhật trạng thái app đã xác thực
-          emit(const AppState.authenticated());
+          print(data.email);
+          emit(AppState.authenticated(user: data));
         },
       );
     } else {

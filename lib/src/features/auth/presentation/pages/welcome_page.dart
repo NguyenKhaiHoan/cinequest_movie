@@ -19,26 +19,33 @@ class WelcomePage extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          SvgPicture.asset(
-            AppAssets.images.backgroundWelcome.path,
-            width: UiUtil.deviceWidth,
-            fit: BoxFit.cover,
-          ),
+          _buildBackground(),
           const Spacer(),
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: AppSizes.defaultSpace),
-            child: Text(
-              'Unpleash the Power of Cinma: Your ticket\nto the Big Screen!'
-                  .hardcoded,
-              style: context.textTheme.bodyMedium,
-              textAlign: TextAlign.center,
-            ),
-          ),
+          _buildDescription(context),
           gapH24,
           const BottomWelcome(),
         ],
       ),
+    );
+  }
+
+  Widget _buildDescription(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppSizes.defaultSpace),
+      child: Text(
+        'Unpleash the Power of Cinma: Your ticket\nto the Big Screen!'
+            .hardcoded,
+        style: context.textTheme.bodyMedium,
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
+  Widget _buildBackground() {
+    return SvgPicture.asset(
+      AppAssets.images.backgroundWelcome.path,
+      width: UiUtil.deviceWidth,
+      fit: BoxFit.cover,
     );
   }
 }

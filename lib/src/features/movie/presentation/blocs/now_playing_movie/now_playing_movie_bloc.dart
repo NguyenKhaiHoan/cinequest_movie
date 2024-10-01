@@ -1,7 +1,7 @@
 import 'package:cinequest/src/core/errors/failure.dart';
 import 'package:cinequest/src/features/movie/domain/entities/movie.dart';
-import 'package:cinequest/src/features/movie/domain/entities/params/movie_lists_params.dart';
-import 'package:cinequest/src/features/movie/domain/usecases/get_now_playing_movies_use_case.dart';
+import 'package:cinequest/src/features/movie/domain/usecases/get_now_playing_movies_usecase.dart';
+import 'package:cinequest/src/features/movie/domain/usecases/params/get_movie_api_params.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -26,7 +26,7 @@ class NowPlayingMovieBloc
     EventGetNowPlayingMovie event,
     Emitter<NowPlayingMovieState> emit,
   ) async {
-    final result = await _useCase.call(params: MovieListsParams());
+    final result = await _useCase.call(params: GetMoviesApiParams());
 
     result.fold((failure) {
       emit(NowPlayingMovieState.failure(failure: failure));

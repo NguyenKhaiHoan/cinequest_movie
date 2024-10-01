@@ -9,16 +9,16 @@ part 'bottom_nav_bloc.freezed.dart';
 class BottomNavBloc extends Bloc<BottomNavEvent, BottomNavState> {
   /// Constructor
   BottomNavBloc() : super(BottomNavState.initial()) {
-    on<BottomNavEvent>((events, emit) {
-      events.map(
-        selectedIndex: (event) => _onSelectedIndex(emit, event),
+    on<BottomNavEvent>((event, emit) {
+      event.map(
+        selectedIndex: (e) => _onSelectedIndex(e, emit),
       );
     });
   }
 
   void _onSelectedIndex(
+    _BottomNavSelectedIndexEvent event,
     Emitter<BottomNavState> emit,
-    EventBottomNavIndexSelected event,
   ) =>
       emit(BottomNavState(currentIndex: event.index));
 }

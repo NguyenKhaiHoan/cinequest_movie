@@ -16,11 +16,8 @@ class CarouselHomeView extends StatelessWidget {
   });
 
   final String title;
-
   final TextStyle? titleStyle;
-
   final String? subtitle;
-
   final Widget child;
 
   @override
@@ -67,7 +64,6 @@ class CarouselBox extends StatelessWidget {
   });
 
   final double maxHeight;
-
   final List<Widget> children;
 
   @override

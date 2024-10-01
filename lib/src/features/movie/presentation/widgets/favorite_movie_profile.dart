@@ -2,7 +2,7 @@ import 'package:cinequest/gen/assets.gen.dart';
 import 'package:cinequest/gen/colors.gen.dart';
 import 'package:cinequest/src/common/constants/app_sizes.dart';
 import 'package:cinequest/src/common/widgets/svg_icon.dart';
-import 'package:cinequest/src/core/di/injection_container.import.dart';
+import 'package:cinequest/src/core/di/injection_container.dart';
 import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:cinequest/src/core/extensions/double_extension.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
@@ -20,7 +20,7 @@ class FavoriteMovieProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: sl<MovieRepository>().favoriteMoviesStateChanges(),
+      stream: sl<MovieRepository>().favoriteMovies(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CircularProgressIndicator(

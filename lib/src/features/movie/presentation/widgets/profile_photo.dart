@@ -1,11 +1,10 @@
-import 'package:cinequest/gen/colors.gen.dart';
+import 'package:cinequest/src/common/bloc/app/app_bloc.dart';
 import 'package:cinequest/src/common/constants/app_sizes.dart';
-import 'package:cinequest/src/core/di/injection_container.import.dart';
 import 'package:cinequest/src/core/extensions/context_extension.dart';
 import 'package:cinequest/src/core/extensions/string_extension.dart';
-import 'package:cinequest/src/core/repositories/user_repository.dart';
 import 'package:cinequest/src/features/auth/domain/entities/user.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// Ảnh hồ sơ
 class ProfilePhoto extends StatelessWidget {
@@ -14,23 +13,12 @@ class ProfilePhoto extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: sl<UserRepository>().authStateChanges(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator(
-            color: AppColors.white,
-          );
-        }
-        if (snapshot.hasError) {
-          return _buildMessage('Error load data');
-        }
-        if (!snapshot.hasData || snapshot.data == null) {
-          return _buildMessage('No data');
-        }
-
-        final user = snapshot.data!;
-        return _buildUserProfile(context, user);
+    return BlocBuilder<AppBloc, AppState>(
+      builder: (context, state) {
+        return state.maybeWhen(
+          authenticated: (user) => _buildUserProfile(context, user!),
+          orElse: () => _buildMessage('Error when loading data user'.hardcoded),
+        );
       },
     );
   }
@@ -48,7 +36,17 @@ class ProfilePhoto extends StatelessWidget {
       width: double.infinity,
       child: Column(
         children: [
-          UserAvatar(imageUrl: user.profilePhoto),
+          Container(
+            height: 100,
+            width: 100,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                image: NetworkImage(user.profilePhoto),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
           gapH8,
           Text(
             '${user.surname} ${user.name} (${user.username})',
@@ -57,29 +55,6 @@ class ProfilePhoto extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
         ],
-      ),
-    );
-  }
-}
-
-/// Ảnh người dùng
-class UserAvatar extends StatelessWidget {
-  /// Constructor
-  const UserAvatar({required this.imageUrl, super.key});
-
-  final String imageUrl;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 100,
-      width: 100,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        image: DecorationImage(
-          image: NetworkImage(imageUrl),
-          fit: BoxFit.cover,
-        ),
       ),
     );
   }

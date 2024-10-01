@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
 import 'package:cinequest/src/common/constants/app_keys.dart';
@@ -10,10 +9,6 @@ import 'package:cinequest/src/core/utils/connectivity_util.dart';
 import 'package:cinequest/src/features/auth/data/data_sources/_mappers/user_mapper.dart';
 import 'package:cinequest/src/features/auth/data/models/user_model.dart';
 import 'package:cinequest/src/features/auth/domain/entities/user.dart';
-import 'package:cinequest/src/features/auth/domain/usecases/params/auth_params.dart';
-import 'package:cinequest/src/features/auth/domain/usecases/params/get_profile_user_params.dart';
-import 'package:cinequest/src/features/auth/domain/usecases/params/save_profile_params.dart';
-import 'package:cinequest/src/features/auth/domain/usecases/params/verification_code_params.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -21,14 +16,20 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 /// Remote DataSource
 abstract class AuthRemoteDataSource {
-  Future<AppUser> getProfileUser(GetProfileUserParams params);
-  Future<void> saveProfileUser(SaveProfileUserParams params);
-  Future<UserCredential> signUp(AuthParams params);
-  Future<UserCredential> login(AuthParams params);
+  Future<AppUser> getProfileUser();
+  Future<void> saveProfileUser({required AppUser user});
+  Future<UserCredential> signUp({
+    required String email,
+    required String password,
+  });
+  Future<UserCredential> login({
+    required String email,
+    required String password,
+  });
   Future<UserCredential> signInWithGoogle();
   Future<void> signOut();
-  Future<void> verificateCode(VerificateCodeParams params);
-  Future<String> saveProfilePhoto(SaveProfilePhotoParams params);
+  Future<void> verificateCode({required String verificationCode});
+  Future<String> saveProfilePhoto({required String profilePhoto});
 }
 
 /// Implementation của AuthRemoteDataSource sử dụng Firebase
@@ -41,12 +42,12 @@ class AuthFirebaseDataSourceImpl implements AuthRemoteDataSource {
   final _userMapper = UserMapper();
 
   @override
-  Future<AppUser> getProfileUser(GetProfileUserParams params) async {
+  Future<AppUser> getProfileUser() async {
     if (await ConnectivityUtil.checkConnectivity()) {
       try {
         final DocumentSnapshot doc = await _firebaseFirestore
             .collection(usersKey)
-            .doc(params.userId)
+            .doc(_firebaseAuth.currentUser?.uid)
             .get();
         if (doc.exists) {
           final model = UserModel.fromJson(doc.data()! as Map<String, dynamic>);
@@ -66,13 +67,13 @@ class AuthFirebaseDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<void> saveProfileUser(SaveProfileUserParams params) async {
+  Future<void> saveProfileUser({required AppUser user}) async {
     if (await ConnectivityUtil.checkConnectivity()) {
-      final model = _userMapper.entityToDto(params.user);
+      final model = _userMapper.entityToModel(user);
       try {
         await _firebaseFirestore
             .collection(usersKey)
-            .doc(model.id)
+            .doc(user.id)
             .set(model.toJson());
       } on FirebaseException catch (e) {
         throw Failure(
@@ -86,12 +87,13 @@ class AuthFirebaseDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<String> saveProfilePhoto(SaveProfilePhotoParams params) async {
+  Future<String> saveProfilePhoto({required String profilePhoto}) async {
     if (await ConnectivityUtil.checkConnectivity()) {
       try {
-        final ref =
-            _firebaseStorage.ref(profilePhotoStorageKey).child(params.userId);
-        final snapshot = await ref.putFile(File(params.profilePhoto));
+        final ref = _firebaseStorage
+            .ref(profilePhotoStorageKey)
+            .child(_firebaseAuth.currentUser?.uid ?? '');
+        final snapshot = await ref.putFile(File(profilePhoto));
         final downloadUrl = await snapshot.ref.getDownloadURL();
         return downloadUrl;
       } on FirebaseException catch (e) {
@@ -106,13 +108,16 @@ class AuthFirebaseDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<UserCredential> signUp(AuthParams params) async {
+  Future<UserCredential> signUp({
+    required String email,
+    required String password,
+  }) async {
     if (await ConnectivityUtil.checkConnectivity()) {
       try {
         await _firebaseAuth.currentUser?.reload();
         return await _firebaseAuth.createUserWithEmailAndPassword(
-          email: params.email,
-          password: params.password,
+          email: email,
+          password: password,
         );
       } on FirebaseException catch (e) {
         throw Failure(
@@ -126,13 +131,16 @@ class AuthFirebaseDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<UserCredential> login(AuthParams params) async {
+  Future<UserCredential> login({
+    required String email,
+    required String password,
+  }) async {
     if (await ConnectivityUtil.checkConnectivity()) {
       try {
         await _firebaseAuth.currentUser?.reload();
         return await _firebaseAuth.signInWithEmailAndPassword(
-          email: params.email,
-          password: params.password,
+          email: email,
+          password: password,
         );
       } on FirebaseException catch (e) {
         throw Failure(
@@ -186,10 +194,10 @@ class AuthFirebaseDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<void> verificateCode(VerificateCodeParams params) async {
+  Future<void> verificateCode({required String verificationCode}) async {
     if (await ConnectivityUtil.checkConnectivity()) {
       await Future<void>.delayed(const Duration(seconds: 3));
-      if (params.verificationCode != '123456') {
+      if (verificationCode != '123456') {
         throw Failure(message: 'Verification code not authenticated'.hardcoded);
       }
     } else {

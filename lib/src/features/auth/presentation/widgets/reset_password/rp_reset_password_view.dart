@@ -29,50 +29,63 @@ class RPResetPasswordView extends StatelessWidget {
     return BlocBuilder<ResetPasswordBloc, ResetPasswordState>(
       builder: (context, state) {
         return Scaffold(
-          appBar: AuthAppBar(title: 'Reset Password'.hardcoded),
-          body: Padding(
-            padding: const EdgeInsets.fromLTRB(
-              AppSizes.defaultSpace,
-              AppSizes.defaultSpace * 2,
-              AppSizes.defaultSpace,
-              AppSizes.defaultSpace / 2,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                ResetPasswordForm(
-                  title: 'Reset password'.hardcoded,
-                  subtitle:
-                      'Enter your email to receive a confirmation link and reset your password'
-                          .hardcoded,
-                  formKey: resetPasswordFormKey,
-                  emailTextEditingController: emailTextEditingController,
-                  onEmailChanged: onEmailChanged,
-                ),
-                const Spacer(),
-                if (state.isFormValided)
-                  CustomButton(
-                    width: 170,
-                    iconPath: AppAssets.images.arrowRight.path,
-                    colorFilter: const ColorFilter.mode(
-                      AppColors.black,
-                      BlendMode.srcIn,
-                    ),
-                    buttonType: ButtonType.elevated,
-                    onPressed: onSend,
-                  )
-                else
-                  CustomButton(
-                    width: 170,
-                    iconPath: AppAssets.images.arrowRight.path,
-                    buttonType: ButtonType.outlined,
-                    onPressed: onSend,
-                  ),
-              ],
-            ),
-          ),
+          appBar: _buildAppBar(),
+          body: _buildBody(state),
         );
       },
     );
+  }
+
+  Widget _buildBody(ResetPasswordState state) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        AppSizes.defaultSpace,
+        AppSizes.defaultSpace * 2,
+        AppSizes.defaultSpace,
+        AppSizes.defaultSpace / 2,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          _buildForm(),
+          const Spacer(),
+          _buildResetPasswordButton(state),
+        ],
+      ),
+    );
+  }
+
+  AuthAppBar _buildAppBar() => AuthAppBar(title: 'Reset Password'.hardcoded);
+
+  Widget _buildForm() {
+    return ResetPasswordForm(
+      title: 'Reset password'.hardcoded,
+      subtitle:
+          'Enter your email to receive a confirmation link and reset your password'
+              .hardcoded,
+      formKey: resetPasswordFormKey,
+      emailTextEditingController: emailTextEditingController,
+      onEmailChanged: onEmailChanged,
+    );
+  }
+
+  Widget _buildResetPasswordButton(ResetPasswordState state) {
+    return state.isFormValided
+        ? CustomButton(
+            width: 170,
+            iconPath: AppAssets.images.arrowRight.path,
+            colorFilter: const ColorFilter.mode(
+              AppColors.black,
+              BlendMode.srcIn,
+            ),
+            buttonType: ButtonType.elevated,
+            onPressed: onSend,
+          )
+        : CustomButton(
+            width: 170,
+            iconPath: AppAssets.images.arrowRight.path,
+            buttonType: ButtonType.outlined,
+            onPressed: onSend,
+          );
   }
 }

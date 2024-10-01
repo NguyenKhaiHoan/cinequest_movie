@@ -45,19 +45,15 @@ mixin _PageMixin on State<_Page> {
       if (!_bioFormKey.currentState!.validate()) {
         return;
       }
-    } else {
-      throw Failure(message: 'Page is not valid');
-    }
-
-    if (currentPage == 3) {
+    } else if (currentPage == 3) {
       if (profilePhoto == null) {
         return;
       }
-      final user = sl<FirebaseAuth>().currentUser;
+      final user = FirebaseAuth.instance.currentUser;
       context.read<ButtonBloc>().add(
             ButtonEvent.execute(
               useCase: sl<SaveProfileUserUseCase>(),
-              params: SaveProfileParams(
+              params: ProfileParams(
                 user: AppUser(
                   id: user?.uid ?? const Uuid().v4(),
                   profilePhoto: '',
@@ -80,10 +76,12 @@ mixin _PageMixin on State<_Page> {
   }
 
   void _listener(BuildContext context, ButtonState state) {
+    print('Load....');
     state.whenOrNull(
       success: () => context.read<AppBloc>().add(const AppEvent.started()),
       failure: (failure) => context.showSnackbar(context, failure.message),
     );
+    print('Finish...');
   }
 
   void _back() {

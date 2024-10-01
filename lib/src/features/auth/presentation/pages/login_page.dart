@@ -1,11 +1,11 @@
 import 'package:cinequest/src/common/bloc/app/app_bloc.dart';
 import 'package:cinequest/src/common/bloc/buttton/button_bloc.dart';
-import 'package:cinequest/src/core/di/injection_container.import.dart';
+import 'package:cinequest/src/core/di/injection_container.dart';
 import 'package:cinequest/src/core/extensions/context_extension.dart';
-import 'package:cinequest/src/features/auth/domain/usecases/get_email_password.dart';
-import 'package:cinequest/src/features/auth/domain/usecases/login_use_case.dart';
+import 'package:cinequest/src/features/auth/domain/usecases/get_email_password_usecase.dart';
+import 'package:cinequest/src/features/auth/domain/usecases/login_usecase.dart';
 import 'package:cinequest/src/features/auth/domain/usecases/params/auth_params.dart';
-import 'package:cinequest/src/features/auth/domain/usecases/save_email_password.dart';
+import 'package:cinequest/src/features/auth/domain/usecases/save_email_password_usecase.dart';
 import 'package:cinequest/src/features/auth/presentation/blocs/login/login_bloc.dart';
 import 'package:cinequest/src/features/auth/presentation/widgets/login_view.dart';
 import 'package:flutter/material.dart';

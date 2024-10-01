@@ -32,16 +32,38 @@ class VerificationCodeView extends StatelessWidget {
     return BlocConsumer<ButtonBloc, ButtonState>(
       listener: listener,
       builder: (context, state) {
-        return _Body(
-          verificationCodeFormKey: formKey,
-          verificationCodeTextEditingController:
-              verificationCodeTextEditingController,
-          onBack: onBack,
-          onSignUp: onCodeVerificated,
-          isLoading: state == const ButtonState.loading(),
-          onVerificationCodeChanged: onVerificationCodeChanged,
+        return Scaffold(
+          appBar: _buildAppBar(),
+          body: _buildBody(state),
         );
       },
+    );
+  }
+
+  Widget _buildBody(ButtonState state) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        AppSizes.defaultSpace,
+        AppSizes.defaultSpace * 2,
+        AppSizes.defaultSpace,
+        AppSizes.defaultSpace / 2,
+      ),
+      child: _Body(
+        verificationCodeFormKey: formKey,
+        verificationCodeTextEditingController:
+            verificationCodeTextEditingController,
+        onBack: onBack,
+        onSignUp: onCodeVerificated,
+        isLoading: state == const ButtonState.loading(),
+        onVerificationCodeChanged: onVerificationCodeChanged,
+      ),
+    );
+  }
+
+  AuthAppBar _buildAppBar() {
+    return AuthAppBar(
+      title: 'Verification'.hardcoded,
+      onBackTap: onBack,
     );
   }
 }
@@ -67,64 +89,62 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AuthAppBar(
-        title: 'Verification'.hardcoded,
-        onBackTap: onBack,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(
-          AppSizes.defaultSpace,
-          AppSizes.defaultSpace * 2,
-          AppSizes.defaultSpace,
-          AppSizes.defaultSpace / 2,
-        ),
-        child: BlocBuilder<SignUpBloc, SignUpState>(
-          builder: (context, state) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+    return BlocBuilder<SignUpBloc, SignUpState>(
+      builder: (context, state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            _buildForm(state),
+            const Spacer(),
+            Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                VerificationForm(
-                  title: 'Verify your email address'.hardcoded,
-                  subtitle: 'We have sent the verification code to '.hardcoded,
-                  email: state.email,
-                  formKey: verificationCodeFormKey,
-                  verificationCodeTextEditingController:
-                      verificationCodeTextEditingController,
-                  onVerificationCodeChanged: onVerificationCodeChanged,
-                ),
-                const Spacer(),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const CustomButton(
-                      width: 100,
-                      text: '0:59',
-                      buttonType: ButtonType.outlined,
-                    ),
-                    gapW8,
-                    Expanded(
-                      child: state.isVerificationCodeFormValid
-                          ? CustomButton(
-                              text: 'Continue'.hardcoded,
-                              textColor: AppColors.black,
-                              buttonType: ButtonType.elevated,
-                              onPressed: onSignUp,
-                              isLoading: isLoading,
-                            )
-                          : CustomButton(
-                              text: 'Continue'.hardcoded,
-                              buttonType: ButtonType.outlined,
-                              onPressed: onSignUp,
-                            ),
-                    ),
-                  ],
-                ),
+                _buildCountdownTime(),
+                gapW8,
+                _buildContinueButton(state),
               ],
-            );
-          },
-        ),
-      ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildContinueButton(SignUpState state) {
+    return Expanded(
+      child: state.isVerificationCodeFormValid
+          ? CustomButton(
+              text: 'Continue'.hardcoded,
+              textColor: AppColors.black,
+              buttonType: ButtonType.elevated,
+              onPressed: onSignUp,
+              isLoading: isLoading,
+            )
+          : CustomButton(
+              text: 'Continue'.hardcoded,
+              buttonType: ButtonType.outlined,
+              onPressed: onSignUp,
+            ),
+    );
+  }
+
+  Widget _buildCountdownTime() {
+    return const CustomButton(
+      width: 100,
+      text: '0:59',
+      buttonType: ButtonType.outlined,
+    );
+  }
+
+  Widget _buildForm(SignUpState state) {
+    return VerificationForm(
+      title: 'Verify your email address'.hardcoded,
+      subtitle: 'We have sent the verification code to '.hardcoded,
+      email: state.email,
+      formKey: verificationCodeFormKey,
+      verificationCodeTextEditingController:
+          verificationCodeTextEditingController,
+      onVerificationCodeChanged: onVerificationCodeChanged,
     );
   }
 }

@@ -39,27 +39,44 @@ class SignUpView extends StatelessWidget {
     return BlocConsumer<ButtonBloc, ButtonState>(
       listener: listener,
       builder: (context, state) {
-        return SignUpViewBody(
-          signUpFormKey: formKey,
-          emailTextEditingController: emailTextEditingController,
-          setPasswordTextEditingController: setPasswordTextEditingController,
-          confirmPasswordTextEditingController:
-              confirmPasswordTextEditingController,
-          onSignUp: onSignUp,
-          onEmailChanged: onEmailChanged,
-          onSetPasswordChanged: onSetPasswordChanged,
-          onConfirmPasswordChanged: onConfirmPasswordChanged,
-          isLoading: state == const ButtonState.loading(),
+        return Scaffold(
+          appBar: _buildAppBar(),
+          body: _buildBody(state),
         );
       },
     );
   }
+
+  Padding _buildBody(ButtonState state) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        AppSizes.defaultSpace,
+        AppSizes.defaultSpace * 2,
+        AppSizes.defaultSpace,
+        AppSizes.defaultSpace / 2,
+      ),
+      child: _Body(
+        signUpFormKey: formKey,
+        emailTextEditingController: emailTextEditingController,
+        setPasswordTextEditingController: setPasswordTextEditingController,
+        confirmPasswordTextEditingController:
+            confirmPasswordTextEditingController,
+        onSignUp: onSignUp,
+        onEmailChanged: onEmailChanged,
+        onSetPasswordChanged: onSetPasswordChanged,
+        onConfirmPasswordChanged: onConfirmPasswordChanged,
+        isLoading: state == const ButtonState.loading(),
+      ),
+    );
+  }
+
+  AuthAppBar _buildAppBar() => AuthAppBar(title: 'Sign Up'.hardcoded);
 }
 
 /// Body
-class SignUpViewBody extends StatelessWidget {
+class _Body extends StatelessWidget {
   /// Constructor
-  const SignUpViewBody({
+  const _Body({
     required this.signUpFormKey,
     required this.emailTextEditingController,
     required this.setPasswordTextEditingController,
@@ -69,7 +86,6 @@ class SignUpViewBody extends StatelessWidget {
     this.onEmailChanged,
     this.onSetPasswordChanged,
     this.onConfirmPasswordChanged,
-    super.key,
   });
 
   final GlobalKey<FormState> signUpFormKey;
@@ -84,59 +100,54 @@ class SignUpViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AuthAppBar(title: 'Sign Up'.hardcoded),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(
-          AppSizes.defaultSpace,
-          AppSizes.defaultSpace * 2,
-          AppSizes.defaultSpace,
-          AppSizes.defaultSpace / 2,
-        ),
-        child: BlocBuilder<SignUpBloc, SignUpState>(
-          buildWhen: (previous, current) =>
-              previous.isSignUpFormValid != current.isSignUpFormValid,
-          builder: (context, state) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                AuthForm(
-                  title: "Let's Get Started!".hardcoded,
-                  formKey: signUpFormKey,
-                  emailTextEditingController: emailTextEditingController,
-                  onEmailChanged: onEmailChanged,
-                  setPasswordTextEditingController:
-                      setPasswordTextEditingController,
-                  onSetPasswordChanged: onSetPasswordChanged,
-                  confirmPasswordTextEditingController:
-                      confirmPasswordTextEditingController,
-                  onConfirmPasswordChanged: onConfirmPasswordChanged,
-                ),
-                const Spacer(),
-                if (state.isSignUpFormValid)
-                  CustomButton(
-                    width: 170,
-                    iconPath: AppAssets.images.arrowRight.path,
-                    colorFilter: const ColorFilter.mode(
-                      AppColors.black,
-                      BlendMode.srcIn,
-                    ),
-                    buttonType: ButtonType.elevated,
-                    onPressed: onSignUp,
-                    isLoading: isLoading,
-                  )
-                else
-                  CustomButton(
-                    width: 170,
-                    iconPath: AppAssets.images.arrowRight.path,
-                    buttonType: ButtonType.outlined,
-                    onPressed: onSignUp,
-                  ),
-              ],
-            );
-          },
-        ),
-      ),
+    return BlocBuilder<SignUpBloc, SignUpState>(
+      buildWhen: (previous, current) =>
+          previous.isSignUpFormValid != current.isSignUpFormValid,
+      builder: (context, state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            _buildForm(),
+            const Spacer(),
+            _buildNextButton(state),
+          ],
+        );
+      },
     );
+  }
+
+  AuthForm _buildForm() {
+    return AuthForm(
+      title: "Let's Get Started!".hardcoded,
+      formKey: signUpFormKey,
+      emailTextEditingController: emailTextEditingController,
+      onEmailChanged: onEmailChanged,
+      setPasswordTextEditingController: setPasswordTextEditingController,
+      onSetPasswordChanged: onSetPasswordChanged,
+      confirmPasswordTextEditingController:
+          confirmPasswordTextEditingController,
+      onConfirmPasswordChanged: onConfirmPasswordChanged,
+    );
+  }
+
+  Widget _buildNextButton(SignUpState state) {
+    return state.isSignUpFormValid
+        ? CustomButton(
+            width: 170,
+            iconPath: AppAssets.images.arrowRight.path,
+            colorFilter: const ColorFilter.mode(
+              AppColors.black,
+              BlendMode.srcIn,
+            ),
+            buttonType: ButtonType.elevated,
+            onPressed: onSignUp,
+            isLoading: isLoading,
+          )
+        : CustomButton(
+            width: 170,
+            iconPath: AppAssets.images.arrowRight.path,
+            buttonType: ButtonType.outlined,
+            onPressed: onSignUp,
+          );
   }
 }

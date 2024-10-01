@@ -167,20 +167,27 @@ final class RouterPages {
       _path += state.uri.path;
     }
 
-    // Nếu chưa setup account thì trả về AccountSetupPage
+    // Nếu chưa setup account thì trả về AccountSetupPage trong trường hợp
+    // mở lại ứng dụng khi mới đăng ký xong chưa kịp setup
     if (appAuthState == const AppState.accountNotSetup()) {
-      return AppRoutes.accountSetup.path;
+      print('Chưa setup');
+      return _path += AppRoutes.accountSetup.path;
     }
     // Nếu đã đăng nhập mà path hiện tại chưa chứa path của HomePage
     // thì trả về path của home page
-    else if (appAuthState == const AppState.authenticated() &&
+    else if (appAuthState.maybeWhen(
+          authenticated: (value) => true,
+          orElse: () => false,
+        ) &&
         !_path.contains(AppRoutes.home.path)) {
+      print('Đã xác thực');
       return AppRoutes.home.path;
     }
     // Nếu chưa đăng nhập mà path hiện tại chưa chứa path của WelcomePage
     // thì trả về path của welcome page
     else if (appAuthState == const AppState.unauthenticated() &&
         !_path.contains(AppRoutes.welcome.path)) {
+      print('Chưa xác thực');
       return AppRoutes.welcome.path;
     }
 

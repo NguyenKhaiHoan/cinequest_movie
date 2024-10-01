@@ -71,7 +71,7 @@ mixin _PageMixin on State<_Page> {
     context.read<ButtonBloc>().add(
           ButtonEvent.execute(
             useCase: sl<VerificateCodeUseCase>(),
-            params: VerificateCodeParams(
+            params: VerificattionCodeParams(
               verificationCode:
                   _verificationCodeTextEditingController.text.trim(),
             ),

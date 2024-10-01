@@ -30,17 +30,21 @@ class ASFullnameView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: context.textTheme.headlineMedium,
-        ),
+        _buildTitle(context),
         gapH24,
-        _buildCustomizeYourAccountForm(),
+        _buildForm(),
       ],
     );
   }
 
-  Widget _buildCustomizeYourAccountForm() {
+  Text _buildTitle(BuildContext context) {
+    return Text(
+      title,
+      style: context.textTheme.headlineMedium,
+    );
+  }
+
+  Widget _buildForm() {
     return Form(
       key: formKey,
       child: Column(

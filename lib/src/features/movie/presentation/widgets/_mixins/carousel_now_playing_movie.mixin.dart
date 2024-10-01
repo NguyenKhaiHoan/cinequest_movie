@@ -2,21 +2,19 @@ part of '../carousel_now_playing_movie.dart';
 
 /// Mixin của CarouselNowPlayingMovie xử lý logic UI
 mixin CarouselNowPlayingMovieMixin on State<CarouselNowPlayingMovie> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      sl<GetMovieLocalUseCase>().call();
-    });
-  }
-
-  void _toggleFavorite(BuildContext context, Movie movie, bool isFavorite) {
+  void _toggleFavorite(
+    BuildContext context,
+    List<Movie> favoriteMovies,
+    Movie movie,
+    bool isFavorite,
+  ) {
     if (isFavorite) {
       context.read<ButtonBloc>().add(
             ButtonEvent.execute(
               useCase: sl<DeleteMovieLocalUseCase>(),
-              params: DeleteMovieLocalParams(
-                movieId: movie.id!,
+              params: MovieParams(
+                movie: movie,
+                movies: favoriteMovies,
               ),
             ),
           );
@@ -24,9 +22,7 @@ mixin CarouselNowPlayingMovieMixin on State<CarouselNowPlayingMovie> {
       context.read<ButtonBloc>().add(
             ButtonEvent.execute(
               useCase: sl<SaveMovieLocalUseCase>(),
-              params: SaveMovieLocalParams(
-                movie: movie,
-              ),
+              params: MovieParams(movie: movie, movies: favoriteMovies),
             ),
           );
     }

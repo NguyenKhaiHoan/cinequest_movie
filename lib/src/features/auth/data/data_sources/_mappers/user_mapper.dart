@@ -25,7 +25,7 @@ class UserMapper implements Mapper<UserModel, AppUser> {
   }
 
   @override
-  UserModel entityToDto(AppUser entity) {
+  UserModel entityToModel(AppUser entity) {
     return UserModel(
       id: entity.id,
       profilePhoto: entity.profilePhoto,

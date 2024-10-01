@@ -30,26 +30,33 @@ class ASBioView extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              title,
-              style: context.textTheme.headlineMedium,
-            ),
+            _buildTitle(context),
             gapH24,
-            Form(
-              key: formKey,
-              child: CustomTextField(
-                label: 'Bio'.hardcoded,
-                controller: bioTextEditingController,
-                onChanged: onChanged,
-                checkCharacterCounter: true,
-                counter: state.bio.length,
-                validator: (value) =>
-                    ValidationUtil.validateEmptyField('Bio', value),
-              ),
-            ),
+            _buildForm(state),
           ],
         );
       },
+    );
+  }
+
+  Form _buildForm(AccountSetupState state) {
+    return Form(
+      key: formKey,
+      child: CustomTextField(
+        label: 'Bio'.hardcoded,
+        controller: bioTextEditingController,
+        onChanged: onChanged,
+        checkCharacterCounter: true,
+        counter: state.bio.length,
+        validator: (value) => ValidationUtil.validateEmptyField('Bio', value),
+      ),
+    );
+  }
+
+  Text _buildTitle(BuildContext context) {
+    return Text(
+      title,
+      style: context.textTheme.headlineMedium,
     );
   }
 }

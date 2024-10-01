@@ -21,22 +21,30 @@ class BottomWelcome extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          CustomButton(
-            width: double.infinity,
-            text: 'Get started'.hardcoded,
-            textColor: AppColors.black,
-            buttonType: ButtonType.elevated,
-            onPressed: () => context.push(AppRoutes.signUp.path),
-          ),
+          _buildSignUpButton(context),
           gapH8,
-          CustomButton(
-            width: double.infinity,
-            text: 'Login'.hardcoded,
-            buttonType: ButtonType.outlined,
-            onPressed: () => context.push(AppRoutes.login.path),
-          ),
+          _buildLoginButton(context),
         ],
       ),
+    );
+  }
+
+  Widget _buildLoginButton(BuildContext context) {
+    return CustomButton(
+      width: double.infinity,
+      text: 'Login'.hardcoded,
+      buttonType: ButtonType.outlined,
+      onPressed: () => context.push(AppRoutes.login.path),
+    );
+  }
+
+  Widget _buildSignUpButton(BuildContext context) {
+    return CustomButton(
+      width: double.infinity,
+      text: 'Get started'.hardcoded,
+      textColor: AppColors.black,
+      buttonType: ButtonType.elevated,
+      onPressed: () => context.push(AppRoutes.signUp.path),
     );
   }
 }

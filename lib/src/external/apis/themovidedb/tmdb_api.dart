@@ -1,5 +1,5 @@
 import 'package:cinequest/src/external/apis/themovidedb/tmdb_url.dart';
-import 'package:cinequest/src/features/movie/data/models/movie_lists_dto.dart';
+import 'package:cinequest/src/features/movie/data/models/movie_lists_model.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -12,7 +12,7 @@ abstract class TMDBApi {
 
   /// Now playing
   @GET('/movie/now_playing')
-  Future<MovieListsDto> getNowPlayingMovies({
+  Future<MovieListsModel> getNowPlayingMovies({
     @Query('language') required String language,
     @Query('page') required int page,
     @Query('api_key') required String apiKey,
@@ -20,7 +20,7 @@ abstract class TMDBApi {
 
   /// Popular
   @GET('/movie/popular')
-  Future<MovieListsDto> getPopularMovies({
+  Future<MovieListsModel> getPopularMovies({
     @Query('language') required String language,
     @Query('page') required int page,
     @Query('api_key') required String apiKey,

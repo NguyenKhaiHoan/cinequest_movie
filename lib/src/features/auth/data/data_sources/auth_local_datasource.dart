@@ -9,7 +9,10 @@ import 'package:cinequest/src/features/auth/domain/usecases/params/auth_params.d
 /// Local DataSource
 abstract class AuthLocalDataSource {
   Future<AuthParams> getEmailPassword();
-  Future<void> saveEmailPassword(AuthParams params);
+  Future<void> saveEmailPassword({
+    required String email,
+    required String password,
+  });
 }
 
 /// Implementation của AuthLocalDataSource sử dụng SecureStorage
@@ -42,11 +45,14 @@ class AuthSecureStorageDataSourceImpl implements AuthLocalDataSource {
   }
 
   @override
-  Future<void> saveEmailPassword(AuthParams params) async {
+  Future<void> saveEmailPassword({
+    required String email,
+    required String password,
+  }) async {
     try {
       await _secureStorageService.saveData(
         authKey,
-        json.encode(params.toJson()),
+        json.encode(AuthParams(email: email, password: password).toJson()),
       );
     } catch (e) {
       throw Failure(
