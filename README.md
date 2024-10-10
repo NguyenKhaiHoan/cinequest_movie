@@ -2,7 +2,7 @@
 
 ## Overview
 
-(New version): [CineQuest - Movie Ticket Booking App (New version)(https://github.com/NguyenKhaiHoan/hnk_fullstack_cinequest_movie_booking_app)
+(New version): [CineQuest - Movie Ticket Booking App (New version)](https://github.com/NguyenKhaiHoan/hnk_fullstack_cinequest_movie_booking_app)
 
 This is a **Movie Ticket Booking** application designed with **Clean Architecture** principles and uses **BLoC** (Business Logic Component) for state management. The app allows users to browse movies, view details, and book tickets for their favorite movies at local cinemas. The project follows a structured and modular approach to ensure scalability, testability, and maintainability.
 
